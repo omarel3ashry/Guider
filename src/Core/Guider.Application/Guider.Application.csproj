@@ -19,12 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="UseCases\client\Command\CreateClient\" />
-    <Folder Include="UseCases\client\Command\DeleteClient\" />
-    <Folder Include="UseCases\client\Command\UpdateClient\" />
-    <Folder Include="UseCases\consultant\Command\CreateConsultant\" />
-    <Folder Include="UseCases\consultant\Command\DeleteConsultant\" />
-    <Folder Include="UseCases\consultant\Command\UpdateConsultant\" />
+    <Folder Include="UseCases\" />
   </ItemGroup>
 
 </Project>

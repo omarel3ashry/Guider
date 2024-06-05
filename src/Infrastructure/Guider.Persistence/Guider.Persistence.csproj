@@ -14,8 +14,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\Guider.Application\Guider.Application.csproj" />
-  </ItemGroup>
-
 </Project>
