@@ -5,8 +5,8 @@
         public int Id { get; set; }
         public string Bio { get; set; }
         public float HourlyRate { get; set; }
-        public bool isActive { get; set; }
-        public bool isVerified { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsVerified { get; set; }
         public int UserId { get; set; }
         public int SubCategoryId { get; set; }
 

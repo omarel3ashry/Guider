@@ -12,27 +12,28 @@ namespace Guider.WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddSerilog((service, config) =>
-            {
-                config.ReadFrom.Configuration(builder.Configuration)
-                      .ReadFrom.Services(service)
-                      .Enrich.FromLogContext()
-                      .WriteTo.MSSqlServer(connectionString: "Data Source=.;Initial Catalog=MyDB;Integrated Security=True;Encrypt=False;Trust Server Certificate=True",
-                                           sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
-                                           {
-                                               TableName = "Logs",
-                                               BatchPostingLimit = 5,
-                                               AutoCreateSqlTable = true
-                                           }
+            //builder.Services.AddSerilog((service, config) =>
+            //{
+            //    config.ReadFrom.Configuration(builder.Configuration)
+            //          .ReadFrom.Services(service)
+            //          .Enrich.FromLogContext()
+            //          .WriteTo.MSSqlServer(connectionString: "Data Source=.;Initial Catalog=MyDB;Integrated Security=True;Encrypt=False;Trust Server Certificate=True",
+            //                               sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+            //                               {
+            //                                   TableName = "Logs",
+            //                                   BatchPostingLimit = 5,
+            //                                   AutoCreateSqlTable = true
+            //                               }
 
-                                           )
-                      .WriteTo.Console();
-            });
+            //                               )
+            //          .WriteTo.Console();
+            //});
+            
 
             builder.Services.AddControllers();
 
             builder.Services.AddApplicationService()
-                            .AddPersistanceService();
+                            .AddPersistanceService(builder.Configuration);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
