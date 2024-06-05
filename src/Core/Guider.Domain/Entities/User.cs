@@ -9,7 +9,7 @@
         public string PassHash { get; set; }
         public string Image { get; set; }
         public string BankAccount { get; set; }
-        public bool isDeleted { get; set; }
+        public bool IsDeleted { get; set; }
 
          public IReadOnlyCollection<Transaction> Transactions { get; set; }
     }
