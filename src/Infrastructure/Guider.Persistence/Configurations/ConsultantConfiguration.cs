@@ -22,6 +22,10 @@ namespace Guider.Persistence.Configurations
             builder.HasOne(e => e.SubCategory)
                 .WithMany(e => e.Consultants)
                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Property(e => e.Image)
+               .HasMaxLength(100);
+            builder.Property(e => e.BankAccount)
+                .HasMaxLength(100);
         }
     }
 }
