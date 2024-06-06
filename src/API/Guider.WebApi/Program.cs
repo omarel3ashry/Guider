@@ -1,6 +1,7 @@
 
 using Guider.Application;
 using Guider.Persistence;
+using Guider.WebApi.Hubs;
 using Serilog;
 
 namespace Guider.WebApi
@@ -12,23 +13,33 @@ namespace Guider.WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            //builder.Services.AddSerilog((service, config) =>
-            //{
-            //    config.ReadFrom.Configuration(builder.Configuration)
-            //          .ReadFrom.Services(service)
-            //          .Enrich.FromLogContext()
-            //          .WriteTo.MSSqlServer(connectionString: "Data Source=.;Initial Catalog=MyDB;Integrated Security=True;Encrypt=False;Trust Server Certificate=True",
-            //                               sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
-            //                               {
-            //                                   TableName = "Logs",
-            //                                   BatchPostingLimit = 5,
-            //                                   AutoCreateSqlTable = true
-            //                               }
+            builder.Services.AddSerilog((service, config) =>
+            {
+                config.ReadFrom.Configuration(builder.Configuration)
+                      .ReadFrom.Services(service)
+                      .Enrich.FromLogContext()
+                      .WriteTo.MSSqlServer(connectionString: "Data Source=.;Initial Catalog=MyDB;Integrated Security=True;Encrypt=False;Trust Server Certificate=True",
+                                           sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+                                           {
+                                               TableName = "Logs",
+                                               BatchPostingLimit = 5,
+                                               AutoCreateSqlTable = true
+                                           }
 
-            //                               )
-            //          .WriteTo.Console();
-            //});
-            
+                                           )
+                      .WriteTo.Console();
+            });
+
+            builder.Services.AddCors(
+                 options => options.AddPolicy(
+                     "client-side",
+                     policy => policy.WithOrigins(builder.Configuration["ClientSideUrl"] ?? "http://localhost:4200")
+             .AllowAnyMethod()
+             .SetIsOriginAllowed(pol => true)
+             .AllowAnyHeader()
+             .AllowCredentials()));
+
+            builder.Services.AddSignalR();
 
             builder.Services.AddControllers();
 
@@ -55,8 +66,9 @@ namespace Guider.WebApi
 
             app.UseAuthorization();
 
-
+            app.UseCors("client-side");
             app.MapControllers();
+            app.MapHub<MeetingHub>("/meetingHub");
 
             app.Run();
         }
