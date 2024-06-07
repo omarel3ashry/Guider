@@ -13,6 +13,7 @@ namespace Guider.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("Users");
             builder.Property(e => e.FirstName)
                 .HasMaxLength(50);
             builder.Property(e => e.LastName)

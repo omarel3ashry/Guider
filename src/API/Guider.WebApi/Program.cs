@@ -1,5 +1,6 @@
 
 using Guider.Application;
+using Guider.Identity;
 using Guider.Persistence;
 using Serilog;
 
@@ -33,7 +34,8 @@ namespace Guider.WebApi
             builder.Services.AddControllers();
 
             builder.Services.AddApplicationService()
-                            .AddPersistanceService(builder.Configuration);
+                            .AddPersistanceService(builder.Configuration)
+                            .AddAddIdentityServices(builder.Configuration);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -53,6 +55,7 @@ namespace Guider.WebApi
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
