@@ -1,4 +1,6 @@
 ﻿using Guider.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Persistence.Data
 {
-    public class GuiderContext : DbContext
+    public class GuiderContext : IdentityDbContext<User, IdentityRole<int>,int>
     {
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Appointment> Appointment { get; set; }
@@ -19,8 +21,6 @@ namespace Guider.Persistence.Data
         public DbSet<Consultant> Consultants { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<User> Users { get; set; }
-
         public GuiderContext(DbContextOptions options) : base(options) { }
 
 

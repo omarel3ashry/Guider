@@ -13,6 +13,7 @@ namespace Guider.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("Users");
             builder.Property(e => e.FirstName)
                 .HasMaxLength(50);
             builder.Property(e => e.LastName)
@@ -20,12 +21,8 @@ namespace Guider.Persistence.Configurations
             builder.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsRequired();
-            builder.Property(e => e.PassHash)
+            builder.Property(e => e.PasswordHash)
                 .HasMaxLength(50);
-            builder.Property(e => e.Image)
-                .HasMaxLength(100);
-            builder.Property(e => e.BankAccount)
-                .HasMaxLength(100);
             builder.Property(e => e.IsDeleted)
                 .HasDefaultValue(false);
         }
