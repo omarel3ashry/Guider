@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guider.Application", "src\Core\Guider.Application\Guider.Application.csproj", "{FD13DB01-B990-4227-9FB9-3431F1884BA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guider.Application", "src\Core\Guider.Application\Guider.Application.csproj", "{FD13DB01-B990-4227-9FB9-3431F1884BA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guider.Domain", "Src\Core\Guider.Domain\Guider.Domain.csproj", "{F77675FE-F574-43D2-8098-455789F2D3BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guider.Domain", "Src\Core\Guider.Domain\Guider.Domain.csproj", "{F77675FE-F574-43D2-8098-455789F2D3BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guider.WebApi", "src\api\Guider.WebApi\Guider.WebApi.csproj", "{AB89DD32-B3F0-45B8-BD77-C86A7A3B312D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guider.WebApi", "src\api\Guider.WebApi\Guider.WebApi.csproj", "{AB89DD32-B3F0-45B8-BD77-C86A7A3B312D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guider.Persistence", "src\infrastructure\Guider.Persistence\Guider.Persistence.csproj", "{3B8E7079-F0B8-4156-BF44-47D6AD2B93B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guider.Persistence", "src\infrastructure\Guider.Persistence\Guider.Persistence.csproj", "{3B8E7079-F0B8-4156-BF44-47D6AD2B93B6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4A6F2225-9223-4F8B-A2B7-250E8EE13679}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{B1E5B067-10E8-4B79-A205-DCB1E30FC2D7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7207E1D8-434C-41DA-8751-8A9ED58BBBA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guider.Infrastructure", "Guider.Infrastructure\Guider.Infrastructure.csproj", "{666D10B4-C672-4DB8-8EEF-4D890E12DBEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{3B8E7079-F0B8-4156-BF44-47D6AD2B93B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B8E7079-F0B8-4156-BF44-47D6AD2B93B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B8E7079-F0B8-4156-BF44-47D6AD2B93B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{666D10B4-C672-4DB8-8EEF-4D890E12DBEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{666D10B4-C672-4DB8-8EEF-4D890E12DBEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{666D10B4-C672-4DB8-8EEF-4D890E12DBEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{666D10B4-C672-4DB8-8EEF-4D890E12DBEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{F77675FE-F574-43D2-8098-455789F2D3BF} = {4A6F2225-9223-4F8B-A2B7-250E8EE13679}
 		{AB89DD32-B3F0-45B8-BD77-C86A7A3B312D} = {B1E5B067-10E8-4B79-A205-DCB1E30FC2D7}
 		{3B8E7079-F0B8-4156-BF44-47D6AD2B93B6} = {7207E1D8-434C-41DA-8751-8A9ED58BBBA9}
+		{666D10B4-C672-4DB8-8EEF-4D890E12DBEB} = {7207E1D8-434C-41DA-8751-8A9ED58BBBA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {15D2B5B4-283D-4797-BB46-80DBDA50CAC5}

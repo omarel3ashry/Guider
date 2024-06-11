@@ -4,17 +4,30 @@ namespace Guider.WebApi.Hubs
 {
     public class MeetingHub : Hub
     {
-        public async Task RequestMeeting(string id, string data)
+        private readonly ILogger _logger;
+
+        public MeetingHub(ILogger<MeetingHub> logger)
         {
-            await Clients.Others.SendAsync("ConsultantInvite", Context.ConnectionId, data);
+            _logger = logger;
         }
 
-        public async Task SendAnswer(string id, string data)
+        public async Task RequestMeeting(int id, string sdp)
         {
-            await Clients.Others.SendAsync("ClientAnswered", Context.ConnectionId, data);
+            _logger.LogInformation(sdp);
+            await Clients.Others.SendAsync("ConsultantInvite", Context.ConnectionId, sdp);
         }
 
-        public async Task CloseMeeting(string id)
+        public async Task SendAnswer(int id, string sdp)
+        {
+            await Clients.Others.SendAsync("ClientAnswered", Context.ConnectionId, sdp);
+        }
+
+        public async Task AddCandidate(int id, IceCandidate candidate)
+        {
+            await Clients.Others.SendAsync("ReceiveCandidate", Context.ConnectionId, candidate);
+        }
+
+        public async Task CloseMeeting(int id)
         {
             await Clients.Others.SendAsync("MeetingClosed", Context.ConnectionId);
         }
