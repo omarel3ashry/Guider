@@ -13,7 +13,11 @@ namespace Guider.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
-            
+            builder.Property(e => e.Image)
+               .HasMaxLength(100);
+            builder.Property(e => e.BankAccount)
+                .HasMaxLength(100);
+
         }
     }
 }

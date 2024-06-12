@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="UseCases\User\" />
   </ItemGroup>
 
 </Project>

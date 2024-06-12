@@ -13,10 +13,6 @@ namespace Guider.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Admin> builder)
         {
-            builder.Property(e => e.Email)
-                .HasMaxLength(50);
-            builder.Property(e => e.PassHash)
-                .HasMaxLength(50);
             builder.Property(e => e.RevenueBankAccount)
                 .HasMaxLength(100);
             builder.Property(e => e.OnHoldBankAccount)

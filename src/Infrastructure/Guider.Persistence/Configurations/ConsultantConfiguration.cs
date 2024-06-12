@@ -24,11 +24,10 @@ namespace Guider.Persistence.Configurations
             builder.HasOne(e => e.SubCategory)
                 .WithMany(e => e.Consultants)
                 .OnDelete(DeleteBehavior.NoAction);
-            builder.HasMany(e => e.Schedules)
-           .WithOne(e => e.Consultant)
-           .HasForeignKey(e => e.ConsultantId)
-           .OnDelete(DeleteBehavior.Cascade);
-            
+            builder.Property(e => e.Image)
+               .HasMaxLength(100);
+            builder.Property(e => e.BankAccount)
+                .HasMaxLength(100);
         }
     }
 }
