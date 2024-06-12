@@ -1,4 +1,6 @@
-﻿using Guider.Persistence.Data;
+﻿using Guider.Application.Contracts.Persistence;
+using Guider.Persistence.Data;
+using Guider.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +15,10 @@ namespace Guider.Persistence
             {
                 options.UseSqlServer(config.GetConnectionString("DevConnection"));
             });
-                
+            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IClientRepository,ClientRepository>();
+            services.AddScoped<IConsultantRepository,ConsultantRepository>();
+            services.AddScoped<IAppointmentRepository,AppointmentRepository>();
             return services;
         }
     }

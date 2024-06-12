@@ -1,9 +1,11 @@
-﻿using Guider.Domain.Entities;
+﻿using Guider.Application.UseCases.consultant;
+using Guider.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +24,11 @@ namespace Guider.Persistence.Configurations
             builder.HasOne(e => e.SubCategory)
                 .WithMany(e => e.Consultants)
                 .OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(e => e.Schedules)
+           .WithOne(e => e.Consultant)
+           .HasForeignKey(e => e.ConsultantId)
+           .OnDelete(DeleteBehavior.Cascade);
+            
         }
     }
 }
