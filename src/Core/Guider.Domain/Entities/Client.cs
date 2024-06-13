@@ -6,7 +6,6 @@
         public string Image { get; set; }
         public string BankAccount { get; set; }
         public int UserId { get; set; }
-
         public User User { get; set; }
 
         public IReadOnlyCollection<Appointment> Appointments { get; set; }

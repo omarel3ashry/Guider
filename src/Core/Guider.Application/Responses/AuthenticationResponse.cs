@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,8 @@ namespace Guider.Application.Responses
     public class AuthenticationResponse
     {
         public bool Succeeded { get; set; }
-        public IEnumerable<string> Errors { get; set; }
+        public int Id { get; set; }
+        public IEnumerable<string>? Errors { get; set; }
     }
 
 }

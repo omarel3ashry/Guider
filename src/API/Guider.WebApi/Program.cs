@@ -51,7 +51,7 @@ namespace Guider.WebApi
                 app.UseSwaggerUI();
             }
 
-            app.UseSerilogRequestLogging();
+            //app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 
