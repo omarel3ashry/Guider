@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Guider.Application\Guider.Application.csproj" />
     <ProjectReference Include="..\..\Core\Guider.Domain\Guider.Domain.csproj" />
     <ProjectReference Include="..\Guider.Identity\Guider.Identity.csproj" />
   </ItemGroup>
