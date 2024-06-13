@@ -34,7 +34,7 @@ namespace Guider.Persistence.Repositories
                .ThenInclude(e => e.Category)
                .Include(e => e.User)
                .Include(e => e.Schedules)
-               .FirstOrDefaultAsync(e => e.Id == id!&& e.User.IsDeleted);
+               .FirstOrDefaultAsync(e => e.Id == id&& !e.User.IsDeleted);
         }
         public async Task<Consultant> GetConsultantWithUserByIdAsync(int id)
         {

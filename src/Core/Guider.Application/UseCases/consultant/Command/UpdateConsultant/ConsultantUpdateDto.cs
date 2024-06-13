@@ -1,6 +1,6 @@
-﻿namespace Guider.Application.UseCases.consultant.Command.CreateConsultant
+﻿namespace Guider.Application.UseCases.consultant.Command.UpdateConsultant
 {
-    public class ConsultantCreateOrUpdateDto
+    public class ConsultantUpdateDto
     {
         public int Id { get; set; }
         public string Bio { get; set; }

@@ -1,5 +1,4 @@
 ﻿using Guider.Application.Responses;
-using Guider.Application.UseCases.consultant.Query.GetAll;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Guider.Application.UseCases.consultant.Query.GetDetails
+namespace Guider.Application.UseCases.consultant.Command.UpdateImage
 {
-    public class GetConsultantDetailsQuery : IRequest<BaseResponse<ConsultantVM>>
+    public class UpdateImageCommand:IRequest<BaseResponse<string>>
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Guider.Application.UseCases.client.Command.CreateClient;
 using Guider.Application.UseCases.client.Query.GetClientDetails;
-using Guider.Application.UseCases.consultant.Command.CreateConsultant;
+
 using Guider.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,9 +21,8 @@ namespace Guider.Application.UseCases.client
             CreateMap<ClientCreateCommand, Client>();
             CreateMap<Client, ClientCreateDto>().ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
-                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.User.Image))
-                .ForMember(dest => dest.BankAccount, opt => opt.MapFrom(src => src.User.BankAccount));
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email));
+                
         }
 
     }

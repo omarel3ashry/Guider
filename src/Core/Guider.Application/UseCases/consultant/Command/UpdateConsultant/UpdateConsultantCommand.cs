@@ -1,4 +1,4 @@
-﻿using Guider.Application.UseCases.consultant.Command.CreateConsultant;
+﻿using Guider.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.consultant.Command.UpdateConsultant
 {
-    public class UpdateConsultantCommand: IRequest<ConsultantCreateOrUpdateDto>
+    public class UpdateConsultantCommand: IRequest<BaseResponse<ConsultantUpdateDto>>
     {
         public int ConsultantId { get; set; }
         public string Bio { get; set; }

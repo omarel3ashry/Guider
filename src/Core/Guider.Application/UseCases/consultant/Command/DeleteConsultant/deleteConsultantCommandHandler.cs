@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Exceptions;
+using Guider.Application.Responses;
+using Guider.Application.UseCases.consultant.Command.UpdateConsultant;
 using Guider.Domain.Entities;
 using Guider.Domain.Enums;
 using MediatR;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.consultant.Command.DeleteConsultant
 {
-    internal class deleteConsultantCommandHandler : IRequestHandler<DeleteConsultantCommand, int>
+    internal class deleteConsultantCommandHandler : IRequestHandler<DeleteConsultantCommand, BaseResponse<int>>
     {
 
         private readonly IConsultantRepository _consultantRepository;
@@ -26,7 +28,7 @@ namespace Guider.Application.UseCases.consultant.Command.DeleteConsultant
             _mapper = mapper;
             _appointmentRepository = appointmentRepository;
         }
-        public async Task<int> Handle(DeleteConsultantCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<int>> Handle(DeleteConsultantCommand request, CancellationToken cancellationToken)
         {
             var consultant = await _consultantRepository.GetConsultantWithUserByIdAsync(request.ConsultantId);
             if (consultant == null)
@@ -41,12 +43,21 @@ namespace Guider.Application.UseCases.consultant.Command.DeleteConsultant
             await CancelFutureAppointments(consultant);
 
             // Update the consultant (and the associated user)
-            await _consultantRepository.UpdateAsync(consultant);
+            var deleted = await _consultantRepository.UpdateAsync(consultant);
 
-            return consultant.Id;
+            var response = new BaseResponse<int>();
+            response.Result = consultant.Id;
+            response.Success = deleted; // Concise assignment
+
+            if (!response.Success) // More descriptive check
+            {
+                response.Message = "unable to update."; // Or a more specific message
+            }
+
+            return response;
         }
 
-        private async Task CancelFutureAppointments(Consultant consultant)
+            private async Task CancelFutureAppointments(Consultant consultant)
         {
             var now = DateTime.UtcNow; // Get the current date and time in UTC
 
@@ -61,5 +72,7 @@ namespace Guider.Application.UseCases.consultant.Command.DeleteConsultant
             await _appointmentRepository.UpdateRangeAsync(futureAppointments);
 
         }
+
+       
     }
 }

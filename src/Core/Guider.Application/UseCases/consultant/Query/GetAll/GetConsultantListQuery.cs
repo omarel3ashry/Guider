@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Guider.Application.Responses;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.consultant.Query.GetAll
 {
-    public class GetConsultantListQuery:IRequest<List<ConsultantListVM>>
+    public class GetConsultantListQuery:IRequest<BaseResponse<List<ConsultantVM>>>
     {
     }
 }

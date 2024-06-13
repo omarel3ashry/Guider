@@ -11,9 +11,9 @@ namespace Guider.WebApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            string MyAllowSpecificOrigins = "";
 
-            
-           builder.Services.AddSerilog((service, config) =>
+            builder.Services.AddSerilog((service, config) =>
            {
                config.ReadFrom.Configuration(builder.Configuration)
                      .ReadFrom.Services(service)
@@ -40,7 +40,18 @@ namespace Guider.WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyOrigin();
 
+                });
+
+            });
 
             var app = builder.Build();
             app.UseDeveloperExceptionPage();
@@ -54,7 +65,7 @@ namespace Guider.WebApi
             }
 
             app.UseSerilogRequestLogging();
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

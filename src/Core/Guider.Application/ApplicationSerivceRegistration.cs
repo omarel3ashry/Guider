@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using Guider.Application.UseCases.client.Command.CreateClient;
-using Guider.Application.UseCases.consultant.Command.CreateConsultant;
+using Guider.Application.UseCases.consultant.Command.UpdateBankAccount;
 using Guider.Application.UseCases.consultant.Command.UpdateConsultant;
+using Guider.Application.UseCases.consultant.Command.UpdateImage;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Guider.Application
@@ -12,9 +13,11 @@ namespace Guider.Application
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
-            services.AddScoped<IValidator<CreateConsultantCommand>, CreateConsultantCommandValidator>();
+           
             services.AddScoped<IValidator<UpdateConsultantCommand>, UpdateConsultantCommandValidator>();
+            services.AddScoped<IValidator<UpdateImageCommand>, UpdateImageCommandValidator>();
             services.AddScoped<IValidator<ClientCreateCommand>, CreateClientCommandValidator>();
+            services.AddScoped<IValidator<UpdateBankAccountCommand>, UpdateBankAccountCommandValidator>();
            
 
             return services;

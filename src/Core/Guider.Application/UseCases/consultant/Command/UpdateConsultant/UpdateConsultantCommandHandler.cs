@@ -2,7 +2,8 @@
 using FluentValidation;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Exceptions;
-using Guider.Application.UseCases.consultant.Command.CreateConsultant;
+using Guider.Application.Responses;
+using Guider.Application.UseCases.consultant.Query.GetAll;
 using Guider.Domain.Entities;
 using MediatR;
 using System;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.consultant.Command.UpdateConsultant
 {
-    public class UpdateConsultantCommandHandler : IRequestHandler<UpdateConsultantCommand, ConsultantCreateOrUpdateDto>
+    public class UpdateConsultantCommandHandler : IRequestHandler<UpdateConsultantCommand,BaseResponse< ConsultantUpdateDto>>
     {
         private readonly IMapper _mapper;
         private readonly IConsultantRepository _consultantRepository;
@@ -26,7 +27,7 @@ namespace Guider.Application.UseCases.consultant.Command.UpdateConsultant
             _consultantRepository = consultantRepository;
             _validator = validator;
         }
-        public async  Task<ConsultantCreateOrUpdateDto> Handle(UpdateConsultantCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<ConsultantUpdateDto>> Handle(UpdateConsultantCommand request, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -47,10 +48,22 @@ namespace Guider.Application.UseCases.consultant.Command.UpdateConsultant
             // Save the changes
             await _consultantRepository.UpdateAsync(consultant);
 
+
+
             // Return the updated consultant
-            return _mapper.Map<ConsultantCreateOrUpdateDto>(consultant);
+            var ConsultantToReturn= _mapper.Map<ConsultantUpdateDto>(consultant);
+            var response = new BaseResponse<ConsultantUpdateDto>();
+            response.Result = ConsultantToReturn;
+            response.Success = ConsultantToReturn != null; // Concise assignment
+
+            if (!response.Success) // More descriptive check
+            {
+                response.Message = "unable to update."; // Or a more specific message
+            }
+
+            return response;
         }
 
-
+        
     }
 }

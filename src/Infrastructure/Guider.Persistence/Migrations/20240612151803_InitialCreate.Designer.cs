@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Guider.Persistence.Migrations
 {
     [DbContext(typeof(GuiderContext))]
-    [Migration("20240607174147_init")]
-    partial class init
+    [Migration("20240612151803_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
