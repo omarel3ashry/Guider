@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Guider.Application.UseCases.Consultants.ConsultantSearch.Query
+namespace Guider.Application.UseCases.Consultants.ConsultantsAll.Query
 {
-    public class ConsultantSearchDto
+    public class CounsultantsDto
     {
         public int Id { get; set; }
         public string ConsultantName { get; set; }

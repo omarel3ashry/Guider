@@ -14,9 +14,9 @@ namespace Guider.Application.UseCases.Consultants.ConsultantSearch
         public ConsultantProfile()
         {
             CreateMap<Consultant, ConsultantSearchDto>()
-               .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
-               .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
-               .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.SubCategory.Name))
+               .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
+               .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
+               .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name))
                .ForMember(dest => dest.HourlyRate, opt => opt.MapFrom(src => src.HourlyRate))
                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
         }

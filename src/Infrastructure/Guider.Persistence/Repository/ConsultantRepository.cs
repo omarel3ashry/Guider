@@ -15,7 +15,16 @@ namespace Guider.Persistence.Repository
         {
 
         }
-
+        public async Task<List<Consultant>> GetAllConsultantsAsync()
+        {
+            return await _context.Consultants
+                 .Include(c => c.User) 
+                .Include(c => c.SubCategory)
+                .ThenInclude(sc => sc.Category)
+                .Include(c => c.Appointments)
+                .ThenInclude(a => a.Client)
+                .ToListAsync();
+        }
         public async Task<List<Consultant>> GetSortedByHourlyRateAsync(bool ascending)
         {
             var query = _context.Consultants

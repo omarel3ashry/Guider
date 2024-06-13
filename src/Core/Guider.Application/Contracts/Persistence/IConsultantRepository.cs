@@ -10,6 +10,7 @@ namespace Guider.Persistence.Repository
 {
     public interface IConsultantRepository : IRepository<Consultant>
     {
+        Task<List<Consultant>> GetAllConsultantsAsync();
         Task<List<Consultant>> GetSortedByHourlyRateAsync(bool ascending);
         Task<List<Consultant>> GetConsultantsByUserNameAsync(string searchQuery);
         Task<List<Consultant>> GetPaginatedConsultantsAsync(int page, int pageSize);

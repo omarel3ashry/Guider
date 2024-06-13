@@ -1,4 +1,5 @@
 ﻿using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
+using Guider.Application.UseCases.Consultants.ConsultantsAll.Query;
 using Guider.Application.UseCases.Consultants.ConsultantSearch;
 using Guider.Application.UseCases.Consultants.ConsultantSearch.Query;
 using MediatR;
@@ -16,6 +17,12 @@ namespace Guider.WebApi.Controllers
         public ConsultantController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+        [HttpGet]
+        public async Task<ActionResult<List<ConsultantDto>>> GetConsultants()
+        {
+            var result = await _mediator.Send(new GetAllConsultantsQuery());
+            return Ok(result);
         }
         [HttpGet("consultant")]
         public async Task<IActionResult> SearchConsultantsByName([FromQuery] string consultantName)
