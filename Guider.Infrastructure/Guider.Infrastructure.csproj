@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Guider.Identity\Guider.Identity.csproj" />
     <ProjectReference Include="..\src\Core\Guider.Application\Guider.Application.csproj" />
   </ItemGroup>
+	
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
 </Project>

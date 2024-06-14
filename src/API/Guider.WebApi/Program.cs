@@ -1,7 +1,9 @@
 
 using Guider.Application;
+using Guider.Identity;
+using Guider.Infrastructure;
+using Guider.Infrastructure.Meeting;
 using Guider.Persistence;
-using Guider.WebApi.Hubs;
 using Serilog;
 
 namespace Guider.WebApi
@@ -39,7 +41,9 @@ namespace Guider.WebApi
              .AllowAnyHeader()
              .AllowCredentials()));
 
-            builder.Services.AddSignalR();
+            //builder.Services.AddSignalR();
+            builder.Services.AddIdentityServices(builder.Configuration)
+                            .AddInfrastructureService();
 
             builder.Services.AddControllers();
 
