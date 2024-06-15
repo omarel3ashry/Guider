@@ -51,8 +51,12 @@ namespace Guider.Persistence.Repositories
             _context.Schedules.Remove(existingSchedule);
             await _context.SaveChangesAsync();
 
-            // Add the updated schedule using AddAsync from BaseRepository
             return await AddAsync(updatedSchedule);
+        }
+        public async Task DeleteAsync(Schedule entity)
+        {
+            _context.Schedules.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
     }
