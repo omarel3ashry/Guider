@@ -4,6 +4,7 @@ using Guider.Identity.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Claims;
 
 namespace Guider.Infrastructure.Meeting
@@ -18,14 +19,38 @@ namespace Guider.Infrastructure.Meeting
         {
             var userIdClaim = ((ClaimsIdentity)Context.User.Identity).Claims
                                 .FirstOrDefault(e => e.Type.Equals(PolicyData.IdClaimName));
-         
+
             int userId = int.Parse(userIdClaim.Value);
             _connections.Add(userId, Context.ConnectionId);
 
             return base.OnConnectedAsync();
         }
 
-        public async Task RequestMeeting(int userId, string sdp)
+        public async Task<bool> RequestMeeting(int userId)
+        {
+            string? connectionId = _connections.GetConnection(userId);
+
+            if (connectionId != null)
+            {
+                string consultantName = Context.User?.Identity?.Name ?? "";
+                await Clients.Client(connectionId).ConsultantRequestMeeting(consultantName);
+            }
+            return connectionId != null;
+        }
+
+        public async Task<bool> JoinMeeting(int userId)
+        {
+            string? connectionId = _connections.GetConnection(userId);
+
+            if (connectionId != null)
+            {
+                string clientName = Context.User?.Identity?.Name ?? "";
+                await Clients.Client(connectionId).ClientJoined(clientName);
+            }
+            return connectionId != null;
+        }
+
+        public async Task StartMeeting(int userId, string sdp)
         {
             string? connectionId = _connections.GetConnection(userId);
 
@@ -33,7 +58,6 @@ namespace Guider.Infrastructure.Meeting
             {
                 await Clients.Client(connectionId).ConsultantInvite(sdp);
             }
-            else await Clients.Caller.ClientUnreachable();
         }
 
         public async Task SendAnswer(int userId, string sdp)
@@ -57,6 +81,16 @@ namespace Guider.Infrastructure.Meeting
 
         }
 
+        public async Task SendMessage(int userId, string msg)
+        {
+            string? connectionId = _connections.GetConnection(userId);
+
+            if (connectionId != null)
+            {
+                await Clients.Client(connectionId).ReceiveMessage(msg);
+            }
+        }
+
         public async Task CloseMeeting(int userId)
         {
             string? connectionId = _connections.GetConnection(userId);
@@ -78,5 +112,6 @@ namespace Guider.Infrastructure.Meeting
 
             return base.OnDisconnectedAsync(exception);
         }
+
     }
 }

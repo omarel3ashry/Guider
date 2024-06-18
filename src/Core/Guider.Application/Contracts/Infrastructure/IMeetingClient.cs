@@ -4,10 +4,12 @@ namespace Guider.Application.Contracts.Infrastructure
 {
     public interface IMeetingClient
     {
+        Task ConsultantRequestMeeting(string consultantName);
+        Task ClientJoined(string clientName);
         Task ConsultantInvite(string sdp);
         Task ClientAnswered(string sdp);
         Task ReceiveCandidate(IceCandidate candidate);
-        Task ClientUnreachable();
+        Task ReceiveMessage(string msg);
         Task MeetingClosed();
     }
 }

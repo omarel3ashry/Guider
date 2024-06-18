@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Guider.Application\Guider.Application.csproj" />
     <ProjectReference Include="..\Guider.Identity\Guider.Identity.csproj" />
-    <ProjectReference Include="..\src\Core\Guider.Application\Guider.Application.csproj" />
   </ItemGroup>
 	
 	<ItemGroup>
