@@ -11,5 +11,6 @@ namespace Guider.Application.Contracts.Persistence
     {
         Task<List<Client>> GetAllClientWithAppointments();
         Task<Client>  GetClientWithAppointments(int id);
+        
     }
 }

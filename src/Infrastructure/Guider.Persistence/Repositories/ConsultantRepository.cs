@@ -24,6 +24,9 @@ namespace Guider.Persistence.Repositories
                .ThenInclude(e => e.Category)
                .Include(e=>e.User)
                .Include(e=>e.Schedules)
+               .Include(e=>e.Appointments)
+               .ThenInclude(e=>e.Client)
+               .ThenInclude(e=>e.User)
                .Where(c => !c.User.IsDeleted)
                .ToListAsync();
         }
@@ -34,6 +37,9 @@ namespace Guider.Persistence.Repositories
                .ThenInclude(e => e.Category)
                .Include(e => e.User)
                .Include(e => e.Schedules)
+                .Include(e => e.Appointments)
+               .ThenInclude(e => e.Client)
+               .ThenInclude(e => e.User)
                .FirstOrDefaultAsync(e => e.Id == id&& !e.User.IsDeleted);
         }
         public async Task<Consultant> GetConsultantWithUserByIdAsync(int id)

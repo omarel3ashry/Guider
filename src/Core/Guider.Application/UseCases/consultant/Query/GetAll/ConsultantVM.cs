@@ -19,5 +19,6 @@ namespace Guider.Application.UseCases.consultant.Query.GetAll
         public string SubCategoryName { get; set; }
         public string CategoryName { get; set; }
         public List<ScheduledDto> Schedules { get; set; }
+        public List<AppointmentDto> Appointments { get; set; }
     }
 }

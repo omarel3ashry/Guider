@@ -9,12 +9,12 @@
         public bool IsVerified { get; set; }
         public int UserId { get; set; }
         public int SubCategoryId { get; set; }
+        public string Email { get; set; }
 
         // Additional properties from User
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Image { get; set; }
-        public string BankAccount { get; set; }
+       
+     
     }
 }

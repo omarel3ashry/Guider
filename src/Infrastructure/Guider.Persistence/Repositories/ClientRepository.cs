@@ -22,6 +22,7 @@ namespace Guider.Persistence.Repositories
                 .Include(e => e.Appointments).
                 ThenInclude(a => a.Consultant).
                  ThenInclude(con => con.User).
+                 Where(e=>!e.User.IsDeleted).
                 ToListAsync();
 
 
@@ -32,7 +33,8 @@ namespace Guider.Persistence.Repositories
                 .Include(e => e.Appointments)
                 .ThenInclude(a => a.Consultant)
                  .ThenInclude(con => con.User).
-                FirstOrDefaultAsync(e => e.Id == id);
+                FirstOrDefaultAsync(e => e.Id == id&& !e.User.IsDeleted);
         }
+       
     }
 }

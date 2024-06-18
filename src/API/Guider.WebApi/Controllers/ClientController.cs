@@ -1,9 +1,13 @@
 ﻿
-using Guider.Application.UseCases.client.Command.CreateClient;
+
 using Guider.Application.UseCases.client.Command.DeleteClient;
+using Guider.Application.UseCases.client.Command.UpdateBankAccount;
+using Guider.Application.UseCases.client.Command.UpdateClient;
+using Guider.Application.UseCases.client.Command.UpdateImage;
 using Guider.Application.UseCases.client.Query.GetAllClients;
 using Guider.Application.UseCases.client.Query.GetClientDetails;
 using Guider.Application.UseCases.consultant.Command.DeleteConsultant;
+using Guider.Application.UseCases.consultant.Command.UpdateConsultant;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,12 +38,17 @@ namespace Guider.WebApi.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateUser(ClientCreateCommand command)
+        [HttpPatch("edit/{id}")]
+        public async Task<ActionResult<UpdateClientDto>> UpdateClient(int id, UpdateClientCommand command)
         {
+            if (id != command.Id)
+            {
+                return BadRequest("Client ID mismatch.");
+            }
+            command.Id = id;
             var clientDto = await _mediator.Send(command);
-            return StatusCode(201, clientDto);
+            return Ok(clientDto);
         }
-        [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteClient(int id)
         {
@@ -47,6 +56,27 @@ namespace Guider.WebApi.Controllers
             var deletedClient = await _mediator.Send(new DeleteClientCommand { ClientId = id });
             return Ok(deletedClient);
 
+        }
+        [HttpPost("update-image")]
+        public async Task<IActionResult> UpdateImage([FromBody] UpdateImageCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("update-bank-account")]
+        public async Task<IActionResult> UpdateBankAccount([FromBody] UpdateBankAccountCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
     }
 }

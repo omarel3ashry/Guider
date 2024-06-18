@@ -42,7 +42,7 @@ namespace Guider.WebApi.Controllers
         }
         
 
-        [HttpPatch("{id}")]
+        [HttpPatch("edit/{id}")]
         public async Task<ActionResult<ConsultantUpdateDto>> UpdateConsultant(int id, UpdateConsultantCommand command)
         {
             if (id != command.ConsultantId)
