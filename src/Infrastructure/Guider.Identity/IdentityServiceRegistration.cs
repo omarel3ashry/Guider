@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Guider.Application.Contracts.Identity;
+using Guider.Domain.Entities;
+using Guider.Identity.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +18,7 @@ namespace Guider.Identity
     {
         public static IServiceCollection AddAddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme =
@@ -33,6 +38,8 @@ namespace Guider.Identity
                     ValidateLifetime = true,   
                 };
             });
+
+            services.AddScoped<ITokenFactory, JwtTokenFactory>();
             return services;
         }
     }

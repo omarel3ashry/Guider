@@ -18,7 +18,7 @@ namespace Guider.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("login")]
+        [HttpPost("login", Name ="UserLogin")]
         public async Task<IActionResult> Login(LoginCommand loginCommand)
         {
             var response = await _mediator.Send(loginCommand);

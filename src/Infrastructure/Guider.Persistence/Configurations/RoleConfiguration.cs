@@ -13,17 +13,17 @@ namespace Guider.Persistence.Configurations
             List<IdentityRole<int>> roles = new List<IdentityRole<int>>()
             {
                 new IdentityRole<int>
-                {
+                {   Id = 11,
                     Name = ConstRole.Admin,
                     NormalizedName = ConstRole.Admin.ToUpper()
                 },
                 new IdentityRole<int>
-                {
+                {   Id = 12,
                     Name = ConstRole.Client,
                     NormalizedName = ConstRole.Client.ToUpper()
                 },
                 new IdentityRole<int>
-                {
+                {   Id = 13,
                     Name = ConstRole.Consultant,
                     NormalizedName = ConstRole.Consultant.ToUpper()
                 },

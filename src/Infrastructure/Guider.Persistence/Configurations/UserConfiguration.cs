@@ -21,8 +21,6 @@ namespace Guider.Persistence.Configurations
             builder.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsRequired();
-            builder.Property(e => e.PasswordHash)
-                .HasMaxLength(50);
             builder.Property(e => e.IsDeleted)
                 .HasDefaultValue(false);
         }
