@@ -47,7 +47,7 @@ namespace Guider.WebApi.Controllers
             var query = new GetPaginatedConsultantsQuery(page, pageSize);
             var result = await _mediator.Send(query);
 
-            if (result == null || result.Count == 0)
+            if (result.Consultants == null || result.Consultants.Count == 0)
             {
                 return NotFound("No consultants found for the specified page and page size.");
             }

@@ -52,16 +52,23 @@ namespace Guider.Persistence.Repository
 
             return consultants;
         }
-        public async Task<List<Consultant>> GetPaginatedConsultantsAsync(int page, int pageSize)
+        public async Task<(List<Consultant> Consultants, int TotalCount)> GetPaginatedConsultantsAsync(int page, int pageSize)
         {
-            return await _context.Consultants
-                                 .Include(c => c.User)
-                                 .Include(c => c.SubCategory)
-                                 .ThenInclude(sc => sc.Category)
-                                 .Include(c => c.Appointments) 
-                                 .Skip((page - 1) * pageSize)
-                                 .Take(pageSize)
-                                 .ToListAsync();
+            var query = _context.Consultants
+                                .Include(c => c.User)
+                                .Include(c => c.SubCategory)
+                                .ThenInclude(sc => sc.Category)
+                                .Include(c => c.Appointments)
+                                .AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            var consultants = await query
+                                .Skip((page - 1) * pageSize)
+                                .Take(pageSize)
+                                .ToListAsync();
+
+            return (consultants, totalCount);
         }
     }
 }

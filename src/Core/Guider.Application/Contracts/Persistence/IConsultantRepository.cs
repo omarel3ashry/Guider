@@ -13,7 +13,7 @@ namespace Guider.Persistence.Repository
         Task<List<Consultant>> GetAllConsultantsAsync();
         Task<List<Consultant>> GetSortedByHourlyRateAsync(bool ascending);
         Task<List<Consultant>> GetConsultantsByUserNameAsync(string searchQuery);
-        Task<List<Consultant>> GetPaginatedConsultantsAsync(int page, int pageSize);
+        Task<(List<Consultant> Consultants, int TotalCount)> GetPaginatedConsultantsAsync(int page, int pageSize);
 
 
     }

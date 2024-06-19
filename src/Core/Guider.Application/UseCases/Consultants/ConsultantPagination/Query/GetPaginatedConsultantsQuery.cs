@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Consultants.ConsultantPagination.Query
 {
-    public class GetPaginatedConsultantsQuery : IRequest<List<ConsultantDto>>
+    public class GetPaginatedConsultantsQuery : IRequest<PaginatedConsultantDto>
     {
         public int Page { get; set; }
         public int PageSize { get; set; }

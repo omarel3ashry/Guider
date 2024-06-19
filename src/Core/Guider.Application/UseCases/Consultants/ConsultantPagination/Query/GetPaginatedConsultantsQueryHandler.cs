@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Consultants.ConsultantPagination.Query
 {
-    public class GetPaginatedConsultantsQueryHandler : IRequestHandler<GetPaginatedConsultantsQuery, List<ConsultantDto>>
+    public class GetPaginatedConsultantsQueryHandler : IRequestHandler<GetPaginatedConsultantsQuery, PaginatedConsultantDto>
     {
         private readonly IConsultantRepository _consultantRepository;
         private readonly IMapper _mapper;
@@ -21,10 +21,19 @@ namespace Guider.Application.UseCases.Consultants.ConsultantPagination.Query
             _mapper = mapper;
         }
 
-        public async Task<List<ConsultantDto>> Handle(GetPaginatedConsultantsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedConsultantDto> Handle(GetPaginatedConsultantsQuery request, CancellationToken cancellationToken)
         {
-            var consultants = await _consultantRepository.GetPaginatedConsultantsAsync(request.Page, request.PageSize);
-            return consultants.Select(c => _mapper.Map<ConsultantDto>(c)).ToList();
+
+            var result = await _consultantRepository.GetPaginatedConsultantsAsync(request.Page, request.PageSize);
+
+            var consultants = result.Consultants.Select(c => _mapper.Map<ConsultantDto>(c)).ToList();
+
+            return new PaginatedConsultantDto
+            {
+                Consultants = consultants,
+                TotalCount = result.TotalCount
+            };
+
         }
     }
 }
