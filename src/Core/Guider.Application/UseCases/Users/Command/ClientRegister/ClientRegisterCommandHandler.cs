@@ -16,10 +16,10 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
     {
         private readonly IMapper _mapper;
         private readonly IValidator<ClientRegisterCommand> _validator;
-        private readonly IClientUserRepository _userRepository;
+        private readonly IRegisterUserRepository<Client> _userRepository;
 
         public ClientRegisterCommandHandler(IMapper mapper, IValidator<ClientRegisterCommand> validator,
-                                            IClientUserRepository userRepository)
+                                            IRegisterUserRepository<Client> userRepository)
         {
             _mapper = mapper;
             _validator = validator;

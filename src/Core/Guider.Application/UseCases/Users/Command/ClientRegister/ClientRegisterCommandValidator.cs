@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Users.Command.ClientRegister
 {
-    internal class ClientRegisterCommandValidator : AbstractValidator<ClientRegisterCommand>
+    public class ClientRegisterCommandValidator : AbstractValidator<ClientRegisterCommand>
     {
         public ClientRegisterCommandValidator()
         {

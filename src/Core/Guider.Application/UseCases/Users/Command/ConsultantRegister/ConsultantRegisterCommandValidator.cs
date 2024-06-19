@@ -2,7 +2,7 @@
 
 namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
 {
-    internal class ConsultantRegisterCommandValidator : AbstractValidator<ConsultantRegisterCommand>
+    public class ConsultantRegisterCommandValidator : AbstractValidator<ConsultantRegisterCommand>
     {
         public ConsultantRegisterCommandValidator()
         {
