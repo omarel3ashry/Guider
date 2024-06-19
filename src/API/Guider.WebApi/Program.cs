@@ -33,7 +33,7 @@ namespace Guider.WebApi
 
             builder.Services.AddControllers();
 
-            builder.Services.AddApplicationService()
+            builder.Services.AddApplicationService(builder.Configuration)
                             .AddPersistanceService(builder.Configuration)
                             .AddAddIdentityServices(builder.Configuration);
 

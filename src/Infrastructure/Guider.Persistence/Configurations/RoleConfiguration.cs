@@ -14,16 +14,19 @@ namespace Guider.Persistence.Configurations
             {
                 new IdentityRole<int>
                 {
+                    Id=1,
                     Name = ConstRole.Admin,
                     NormalizedName = ConstRole.Admin.ToUpper()
                 },
                 new IdentityRole<int>
                 {
+                    Id=2,
                     Name = ConstRole.Client,
                     NormalizedName = ConstRole.Client.ToUpper()
                 },
                 new IdentityRole<int>
                 {
+                    Id=3,
                     Name = ConstRole.Consultant,
                     NormalizedName = ConstRole.Consultant.ToUpper()
                 },

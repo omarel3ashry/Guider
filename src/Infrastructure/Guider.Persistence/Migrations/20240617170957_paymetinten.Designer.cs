@@ -4,6 +4,7 @@ using Guider.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Guider.Persistence.Migrations
 {
     [DbContext(typeof(GuiderContext))]
-    partial class GuiderContextModelSnapshot : ModelSnapshot
+    [Migration("20240617170957_paymetinten")]
+    partial class paymetinten
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,7 +241,7 @@ namespace Guider.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AdminId")
+                    b.Property<int>("AdminId")
                         .HasColumnType("int");
 
                     b.Property<float>("Amount")
@@ -593,9 +596,11 @@ namespace Guider.Persistence.Migrations
 
             modelBuilder.Entity("Guider.Domain.Entities.Transaction", b =>
                 {
-                    b.HasOne("Guider.Domain.Entities.Admin", null)
+                    b.HasOne("Guider.Domain.Entities.Admin", "Admin")
                         .WithMany("Transactions")
-                        .HasForeignKey("AdminId");
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Guider.Domain.Entities.Appointment", "Appointment")
                         .WithMany("Transactions")
@@ -608,6 +613,8 @@ namespace Guider.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Admin");
 
                     b.Navigation("Appointment");
 
