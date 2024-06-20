@@ -31,7 +31,7 @@ namespace Guider.WebApi
             //                               )
             //          .WriteTo.Console();
             //});
-            
+
 
             builder.Services.AddControllers();
 
@@ -93,7 +93,7 @@ namespace Guider.WebApi
             app.UseAuthentication();
             app.UseAuthorization();
 
-
+            app.UseCors("angularApp");
             app.MapControllers();
 
             app.Run();

@@ -14,7 +14,7 @@ namespace Guider.WebApi.Controllers
         }
 
         [HttpGet(Name = "GetAnyRandomString")]
-        [Authorize]
+        //[Authorize]
         public ActionResult<string> Get()
         {
             return Ok("any random string");
