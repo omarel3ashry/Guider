@@ -1,14 +1,9 @@
 ﻿using Guider.Application.Contracts.Persistence;
 using Guider.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 using Guider.Persistence.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace Guider.Persistence.Repository
+namespace Guider.Persistence.Repositories
 {
     public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRepository
     {

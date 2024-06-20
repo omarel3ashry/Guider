@@ -1,12 +1,6 @@
-﻿using Guider.Application.Contracts.Persistence;
-using Guider.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Guider.Domain.Entities;
 
-namespace Guider.Persistence.Repository
+namespace Guider.Application.Contracts.Persistence
 {
     public interface IConsultantRepository : IRepository<Consultant>
     {

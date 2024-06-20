@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
+using Guider.Application.Contracts.Persistence;
 using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
-using Guider.Persistence.Repository;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Consultants.ConsultantsAll.Query
 {

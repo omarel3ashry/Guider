@@ -1,13 +1,9 @@
-﻿using Guider.Domain.Entities;
+﻿using Guider.Application.Contracts.Persistence;
+using Guider.Domain.Entities;
 using Guider.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Guider.Persistence.Repository
+namespace Guider.Persistence.Repositories
 {
     public class ConsultantRepository : BaseRepository<Consultant>, IConsultantRepository
     {
@@ -18,7 +14,7 @@ namespace Guider.Persistence.Repository
         public async Task<List<Consultant>> GetAllConsultantsAsync()
         {
             return await _context.Consultants
-                 .Include(c => c.User) 
+                 .Include(c => c.User)
                 .Include(c => c.SubCategory)
                 .ThenInclude(sc => sc.Category)
                 .Include(c => c.Appointments)

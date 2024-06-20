@@ -2,11 +2,8 @@
 using Guider.Domain.Entities;
 using Guider.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Guider.Persistence.Repository
+namespace Guider.Persistence.Repositories
 {
     public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
@@ -37,14 +34,14 @@ namespace Guider.Persistence.Repository
                                          .FirstOrDefaultAsync(c => c.Id == categoryId);
 
 
-            
-            var consultants = category.SubCategories?
+
+            var consultants = category?.SubCategories?
                 .SelectMany(sc => sc.Consultants)
                 .Where(c => string.IsNullOrEmpty(consultantName) ||
                             (c.User.FirstName + " " + c.User.LastName).Contains(consultantName))
                 .ToList();
-            return consultants;
-           
+
+            return consultants ?? [];
         }
     }
 }

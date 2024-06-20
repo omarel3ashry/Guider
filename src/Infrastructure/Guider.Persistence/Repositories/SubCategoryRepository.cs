@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Guider.Application.Contracts.Persistence;
+﻿using Guider.Application.Contracts.Persistence;
 using Guider.Domain.Entities;
 using Guider.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Guider.Persistence.Repository
+namespace Guider.Persistence.Repositories
 {
     public class SubCategoryRepository : BaseRepository<SubCategory>, ISubCategoryRepository
     {
@@ -20,7 +17,7 @@ namespace Guider.Persistence.Repository
                                 .Include(c => c.User)
                                 .Include(c => c.SubCategory)
                                     .ThenInclude(sc => sc.Category)
-                                .Include(c => c.Appointments) 
+                                .Include(c => c.Appointments)
                                 .Where(c => c.SubCategoryId == subCategoryId);
 
             if (!string.IsNullOrEmpty(consultantName))
