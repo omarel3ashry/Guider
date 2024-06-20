@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Guider.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Produces("application/json")]
+
     public class TestController : ControllerBase
     {
 
@@ -13,7 +14,8 @@ namespace Guider.WebApi.Controllers
         [Authorize]
         public ActionResult<string> Get()
         {
-            return Ok("any random string");
+            var roles = HttpContext.User.FindAll(ClaimTypes.Role).ToList().Select(e => e.Value);
+            return Ok($"your role is {string.Join(",", roles)}");
         }
 
         [HttpGet("adminTest", Name = "GetAnyRandomStringforAdminTest")]

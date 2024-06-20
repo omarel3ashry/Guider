@@ -1,4 +1,5 @@
 ﻿using Guider.Application.UseCases.Consultants.ConsultantSortt.Query;
+using Guider.Application.UseCases.Consultants.Query.ConsultantSort.Query;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

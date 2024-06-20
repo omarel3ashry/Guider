@@ -1,4 +1,9 @@
 ﻿using Guider.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Guider.Application.Contracts.Persistence
 {
@@ -10,5 +15,8 @@ namespace Guider.Application.Contracts.Persistence
         Task<(List<Consultant> Consultants, int TotalCount)> GetPaginatedConsultantsAsync(int page, int pageSize);
 
 
+        Task<List<Consultant>> GetConsultantsWithsubCategoryAndSchedule();
+        Task<Consultant> GetConsultantWithsubCategoryAndSchedule(int id);
+        Task<Consultant> GetConsultantWithUserByIdAsync(int id);
     }
 }

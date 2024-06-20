@@ -2,7 +2,6 @@
 using FluentValidation;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
-using Guider.Application.UseCases.Users.Command.ClientRegister;
 using Guider.Domain.Entities;
 using MediatR;
 
@@ -34,7 +33,7 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
 
             if (!result.Succeeded)
                 return result;
-            var consultant = _mapper.Map<Client>(request);
+            var consultant = _mapper.Map<Consultant>(request);
             consultant.UserId = result.Id;
             //save into database using consultant repository
             return result;

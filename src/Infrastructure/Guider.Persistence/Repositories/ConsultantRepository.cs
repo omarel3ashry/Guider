@@ -14,15 +14,15 @@ namespace Guider.Persistence.Repositories
         public async Task<List<Consultant>> GetAllConsultantsAsync()
         {
             return await _context.Consultants
-                 .Include(c => c.User)
+                .Include(c => c.User)
                 .Include(c => c.SubCategory)
-                .ThenInclude(sc => sc.Category)
+                    .ThenInclude(sc => sc.Category)
                 .Include(c => c.Appointments)
-                .ThenInclude(a => a.Client)
-                .ToListAsync();
+                    .ThenInclude(a => a.Client)
+               .ToListAsync();
         }
         public async Task<List<Consultant>> GetSortedByHourlyRateAsync(bool ascending)
-    {
+        {
             var query = _context.Consultants
                .Include(c => c.User)
                .Include(c => c.SubCategory)
@@ -33,18 +33,18 @@ namespace Guider.Persistence.Repositories
                 return await query.OrderBy(c => c.HourlyRate).ToListAsync();
             }
             else
-        {
+            {
                 return await query.OrderByDescending(c => c.HourlyRate).ToListAsync();
-        }
+            }
         }
         public async Task<List<Consultant>> GetConsultantsByUserNameAsync(string searchQuery)
         {
             var consultants = await _context.Consultants
-       .Include(c => c.User)
-       .Include(c => c.SubCategory)
-           .ThenInclude(sc => sc.Category)
-       .Where(c => c.User.UserName.Contains(searchQuery))
-       .ToListAsync();
+                .Include(c => c.User)
+                .Include(c => c.SubCategory)
+                 .ThenInclude(sc => sc.Category)
+                .Where(c => c.User.UserName.Contains(searchQuery))
+                .ToListAsync();
 
             return consultants;
         }
@@ -53,7 +53,7 @@ namespace Guider.Persistence.Repositories
             var query = _context.Consultants
                                 .Include(c => c.User)
                                 .Include(c => c.SubCategory)
-                                .ThenInclude(sc => sc.Category)
+                                    .ThenInclude(sc => sc.Category)
                                 .Include(c => c.Appointments)
                                 .AsQueryable();
 
@@ -65,6 +65,38 @@ namespace Guider.Persistence.Repositories
                                 .ToListAsync();
 
             return (consultants, totalCount);
+        }
+        public async Task<List<Consultant>> GetConsultantsWithsubCategoryAndSchedule()
+        {
+            return await _context.Consultants
+               .Include(e => e.SubCategory)
+                    .ThenInclude(e => e.Category)
+               .Include(e => e.User)
+               .Include(e => e.Schedules)
+               .Include(e => e.Appointments)
+                     .ThenInclude(e => e.Client)
+                        .ThenInclude(e => e.User)
+               .Where(c => !c.User.IsDeleted)
+               .ToListAsync();
+        }
+        public async Task<Consultant> GetConsultantWithsubCategoryAndSchedule(int id)
+        {
+            return await _context.Consultants
+               .Include(e => e.SubCategory)
+                    .ThenInclude(e => e.Category)
+               .Include(e => e.User)
+               .Include(e => e.Schedules)
+               .Include(e => e.Appointments)
+                    .ThenInclude(e => e.Client)
+                        .ThenInclude(e => e.User)
+               .FirstOrDefaultAsync(e => e.Id == id && !e.User.IsDeleted);
+        }
+        public async Task<Consultant> GetConsultantWithUserByIdAsync(int id)
+        {
+            return await _context.Consultants
+                .Include(c => c.User)
+                .Include(e => e.Appointments)
+                .FirstOrDefaultAsync(c => c.Id == id && !c.User.IsDeleted);
         }
     }
 }

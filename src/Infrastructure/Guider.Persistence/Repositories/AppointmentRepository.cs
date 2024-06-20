@@ -11,6 +11,7 @@ namespace Guider.Persistence.Repositories
         {
 
         }
+
         public async Task<List<Appointment>> GetSortedByRateAsync(bool ascending)
         {
             var query = _context.Appointment
@@ -28,6 +29,12 @@ namespace Guider.Persistence.Repositories
             {
                 return await query.OrderByDescending(c => c.Rate).ToListAsync();
             }
+        }
+
+        public async Task UpdateRangeAsync(IEnumerable<Appointment> appointments)
+        {
+            _context.Appointment.UpdateRange(appointments);
+            await _context.SaveChangesAsync();
         }
     }
 }

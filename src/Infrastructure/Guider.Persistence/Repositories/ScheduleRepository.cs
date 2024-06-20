@@ -1,17 +1,11 @@
 ﻿using Guider.Application.Contracts.Persistence;
-using Guider.Application.UseCases.Schedules.Command.UpdateSchedule;
 using Guider.Domain.Entities;
 using Guider.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Persistence.Repositories
 {
-    public class ScheduleRepository : BaseRepository<Schedule>,IScheduleRepository
+    public class ScheduleRepository : BaseRepository<Schedule>, IScheduleRepository
     {
 
         public ScheduleRepository(GuiderContext context) : base(context)
@@ -20,11 +14,11 @@ namespace Guider.Persistence.Repositories
 
         public async Task<bool> AddSchedulesAsync(List<Schedule> schedules)
         {
-            
-                await _context.Schedules.AddRangeAsync(schedules);
-                await _context.SaveChangesAsync();
-                return true;
-            
+
+            await _context.Schedules.AddRangeAsync(schedules);
+            await _context.SaveChangesAsync();
+            return true;
+
         }
         public async Task<List<Schedule>> GetSchedulesByConsultantIdAsync(int consultantId)
         {

@@ -1,9 +1,15 @@
-﻿using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
+﻿using Guider.Application.UseCases.Consultant.Query.GetAll;
+using Guider.Application.UseCases.Consultant.Query.GetDetails;
+using Guider.Application.UseCases.Consultants.Command.DeleteConsultant;
+using Guider.Application.UseCases.Consultants.Command.UpdateBankAccount;
+using Guider.Application.UseCases.Consultants.Command.UpdateConsultant;
+using Guider.Application.UseCases.Consultants.Command.UpdateImage;
+using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
 using Guider.Application.UseCases.Consultants.ConsultantsAll.Query;
-using Guider.Application.UseCases.Consultants.ConsultantSearch;
 using Guider.Application.UseCases.Consultants.ConsultantSearch.Query;
+using Guider.Application.UseCases.Consultants.Query.ConsultantPagination.Query;
+using Guider.Application.UseCases.Consultants.Query.GetAll;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
@@ -18,12 +24,14 @@ namespace Guider.WebApi.Controllers
         {
             _mediator = mediator;
         }
+
         [HttpGet]
         public async Task<ActionResult<List<ConsultantDto>>> GetConsultants()
         {
             var result = await _mediator.Send(new GetAllConsultantsQuery());
             return Ok(result);
         }
+
         [HttpGet("consultant")]
         public async Task<IActionResult> SearchConsultantsByName([FromQuery] string consultantName)
         {
@@ -41,7 +49,8 @@ namespace Guider.WebApi.Controllers
 
             return Ok(consultants);
         }
-        [HttpGet("api/pagination")]
+
+        [HttpGet("pagination")]
         public async Task<IActionResult> GetConsultants([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
         {
             var query = new GetPaginatedConsultantsQuery(page, pageSize);
@@ -54,6 +63,64 @@ namespace Guider.WebApi.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("all", Name = "GetAllConsultants")]
+        public async Task<ActionResult<List<ConsultantVM>>> GetAllConsultants()
+        {
+            var consultants = await _mediator.Send(new GetConsultantListQuery());
+            return Ok(consultants);
+        }
+
+        [HttpGet("{id}", Name = "GetconsultantById")]
+        public async Task<ActionResult> GetConsultantById(int id)
+        {
+            var consultant = await _mediator.Send(new GetConsultantDetailsQuery { Id = id });
+            return Ok(consultant);
+
+        }
+
+
+        [HttpPatch("edit/{id}")]
+        public async Task<ActionResult<ConsultantUpdateDto>> UpdateConsultant(int id, UpdateConsultantCommand command)
+        {
+            if (id != command.ConsultantId)
+            {
+                return BadRequest("Consultant ID mismatch.");
+            }
+            command.ConsultantId = id;
+            var consultantDto = await _mediator.Send(command);
+            return Ok(consultantDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteConsultant([FromRoute] DeleteConsultantCommand command)
+        {
+            var deletedConsultantId = await _mediator.Send(command);
+            return Ok(deletedConsultantId);
+        }
+
+        [HttpPost("cons-img")]
+        public async Task<IActionResult> UpdateConsultantImage(UpdateConsultantImageCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("cons-bAccount")]
+        public async Task<IActionResult> UpdateConsultantBankAccount(UpdateConsultantBankAccountCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
     }
 }
-   
+

@@ -32,7 +32,7 @@ namespace Guider.Persistence.Repositories
             {
                 return false;
             }
-                    
+
 
             return await _userManager.CheckPasswordAsync(user, password);
         }
@@ -40,7 +40,7 @@ namespace Guider.Persistence.Repositories
         public async Task<bool> UpdateAsync(User user)
         {
             var res = await _userManager.UpdateAsync(user);
-            if(res.Succeeded)
+            if (res.Succeeded)
             {
                 return _context.SaveChanges() < 0;
             }
@@ -48,4 +48,4 @@ namespace Guider.Persistence.Repositories
         }
     }
 
-    }
+}

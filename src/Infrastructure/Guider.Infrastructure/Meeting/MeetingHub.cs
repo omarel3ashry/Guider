@@ -18,7 +18,7 @@ namespace Guider.Infrastructure.Meeting
         public override Task OnConnectedAsync()
         {
             var userIdClaim = ((ClaimsIdentity)Context.User.Identity).Claims
-                                .FirstOrDefault(e => e.Type.Equals(PolicyData.IdClaimName));
+                                .FirstOrDefault(e => e.Type.Equals("sid"));
 
             int userId = int.Parse(userIdClaim.Value);
             _connections.Add(userId, Context.ConnectionId);
@@ -104,7 +104,7 @@ namespace Guider.Infrastructure.Meeting
         public override Task OnDisconnectedAsync(Exception? exception)
         {
             var userIdClaim = ((ClaimsIdentity)Context.User.Identity).Claims
-                                .FirstOrDefault(e => e.Type.Equals(PolicyData.IdClaimName));
+                                .FirstOrDefault(e => e.Type.Equals("sid"));
 
             int userId = int.Parse(userIdClaim.Value);
 

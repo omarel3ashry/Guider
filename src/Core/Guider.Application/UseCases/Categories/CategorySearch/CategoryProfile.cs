@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Guider.Application.UseCases.Categories.CategorySearch.Query;
-using Guider.Application.UseCases.Consultants.ConsultantSearch.Query;
 using Guider.Domain.Entities;
 
 namespace Guider.Application.UseCases.Categories.CategorySearch

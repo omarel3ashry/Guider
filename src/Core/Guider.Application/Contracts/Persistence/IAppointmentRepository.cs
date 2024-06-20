@@ -10,5 +10,6 @@ namespace Guider.Application.Contracts.Persistence
     public interface IAppointmentRepository:IRepository<Appointment>
     {
         Task<List<Appointment>> GetSortedByRateAsync(bool ascending);
+        Task UpdateRangeAsync(IEnumerable<Appointment> appointments);
     }
 }

@@ -2,7 +2,6 @@
 using Guider.Application.Responses;
 using Guider.Domain.Entities;
 using Guider.Persistence.Consts;
-using Guider.Persistence.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace Guider.Persistence.Repositories
@@ -10,12 +9,10 @@ namespace Guider.Persistence.Repositories
     public class ConsultantRegisterRepository : IRegisterUserRepository<Consultant>
     {
         private readonly UserManager<User> _userManager;
-        private readonly GuiderContext _context;
 
-        public ConsultantRegisterRepository(UserManager<User> userManager, GuiderContext context)
+        public ConsultantRegisterRepository(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _context = context;
         }
 
         public async Task<AuthenticationResponse> RegisterAsync(User user, string password)
@@ -28,12 +25,12 @@ namespace Guider.Persistence.Repositories
                     Errors = createResult.Errors.Select(e => e.Description).ToArray()
                 };
 
-            var roleResult = await _userManager.AddToRoleAsync(user,ConstRole.Consultant);
+            var roleResult = await _userManager.AddToRoleAsync(user, ConstRole.Consultant);
             if (!roleResult.Succeeded)
-                return new AuthenticationResponse() 
+                return new AuthenticationResponse()
                 {
                     Succeeded = roleResult.Succeeded,
-                    Errors = roleResult.Errors.Select(e=>e.Description).ToArray() 
+                    Errors = roleResult.Errors.Select(e => e.Description).ToArray()
                 };
 
             return new AuthenticationResponse() { Succeeded = roleResult.Succeeded };

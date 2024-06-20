@@ -13,6 +13,7 @@ namespace Guider.WebApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            string MyAllowSpecificOrigins = "";
 
             // Add services to the container.
             //builder.Services.AddSerilog((service, config) =>

@@ -2,7 +2,6 @@
 using Guider.Application.Responses;
 using Guider.Domain.Entities;
 using Guider.Persistence.Consts;
-using Guider.Persistence.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace Guider.Persistence.Repositories
@@ -10,12 +9,10 @@ namespace Guider.Persistence.Repositories
     public class ClientRegisterRepository : IRegisterUserRepository<Client>
     {
         private readonly UserManager<User> _userManager;
-        private readonly GuiderContext _context;
 
-        public ClientRegisterRepository(UserManager<User> userManager, GuiderContext context)
+        public ClientRegisterRepository(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _context = context;
         }
 
         public async Task<AuthenticationResponse> RegisterAsync(User user, string password)

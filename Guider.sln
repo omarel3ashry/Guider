@@ -17,7 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{B1E5B067-10E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7207E1D8-434C-41DA-8751-8A9ED58BBBA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guider.Identity", "src\Infrastructure\Guider.Identity\Guider.Identity.csproj", "{FFDF439D-B32F-42E6-8DFD-49A9B257A401}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guider.Identity", "src\Infrastructure\Guider.Identity\Guider.Identity.csproj", "{FFDF439D-B32F-42E6-8DFD-49A9B257A401}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guider.Infrastructure", "src\Infrastructure\Guider.Infrastructure\Guider.Infrastructure.csproj", "{D9EC1419-BF8B-4AA3-B673-66944B8EE73B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{FFDF439D-B32F-42E6-8DFD-49A9B257A401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFDF439D-B32F-42E6-8DFD-49A9B257A401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFDF439D-B32F-42E6-8DFD-49A9B257A401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9EC1419-BF8B-4AA3-B673-66944B8EE73B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9EC1419-BF8B-4AA3-B673-66944B8EE73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9EC1419-BF8B-4AA3-B673-66944B8EE73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9EC1419-BF8B-4AA3-B673-66944B8EE73B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{AB89DD32-B3F0-45B8-BD77-C86A7A3B312D} = {B1E5B067-10E8-4B79-A205-DCB1E30FC2D7}
 		{3B8E7079-F0B8-4156-BF44-47D6AD2B93B6} = {7207E1D8-434C-41DA-8751-8A9ED58BBBA9}
 		{FFDF439D-B32F-42E6-8DFD-49A9B257A401} = {7207E1D8-434C-41DA-8751-8A9ED58BBBA9}
+		{D9EC1419-BF8B-4AA3-B673-66944B8EE73B} = {7207E1D8-434C-41DA-8751-8A9ED58BBBA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {15D2B5B4-283D-4797-BB46-80DBDA50CAC5}

@@ -11,7 +11,7 @@ namespace Guider.Persistence
 {
     public static class PersistenceServiceResgistration
     {
-        public static IServiceCollection AddPersistanceService(this IServiceCollection services,IConfiguration config)
+        public static IServiceCollection AddPersistanceService(this IServiceCollection services, IConfiguration config)
         {
             services.AddDbContext<GuiderContext>(options =>
             {
@@ -30,6 +30,7 @@ namespace Guider.Persistence
             services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
 
             return services;
         }
