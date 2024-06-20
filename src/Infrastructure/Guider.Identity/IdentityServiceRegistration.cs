@@ -35,8 +35,34 @@ namespace Guider.Identity
                     ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SignInKey"]!)),
-                    ValidateLifetime = true,   
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = false,
+                    ValidateIssuer = false
                 };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = (context) =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        Debug.WriteLine(accessToken);
+                        var path = context.HttpContext.Request.Path;
+                        Debug.WriteLine(path);
+
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/meetingHub")))
+                        {
+                            Debug.WriteLine("TRUEEEEEEEEEEE");
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+            services.AddAuthorizationCore(opt =>
+            {
+                opt.AddPolicy(PolicyData.ConsultantPolicyName, p => p.RequireClaim(PolicyData.RoleClaimName, PolicyData.ConsultantClaimValue));
+                opt.AddPolicy(PolicyData.ClientPolicyName, p => p.RequireClaim(PolicyData.RoleClaimName, PolicyData.ClientClaimValue));
             });
 
             services.AddScoped<ITokenFactory, JwtTokenFactory>();

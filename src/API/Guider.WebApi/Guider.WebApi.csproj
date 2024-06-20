@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Guider.Identity\Guider.Identity.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Guider.Infrastructure\Guider.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Core\Guider.Application\Guider.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Guider.Identity\Guider.Identity.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Guider.Persistence\Guider.Persistence.csproj" />

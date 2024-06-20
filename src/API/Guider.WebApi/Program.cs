@@ -1,5 +1,7 @@
 using Guider.Application;
 using Guider.Identity;
+using Guider.Infrastructure;
+using Guider.Infrastructure.Meeting;
 using Guider.Persistence;
 using Guider.WebApi.MIddlewares;
 using Microsoft.OpenApi.Models;
@@ -94,6 +96,7 @@ namespace Guider.WebApi
 
             app.UseCors("angularApp");
             app.MapControllers();
+            app.MapHub<MeetingHub>("/meetingHub");
 
             app.Run();
         }

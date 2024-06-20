@@ -6,16 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.6" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.6.0" />
-  </ItemGroup>
-
+	</ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Guider.Application\Guider.Application.csproj" />
   </ItemGroup>
-
+	
 </Project>
