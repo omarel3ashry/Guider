@@ -2,11 +2,6 @@
 using Guider.Application.Contracts.Persistence;
 using Guider.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Schedules.Command.CreateSchedule
 {
@@ -26,7 +21,7 @@ namespace Guider.Application.UseCases.Schedules.Command.CreateSchedule
 
         public async Task<bool> Handle(CreateScheduleCommand request, CancellationToken cancellationToken)
         {
-            var consultant = await _consultantRepository.GetConsultantByIdAsync(request.ConsultantId);
+            var consultant = await _consultantRepository.GetByIdAsync(request.ConsultantId);
 
             if (consultant == null)
             {
