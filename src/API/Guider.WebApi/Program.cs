@@ -37,6 +37,15 @@ namespace Guider.WebApi
                             .AddPersistanceService(builder.Configuration)
                             .AddAddIdentityServices(builder.Configuration);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -54,7 +63,7 @@ namespace Guider.WebApi
             //app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowAllOrigins");
             app.UseAuthentication();
             app.UseAuthorization();
 

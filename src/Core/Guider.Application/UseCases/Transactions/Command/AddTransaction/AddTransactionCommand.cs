@@ -14,7 +14,7 @@ namespace Guider.Application.UseCases.Transactions.Command.AddTransaction
     {
 
         public TransactionType Type { get; set; } 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; }=DateTime.Now;
         public float Amount { get; set; }
         public int UserId { get; set; }
         public int AppointmentId { get; set; }

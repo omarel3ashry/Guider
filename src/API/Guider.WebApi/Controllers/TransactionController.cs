@@ -18,10 +18,8 @@ namespace Guider.WebApi.Controllers
 
         [HttpPost]
         public async Task<ActionResult<bool>> PostTransaction(AddTransactionCommand AddTransactionCommand)
-        {
+         {
             var transaction = await _mediator.Send(AddTransactionCommand);
-
-
             return Ok(transaction);
         }
 
