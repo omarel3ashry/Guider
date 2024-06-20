@@ -39,6 +39,15 @@ namespace Guider.WebApi
                             .AddPersistanceService(builder.Configuration)
                             .AddAddIdentityServices(builder.Configuration);
 
+            builder.Services.AddCors(
+               options => options.AddPolicy(
+                   "angularApp",
+                   policy => policy.WithOrigins(builder.Configuration["AngularUrl"] ?? "http://localhost:4200/")
+                .AllowAnyMethod()
+                .SetIsOriginAllowed(policy => true)
+                .AllowAnyHeader()
+                .AllowCredentials()));
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(option =>
