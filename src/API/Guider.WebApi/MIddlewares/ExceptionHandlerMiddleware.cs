@@ -43,6 +43,9 @@ namespace Guider.WebApi.MIddlewares
                 case NotFoundException:
                     statusCode = HttpStatusCode.NotFound;
                     break;
+                case NotAuthorizedException:
+                    statusCode = HttpStatusCode.Forbidden;
+                    break;
                 case Exception:
                     statusCode = HttpStatusCode.BadRequest;
                     break;

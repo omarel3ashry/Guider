@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Guider.Application\Guider.Application.csproj" />
+  </ItemGroup>
+
 </Project>
