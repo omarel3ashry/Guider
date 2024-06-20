@@ -29,6 +29,7 @@ namespace Guider.Persistence
             services.AddScoped<IConsultantRepository, ConsultantRepository>();
             services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
             return services;
         }

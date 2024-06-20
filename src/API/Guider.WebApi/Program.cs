@@ -1,4 +1,3 @@
-
 using Guider.Application;
 using Guider.Identity;
 using Guider.Persistence;
@@ -38,15 +37,7 @@ namespace Guider.WebApi
             builder.Services.AddApplicationService()
                             .AddPersistanceService(builder.Configuration)
                             .AddAddIdentityServices(builder.Configuration);
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOrigins", builder =>
-                {
-                    builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
-                });
-            });
+
 
             builder.Services.AddCors(
                options => options.AddPolicy(
@@ -85,7 +76,6 @@ namespace Guider.WebApi
                 });
             });
 
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -98,7 +88,7 @@ namespace Guider.WebApi
             //app.UseSerilogRequestLogging();
             app.UseExceptionHandlerMiddleware();
             app.UseHttpsRedirection();
-            app.UseCors("AllowAllOrigins");
+
             app.UseAuthentication();
             app.UseAuthorization();
 

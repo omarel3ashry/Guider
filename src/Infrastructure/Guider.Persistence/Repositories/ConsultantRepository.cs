@@ -22,7 +22,7 @@ namespace Guider.Persistence.Repositories
                 .ToListAsync();
         }
         public async Task<List<Consultant>> GetSortedByHourlyRateAsync(bool ascending)
-        {
+    {
             var query = _context.Consultants
                .Include(c => c.User)
                .Include(c => c.SubCategory)
@@ -33,9 +33,9 @@ namespace Guider.Persistence.Repositories
                 return await query.OrderBy(c => c.HourlyRate).ToListAsync();
             }
             else
-            {
+        {
                 return await query.OrderByDescending(c => c.HourlyRate).ToListAsync();
-            }
+        }
         }
         public async Task<List<Consultant>> GetConsultantsByUserNameAsync(string searchQuery)
         {
