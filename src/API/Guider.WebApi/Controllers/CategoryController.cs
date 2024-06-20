@@ -1,8 +1,6 @@
 ﻿using Guider.Application.UseCases.Categories.CategorySearch.Query;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Guider.WebApi.Controllers
 {

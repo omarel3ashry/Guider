@@ -5,7 +5,6 @@ using Guider.Infrastructure.Meeting;
 using Guider.Persistence;
 using Guider.WebApi.MIddlewares;
 using Microsoft.OpenApi.Models;
-using Serilog;
 
 namespace Guider.WebApi
 {
@@ -37,8 +36,9 @@ namespace Guider.WebApi
             builder.Services.AddControllers();
 
             builder.Services.AddApplicationService()
+                            .AddInfrastructureService()
                             .AddPersistanceService(builder.Configuration)
-                            .AddAddIdentityServices(builder.Configuration);
+                            .AddIdentityServices(builder.Configuration);
 
 
             builder.Services.AddCors(
@@ -96,7 +96,7 @@ namespace Guider.WebApi
 
             app.UseCors("angularApp");
             app.MapControllers();
-            app.MapHub<MeetingHub>("/meetingHub");
+            app.MapHub<MeetingHub>($"/{app.Configuration["MeetingHub:path"]}");
 
             app.Run();
         }

@@ -1,24 +1,18 @@
 ﻿using Guider.Application.Contracts.Identity;
-using Guider.Domain.Entities;
 using Guider.Identity.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Identity
 {
     public static class IdentityServiceRegistration
     {
-        public static IServiceCollection AddAddIdentityServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme =
@@ -34,12 +28,10 @@ namespace Guider.Identity
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SignInKey"]!)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SignInKey"]!)),
                     ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateAudience = false,
-                    ValidateIssuer = false
                 };
+
                 options.Events = new JwtBearerEvents
                 {
                     OnMessageReceived = (context) =>
@@ -49,7 +41,7 @@ namespace Guider.Identity
                         var path = context.HttpContext.Request.Path;
                         Debug.WriteLine(path);
 
-                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/meetingHub")))
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments($"/{configuration["MeetingHub:path"]}")))
                         {
                             Debug.WriteLine("TRUEEEEEEEEEEE");
                             context.Token = accessToken;
@@ -57,12 +49,6 @@ namespace Guider.Identity
                         return Task.CompletedTask;
                     }
                 };
-            });
-
-            services.AddAuthorizationCore(opt =>
-            {
-                opt.AddPolicy(PolicyData.ConsultantPolicyName, p => p.RequireClaim(PolicyData.RoleClaimName, PolicyData.ConsultantClaimValue));
-                opt.AddPolicy(PolicyData.ClientPolicyName, p => p.RequireClaim(PolicyData.RoleClaimName, PolicyData.ClientClaimValue));
             });
 
             services.AddScoped<ITokenFactory, JwtTokenFactory>();

@@ -28,7 +28,7 @@ namespace Guider.Identity.Authentication
             var roles = await _userRepository.GetUserRolesAsync(user);
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sid, user.Id.ToString()),
                 new Claim(ClaimTypes.Name,$"{user.FirstName} {user.LastName}" ),
                 new Claim(ClaimTypes.Role, roles[0])
             };
