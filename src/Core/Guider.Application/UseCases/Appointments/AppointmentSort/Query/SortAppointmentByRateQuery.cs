@@ -1,4 +1,6 @@
-﻿using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
+﻿using Guider.Application.Responses;
+using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
+using Guider.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
 {
-    public class SortAppointmentByRateQuery : IRequest<PaginatedConsultantDto>
+    public class SortAppointmentByRateQuery : IRequest<PaginatedList<SortconsultantByRateDto, Consultant>>
     {
         public bool Ascending { get; }
         public int Page { get; }

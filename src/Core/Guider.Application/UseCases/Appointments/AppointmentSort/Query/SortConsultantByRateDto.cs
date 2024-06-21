@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
 {
-    public class SortAppointementByRateDto
+    public class SortconsultantByRateDto
     {
         public int Id { get; set; }
         public string ConsultantName { get; set; }
         public string CategoryName { get; set; }
         public string SubCategoryName { get; set; }
-        public float averageRate { get; set; }
+        public float AverageRate { get; set; }
         public float HourlyRate { get; set; }
         public string Image { get; set; }
 
