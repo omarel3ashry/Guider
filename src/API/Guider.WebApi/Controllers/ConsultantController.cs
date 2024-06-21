@@ -24,22 +24,12 @@ namespace Guider.WebApi.Controllers
             var result = await _mediator.Send(new GetAllConsultantsQuery());
             return Ok(result);
         }
-        [HttpGet("consultant")]
-        public async Task<IActionResult> SearchConsultantsByName([FromQuery] string consultantName)
+        [HttpGet("search")]
+        public async Task<ActionResult<PaginatedConsultantDto>> SearchConsultants([FromQuery] string searchQuery, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            if (string.IsNullOrEmpty(consultantName))
-            {
-                return BadRequest("Consultant name cannot be empty.");
-            }
-
-            var consultants = await _mediator.Send(new ConsultantSearchQuery(consultantName));
-
-            if (consultants.Count == 0)
-            {
-                return NotFound($"No consultants found matching the search query: {consultantName}");
-            }
-
-            return Ok(consultants);
+            var query = new ConsultantSearchQuery(searchQuery, page, pageSize);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
         [HttpGet("api/pagination")]
         public async Task<IActionResult> GetConsultants([FromQuery] int page = 1, [FromQuery] int pageSize = 5)

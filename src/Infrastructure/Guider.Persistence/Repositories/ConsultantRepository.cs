@@ -21,22 +21,27 @@ namespace Guider.Persistence.Repositories
                 .ThenInclude(a => a.Client)
                 .ToListAsync();
         }
-        public async Task<List<Consultant>> GetSortedByHourlyRateAsync(bool ascending)
-    {
-            var query = _context.Consultants
-               .Include(c => c.User)
-               .Include(c => c.SubCategory)
-                   .ThenInclude(sc => sc.Category);
-
-            if (ascending)
-            {
-                return await query.OrderBy(c => c.HourlyRate).ToListAsync();
-            }
-            else
+        public async Task<(List<Consultant> Consultants, int TotalCount)> GetSortedByHourlyRateAsync(bool ascending, int page, int pageSize)
         {
-                return await query.OrderByDescending(c => c.HourlyRate).ToListAsync();
+            var baseQuery = _context.Consultants
+                .Include(c => c.User)
+                .Include(c => c.SubCategory)
+                    .ThenInclude(sc => sc.Category)
+                .AsQueryable();
+
+            var sortedQuery = ascending
+                ? baseQuery.OrderBy(c => c.HourlyRate)
+                : baseQuery.OrderByDescending(c => c.HourlyRate);
+
+            var totalCount = await sortedQuery.CountAsync();
+            var consultants = await sortedQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (consultants, totalCount);
         }
-        }
+
         public async Task<List<Consultant>> GetConsultantsByUserNameAsync(string searchQuery)
         {
             var consultants = await _context.Consultants
@@ -66,5 +71,27 @@ namespace Guider.Persistence.Repositories
 
             return (consultants, totalCount);
         }
+        public async Task<(List<Consultant> Consultants, int TotalCount)> SearchConsultantsAsync(string searchQuery, int page, int pageSize)
+        {
+            var query = _context.Consultants
+                .Include(c => c.User)
+                .Include(c => c.SubCategory)
+                    .ThenInclude(sc => sc.Category)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(c => c.User.UserName.Contains(searchQuery));
+            }
+
+            var totalCount = await query.CountAsync();
+            var consultants = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (consultants, totalCount);
+        }
+
     }
 }

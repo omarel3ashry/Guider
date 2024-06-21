@@ -1,23 +1,32 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
+using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
 using MediatR;
 
 namespace Guider.Application.UseCases.Consultants.ConsultantSearch.Query
 {
-    public class ConsultantSearchQueryHandler : IRequestHandler<ConsultantSearchQuery, List<ConsultantSearchDto>>
+    public class ConsultantSearchQueryHandler : IRequestHandler<ConsultantSearchQuery,PaginatedConsultantDto>
     {
         private readonly IConsultantRepository _consultantRepository;
         private readonly IMapper _mapper;
+
         public ConsultantSearchQueryHandler(IConsultantRepository consultantRepository, IMapper mapper)
         {
             _consultantRepository = consultantRepository;
             _mapper = mapper;
         }
 
-        public async Task<List<ConsultantSearchDto>> Handle(ConsultantSearchQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedConsultantDto> Handle(ConsultantSearchQuery request, CancellationToken cancellationToken)
         {
-            var consultants = await _consultantRepository.GetConsultantsByUserNameAsync(request.SearchQuery);
-            return consultants.Select(c => _mapper.Map<ConsultantSearchDto>(c)).ToList();
+            var (consultants, totalCount) = await _consultantRepository.SearchConsultantsAsync(request.SearchQuery, request.page, request.pageSize);
+            var consultantDtos = _mapper.Map<List<ConsultantDto>>(consultants);
+
+            return new PaginatedConsultantDto
+            {
+                Consultants = consultantDtos,
+                TotalCount = totalCount
+            };
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Guider.Application.UseCases.Categories.CategorySearch.Query;
+using Guider.Application.UseCases.Categories.Query.GetListOfCategories;
 using Guider.Application.UseCases.Consultants.ConsultantSearch.Query;
 using Guider.Domain.Entities;
 
@@ -15,6 +16,8 @@ namespace Guider.Application.UseCases.Categories.CategorySearch
                 .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Appointments.Any() ? src.Appointments.Average(a => a.Rate) : 0))
                 .ForMember(dest => dest.HourlyRate, opt => opt.MapFrom(src => src.HourlyRate))
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
+
+            CreateMap<Category, CategoryDto>();
         }
     }
 }

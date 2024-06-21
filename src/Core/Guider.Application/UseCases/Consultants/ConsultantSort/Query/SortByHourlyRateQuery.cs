@@ -1,4 +1,5 @@
-﻿using Guider.Domain.Entities;
+﻿using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
+using Guider.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,19 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Consultants.ConsultantSortt.Query
 {
-    public class SortByHourlyRateQuery : IRequest<List<SortByHourlyRateDto>>
+    public class SortByHourlyRateQuery : IRequest<PaginatedConsultantDto>
     {
         public bool Ascending { get; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
 
-        public SortByHourlyRateQuery(bool ascending)
+
+        public SortByHourlyRateQuery(bool ascending, int page, int pageSize)
         {
             Ascending = ascending;
+            Page=page;
+            PageSize=pageSize;
+
         }
     }
 }

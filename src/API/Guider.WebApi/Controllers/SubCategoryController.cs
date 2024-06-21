@@ -1,4 +1,6 @@
-﻿using Guider.Application.UseCases.SubCategories.Query;
+﻿using Guider.Application.UseCases.Categories.Query.GetListOfCategories;
+using Guider.Application.UseCases.SubCategories.Query;
+using Guider.Application.UseCases.SubCategories.Query.getSubCategoryList;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +33,18 @@ namespace Guider.WebApi.Controllers
                 return NotFound(new { Message = "No consultants found matching the search query." });
             }
 
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllSubCategories()
+        {
+            var query = new getSubCategoryListQuery();
+            var result = await _mediator.Send(query);
+            if (result == null || result.Count == 0)
+            {
+                return NotFound("No SubCategory found .");
+            }
             return Ok(result);
         }
     }
