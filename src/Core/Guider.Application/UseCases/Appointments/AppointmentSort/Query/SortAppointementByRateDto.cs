@@ -12,7 +12,7 @@ namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
         public string ConsultantName { get; set; }
         public string CategoryName { get; set; }
         public string SubCategoryName { get; set; }
-        public float Rate { get; set; }
+        public float averageRate { get; set; }
         public float HourlyRate { get; set; }
         public string Image { get; set; }
 

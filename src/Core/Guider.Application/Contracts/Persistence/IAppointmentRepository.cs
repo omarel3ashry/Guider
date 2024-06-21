@@ -11,6 +11,7 @@ namespace Guider.Application.Contracts.Persistence
     {
         //Task<List<Appointment>> GetSortedByRateAsync(bool ascending);
         Task<(List<Appointment> Appointments, int TotalCount)> GetSortedByRateAsync(bool ascending, int page, int pageSize);
+        Task<float> CalculateAverageRate(int CounsultantId);
 
     }
 }

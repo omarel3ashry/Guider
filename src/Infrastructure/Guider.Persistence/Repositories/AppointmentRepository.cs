@@ -28,6 +28,19 @@ namespace Guider.Persistence.Repositories
 
             return (appointments, totalCount);
         }
-        
+        public  async Task<float> CalculateAverageRate(int CounsultantId)
+        {
+           var Appointments = await _context.Appointment
+        .Where(a => a.ConsultantId == CounsultantId)
+        .ToListAsync();
+
+            if (!Appointments.Any())
+            {
+                return 0; 
+            }
+
+            return Appointments.Average(a => a.Rate);
+        }
+
     }
 }

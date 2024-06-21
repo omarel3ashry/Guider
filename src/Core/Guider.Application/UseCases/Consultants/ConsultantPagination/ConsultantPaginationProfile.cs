@@ -19,7 +19,6 @@ namespace Guider.Application.UseCases.Consultants.ConsultantPagination
                 .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name))
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
                 .ForMember(dest => dest.HourlyRate, opt => opt.MapFrom(src => src.HourlyRate))
-                .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Appointments.OrderByDescending(a => a.Date).FirstOrDefault().Rate))
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
         }
     }

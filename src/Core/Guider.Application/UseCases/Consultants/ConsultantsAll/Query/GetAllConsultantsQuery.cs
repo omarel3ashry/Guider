@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Consultants.ConsultantsAll.Query
 {
-    public class GetAllConsultantsQuery : IRequest<List<ConsultantDto>>
+    public class GetAllConsultantsQuery : IRequest<List<CounsultantsDto>>
     {
     }
 }

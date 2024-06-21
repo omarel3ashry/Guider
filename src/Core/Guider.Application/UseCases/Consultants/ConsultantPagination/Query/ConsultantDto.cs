@@ -13,7 +13,7 @@ namespace Guider.Application.UseCases.Consultants.ConsultantPagination.Query
         public string SubCategoryName { get; set; }
         public string CategoryName { get; set; }
         public float HourlyRate { get; set; }
-        public float Rate { get; set; }
+        public float AverageRate { get; set; }
         public string Image { get; set; }
     }
 }
