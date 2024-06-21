@@ -1,14 +1,12 @@
-﻿using Guider.Application.UseCases.Consultant.Query.GetAll;
-using Guider.Application.UseCases.Consultant.Query.GetDetails;
+﻿using Guider.Application.UseCases.Consultants.Query.GetAll;
+using Guider.Application.UseCases.Consultants.Query.GetDetails;
 using Guider.Application.UseCases.Consultants.Command.DeleteConsultant;
 using Guider.Application.UseCases.Consultants.Command.UpdateBankAccount;
 using Guider.Application.UseCases.Consultants.Command.UpdateConsultant;
 using Guider.Application.UseCases.Consultants.Command.UpdateImage;
-using Guider.Application.UseCases.Consultants.ConsultantPagination.Query;
-using Guider.Application.UseCases.Consultants.ConsultantsAll.Query;
-using Guider.Application.UseCases.Consultants.ConsultantSearch.Query;
+using Guider.Application.UseCases.Consultants.Query.ConsultantPagination;
+using Guider.Application.UseCases.Consultants.Query.ConsultantSearch.Query;
 using Guider.Application.UseCases.Consultants.Query.ConsultantPagination.Query;
-using Guider.Application.UseCases.Consultants.Query.GetAll;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +26,7 @@ namespace Guider.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ConsultantDto>>> GetConsultants()
         {
-            var result = await _mediator.Send(new GetAllConsultantsQuery());
+            var result = await _mediator.Send(new GetConsultantListQuery());
             return Ok(result);
         }
 
