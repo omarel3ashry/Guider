@@ -11,8 +11,6 @@ namespace Guider.Domain.Entities
         public DateTime Date { get; set; }
         public int ClientId { get; set; }
         public int ConsultantId { get; set; }
-        public string? PaymentIntentId { get; set; }
-        public string? ClientSecretKey { get; set; }
 
         public Client Client { get; set; }
         public Consultant Consultant { get; set; }

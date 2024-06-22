@@ -18,6 +18,7 @@ namespace Guider.Persistence
             });
             services.AddScoped(typeof(IRepository<>),typeof(BaseRepository<>));
             services.AddScoped<IAppointmentRepository,AppointmentRepository>();
+            services.AddScoped<ITransactionRepository,TransactionRepository>();
             return services;
         }
     }

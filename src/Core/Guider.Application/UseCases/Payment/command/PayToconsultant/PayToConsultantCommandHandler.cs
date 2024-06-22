@@ -22,23 +22,27 @@ namespace Guider.Application.UseCases.Payment.command.PayToconsultant
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IMapper _mapper;
         private readonly IRepository<Transaction> _transactionRepo;
+        private readonly ITransactionRepository _transactionRepository;
 
 
-        public PayToConsultantCommandHandler(IAppointmentRepository appointmentRepository, IMapper mapper, IRepository<Transaction> transactionRepo)
+
+        public PayToConsultantCommandHandler(IAppointmentRepository appointmentRepository, IMapper mapper, IRepository<Transaction> transactionRepo,ITransactionRepository transactionRepository)
         {
 
            
             _appointmentRepository = appointmentRepository;
             _mapper = mapper;
             _transactionRepo = transactionRepo;
+            _transactionRepository= transactionRepository;
 
         }
         public async Task<bool> Handle(PayToConsultantCommand request, CancellationToken cancellationToken)
         {
             var appointment = await _appointmentRepository.GetAppointmentByIdAsync(request.appointmentId);
+            var transaction= await _transactionRepository.GetByAppointmentIdAsync(request.appointmentId);
             // Retrieve the PaymentIntent to get the amount
             var paymentIntentService = new PaymentIntentService();
-            var paymentIntent = await paymentIntentService.GetAsync(appointment.PaymentIntentId);
+            var paymentIntent = await paymentIntentService.GetAsync(transaction.PaymentIntentId);
 
             //consultant pay amount
             var consultantPaymnetAmount =paymentIntent.Amount-10;
@@ -49,7 +53,7 @@ namespace Guider.Application.UseCases.Payment.command.PayToconsultant
                 Amount = consultantPaymnetAmount,
                 UserId = appointment.Consultant.UserId,
                 AppointmentId = request.appointmentId,
-                PaymentIntentId = appointment.PaymentIntentId
+                PaymentIntentId = transaction.PaymentIntentId
             } ;
 
             var commisionAmount = (paymentIntent.Amount) * (10 / 100);
@@ -60,7 +64,7 @@ namespace Guider.Application.UseCases.Payment.command.PayToconsultant
                 Amount = commisionAmount,
                 UserId = appointment.Client.UserId,
                 AppointmentId = request.appointmentId,
-                PaymentIntentId = appointment.PaymentIntentId
+                PaymentIntentId = transaction.PaymentIntentId
             };
             var  mappedCommisionTransaction=_mapper.Map<Transaction>(CommisionTransaction);
             var mappedconsultantTransaction = _mapper.Map<Transaction>(consultantTransaction);

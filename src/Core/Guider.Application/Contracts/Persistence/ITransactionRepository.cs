@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.Contracts.Persistence
 {
-    public interface ITransactionRepository:IRepository<Transaction>
+    public interface ITransactionRepository
     {
   
     
+        Task<Transaction> GetByAppointmentIdAsync(int appoinmentid);
     
     }
 }

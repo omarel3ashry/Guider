@@ -23,18 +23,20 @@ namespace Guider.Application.UseCases.Payment.command.Refund
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IMapper _mapper;
         private readonly IRepository<Transaction> _transactionRepo;
-        public RefundPaymentHandler( IAppointmentRepository appointmentRepository, IMapper mapper, IRepository<Transaction> transactionRepo)
+        private readonly ITransactionRepository _transactionRepository;
+        public RefundPaymentHandler( IAppointmentRepository appointmentRepository, IMapper mapper, IRepository<Transaction> transactionRepo, ITransactionRepository transactionRepository)
         {
             _appointmentRepository = appointmentRepository;
             _mapper = mapper;
             _transactionRepo = transactionRepo;
-
+            _transactionRepository = transactionRepository;
         }
         public async Task<Stripe.Refund> Handle(RefundPaymentCommand request, CancellationToken cancellationToken)
         {
 
             //  Get the appointment details
             var appointment = await _appointmentRepository.GetAppointmentByIdAsync(request.AppointmentId);
+            var transaction=await _transactionRepository.GetByAppointmentIdAsync(request.AppointmentId);
             // Retrieve the PaymentIntent to get the amount
             var paymentIntentService = new PaymentIntentService();
             var paymentIntent = await paymentIntentService.GetAsync(appointment.PaymentIntentId);
@@ -42,7 +44,7 @@ namespace Guider.Application.UseCases.Payment.command.Refund
             // Create the refund options
             var options = new RefundCreateOptions
             {
-                PaymentIntent = appointment.PaymentIntentId
+                PaymentIntent = transaction.PaymentIntentId
             };
             // Create the refund
             var service = new RefundService();
@@ -54,7 +56,7 @@ namespace Guider.Application.UseCases.Payment.command.Refund
                 Amount = paymentIntent.Amount,
                 UserId = appointment.Client.UserId,
                 AppointmentId = request.AppointmentId,
-                PaymentIntentId = appointment.PaymentIntentId
+                PaymentIntentId = transaction.PaymentIntentId
             };
             // Send the command to add a transaction
             var mappedtransaction = _mapper.Map<Transaction>(TransactionToAddDto);
