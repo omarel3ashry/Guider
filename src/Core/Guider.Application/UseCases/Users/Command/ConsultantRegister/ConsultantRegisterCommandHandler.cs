@@ -31,7 +31,7 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
             var user = _mapper.Map<User>(request);
             var result = await _userRepository.RegisterAsync(user, request.Password);
 
-            if (!result.Succeeded)
+            if (!result.Success)
                 return result;
             var consultant = _mapper.Map<Consultant>(request);
             consultant.UserId = result.Id;

@@ -37,7 +37,7 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
 
             var result = await _userRepository.RegisterAsync(user,request.Password);
 
-            if(!result.Succeeded)
+            if(!result.Success)
                 return result;
             var client = _mapper.Map<Client>(request);
             client.UserId = result.Id;
