@@ -4,11 +4,6 @@ using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
 using Guider.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Users.Command.ClientRegister
 {
@@ -35,9 +30,9 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
 
             var user = _mapper.Map<User>(request);
 
-            var result = await _userRepository.RegisterAsync(user,request.Password);
+            var result = await _userRepository.RegisterAsync(user, request.Password);
 
-            if(!result.Success)
+            if (!result.Success)
                 return result;
             var client = _mapper.Map<Client>(request);
             client.UserId = result.Id;

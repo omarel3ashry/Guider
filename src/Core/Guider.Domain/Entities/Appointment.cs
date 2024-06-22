@@ -14,5 +14,7 @@ namespace Guider.Domain.Entities
         public Client Client { get; set; }
         public Consultant Consultant { get; set; }
         public IReadOnlyCollection<Transaction> Transactions { get; set; }
+
+
     }
 }

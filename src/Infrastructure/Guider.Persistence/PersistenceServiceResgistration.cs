@@ -20,6 +20,7 @@ namespace Guider.Persistence
 
             services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<GuiderContext>();
 
+            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRegisterUserRepository<Client>, ClientRegisterRepository>();
             services.AddScoped<IRegisterUserRepository<Consultant>, ConsultantRegisterRepository>();
@@ -30,7 +31,7 @@ namespace Guider.Persistence
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
-            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             return services;
         }

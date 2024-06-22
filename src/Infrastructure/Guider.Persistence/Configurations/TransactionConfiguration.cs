@@ -19,9 +19,7 @@ namespace Guider.Persistence.Configurations
             builder.HasOne(e => e.User)
                 .WithMany(e => e.Transactions)
                 .OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(e => e.Admin)
-                .WithMany(e => e.Transactions)
-                .OnDelete(DeleteBehavior.NoAction);
+           
         }
     }
 }

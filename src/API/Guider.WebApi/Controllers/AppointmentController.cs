@@ -1,4 +1,6 @@
-﻿using Guider.Application.UseCases.Appointments.Command.updateAppointment;
+﻿using Guider.Application.UseCases.Appointments.Dto;
+using Guider.Application.UseCases.Appointments.Query;
+using Guider.Application.UseCases.Appointments.Command.updateAppointment;
 using Guider.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +25,15 @@ namespace Guider.WebApi.Controllers
              await _mediator.Send(request);
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AppointmentToReturnDto>> GetAppointment(int id)
+        {
+            var GetAppointmentQuery = new GetAppointmentQuery() { id = id };
+            var result = await _mediator.Send(GetAppointmentQuery);
+            return Ok(result);
+        }
     }
 
-}
 
+    }
