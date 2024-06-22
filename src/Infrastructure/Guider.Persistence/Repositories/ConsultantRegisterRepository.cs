@@ -21,7 +21,7 @@ namespace Guider.Persistence.Repositories
             if (!createResult.Succeeded)
                 return new AuthenticationResponse()
                 {
-                    Succeeded = createResult.Succeeded,
+                    Success = createResult.Succeeded,
                     Errors = createResult.Errors.Select(e => e.Description).ToArray()
                 };
 
@@ -29,11 +29,11 @@ namespace Guider.Persistence.Repositories
             if (!roleResult.Succeeded)
                 return new AuthenticationResponse()
                 {
-                    Succeeded = roleResult.Succeeded,
+                    Success = roleResult.Succeeded,
                     Errors = roleResult.Errors.Select(e => e.Description).ToArray()
                 };
 
-            return new AuthenticationResponse() { Succeeded = roleResult.Succeeded };
+            return new AuthenticationResponse() { Success = roleResult.Succeeded , Id = user.Id };
         }
     }
 }
