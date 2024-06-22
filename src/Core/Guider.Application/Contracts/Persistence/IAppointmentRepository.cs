@@ -12,7 +12,7 @@ namespace Guider.Application.Contracts.Persistence
     {
         //Task<List<Appointment>> GetSortedByRateAsync(bool ascending);
         Task<float> CalculateAverageRate(int CounsultantId);
-        Task UpdateAppointmentStateAsync(int appointmentId, AppointmentState newState,float rate);
+        Task UpdateAppointmentStateAsync(int appointmentId, AppointmentState newState,float? rate);
 
     }
 }

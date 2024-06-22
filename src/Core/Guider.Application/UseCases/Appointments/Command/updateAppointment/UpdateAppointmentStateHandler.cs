@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
+using Guider.Domain.Enums;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,15 @@ namespace Guider.Application.UseCases.Appointments.Command.updateAppointment
 
         public async Task Handle(updateAppointmentStateCommand request, CancellationToken cancellationToken)
         {
+           
             await _appointmentsRepository.UpdateAppointmentStateAsync(request.Id, request.State,request.Rate.Value);
-            var appointment=await _appointmentsRepository.GetByIdAsync(request.Id);
-            await _consultantRepository.UpdateConsultantAverageRate(appointment.ConsultantId);
+            if (request.State == AppointmentState.Completed)
+            {
+                var appointment = await _appointmentsRepository.GetByIdAsync(request.Id);
+                await _consultantRepository.UpdateConsultantAverageRate(appointment.ConsultantId);
+            }
 
-            
+
         }
     }
 }

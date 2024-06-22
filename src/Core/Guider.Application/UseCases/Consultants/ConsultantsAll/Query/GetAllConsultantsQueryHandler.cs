@@ -22,12 +22,12 @@ namespace Guider.Application.UseCases.Consultants.ConsultantsAll.Query
         {
             var consultants = await _consultantRepository.GetAllConsultantsAsync();
             var CounsultantsDto= _mapper.Map<List<CounsultantsDto>>(consultants);
-            foreach (var consultant in CounsultantsDto)
-            {
-                var id=consultant.Id;
-                var avgRate=await _appointmentRepository.CalculateAverageRate(id);
-                consultant.AverageRate=avgRate;
-            }
+            //foreach (var consultant in CounsultantsDto)
+            //{
+            //    var id=consultant.Id;
+            //    var avgRate=await _appointmentRepository.CalculateAverageRate(id);
+            //    consultant.AverageRate=avgRate;
+            //}
             return CounsultantsDto;
         }
     }

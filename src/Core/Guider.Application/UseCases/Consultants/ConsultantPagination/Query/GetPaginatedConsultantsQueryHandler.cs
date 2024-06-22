@@ -24,12 +24,12 @@ namespace Guider.Application.UseCases.Consultants.ConsultantPagination.Query
             var result = await _consultantRepository.GetPaginatedConsultantsAsync(request.Page, request.PageSize);
 
             var consultants = result.Consultants.Select(c => _mapper.Map<ConsultantDto>(c)).ToList();
-            foreach (var consultant in consultants)
-            {
-                var id = consultant.Id;
-                var avgRate = await _appointmentRepository.CalculateAverageRate(id);
-                consultant.AverageRate = avgRate;
-            }
+            //foreach (var consultant in consultants)
+            //{
+            //    var id = consultant.Id;
+            //    var avgRate = await _appointmentRepository.CalculateAverageRate(id);
+            //    consultant.AverageRate = avgRate;
+            //}
 
             return new PaginatedConsultantDto
             {

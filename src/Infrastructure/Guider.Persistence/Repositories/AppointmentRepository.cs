@@ -52,13 +52,16 @@ namespace Guider.Persistence.Repositories
             return Appointments.Average(a => a.Rate);
         }
 
-        public async Task UpdateAppointmentStateAsync(int appointmentId, AppointmentState newState,float rate)
+        public async Task UpdateAppointmentStateAsync(int appointmentId, AppointmentState newState,float? rate)
         {
             var appointment = await _context.Appointment.FindAsync(appointmentId);
             if (appointment != null)
             {
                 appointment.State = newState;
-                appointment.Rate = rate;
+                if (newState == AppointmentState.Completed && rate.HasValue)
+                {
+                    appointment.Rate = rate.Value;
+                }
                 _context.Appointment.Update(appointment);
                 await _context.SaveChangesAsync();
                
