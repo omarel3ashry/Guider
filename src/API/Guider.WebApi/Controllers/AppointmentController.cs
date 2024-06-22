@@ -1,4 +1,5 @@
-﻿using Guider.Application.UseCases.Appointments.Dto;
+﻿using Guider.Application.UseCases.Appointments.command.insertAppointment;
+using Guider.Application.UseCases.Appointments.Dto;
 using Guider.Application.UseCases.Appointments.Query;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +24,12 @@ namespace Guider.WebApi.Controllers
             var result=await _mediator.Send(GetAppointmentQuery);
             return Ok(result);
         }
-
+        [HttpPost]
+        public async Task<ActionResult> addAppointment(AddAppointmentCommand AddAppointmentCommand)
+        {
+            var result = await _mediator.Send(AddAppointmentCommand);
+            return Ok( result);
+        }
 
     }
 }

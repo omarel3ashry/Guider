@@ -14,32 +14,35 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Payment.command.UserPayment
 {
-    public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, AppointmentToReturnDto>
+    public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, CreateOrUpdatePaymentIntentCommand>
     {
         private readonly IConfiguration _configuration;
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IRepository<Appointment> _appointmentRepo;
         private readonly IMapper _mapper;
-        public CreateOrUpdatePaymentIntentHandler(IConfiguration configuration, IAppointmentRepository appointmentRepository, IRepository<Appointment> appointmentRepo, IMapper mapper)
+        private readonly IRepository<Consultant> _consultantrepository;
+        public CreateOrUpdatePaymentIntentHandler(IConfiguration configuration, IAppointmentRepository appointmentRepository, IRepository<Appointment> appointmentRepo, IRepository<Consultant> consultantrepository, IMapper mapper)
         {
             _configuration = configuration;
             _appointmentRepo = appointmentRepo;
             _mapper = mapper;
             _appointmentRepository=appointmentRepository;
+            _consultantrepository=consultantrepository;
 
         }
 
-        public async Task<AppointmentToReturnDto> Handle(CreateOrUpdatePaymentIntentCommand request, CancellationToken cancellationToken)
+        public async Task<CreateOrUpdatePaymentIntentCommand> Handle(CreateOrUpdatePaymentIntentCommand request, CancellationToken cancellationToken)
         {
             StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
-            var appointment = await _appointmentRepository.GetAppointmentByIdAsync(request.AppointmentId);
-            if (appointment == null) throw new ArgumentException("Appointment not found.");
+            //var appointment = await _appointmentRepository.GetAppointmentByIdAsync(request.AppointmentId);
+            //if (appointment == null) throw new ArgumentException("Appointment not found.");
             //calculate the amount
-            var amount = appointment.Duration * appointment.Consultant.HourlyRate;
+            var consultant=await _consultantrepository.GetByIdAsync(request.ConsultantId);
+            var amount = request.Duration * consultant.HourlyRate;
             if (amount < 0.50f) throw new ArgumentException("The amount must be at least 50 cents.");
             var paymentIntentService = new PaymentIntentService();
             PaymentIntent paymentIntent;
-            if (string.IsNullOrEmpty(appointment.PaymentIntentId))
+            if (string.IsNullOrEmpty(request.PaymentIntentId))
             {
                 var options = new PaymentIntentCreateOptions
                 {
@@ -48,8 +51,8 @@ namespace Guider.Application.UseCases.Payment.command.UserPayment
                     PaymentMethodTypes = new List<string> { "card" }
                 };
                 paymentIntent = await paymentIntentService.CreateAsync(options);
-                appointment.PaymentIntentId = paymentIntent.Id;
-                appointment.ClientSecretKey = paymentIntent.ClientSecret;
+                request.PaymentIntentId = paymentIntent.Id;
+                request.ClientSecretKey = paymentIntent.ClientSecret;
             }
             else
             {
@@ -57,11 +60,11 @@ namespace Guider.Application.UseCases.Payment.command.UserPayment
                 {
                     Amount = (long)(amount * 100),
                 };
-                await paymentIntentService.UpdateAsync(appointment.PaymentIntentId, updateOptions);
+                 await paymentIntentService.UpdateAsync(request.PaymentIntentId, updateOptions);
             }
-            await _appointmentRepo.UpdateAsync(appointment);
+            
 
-           return _mapper.Map<AppointmentToReturnDto>(appointment); 
+           return request; 
         }
     }
 }

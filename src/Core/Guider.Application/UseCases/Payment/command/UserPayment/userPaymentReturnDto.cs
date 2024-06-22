@@ -1,7 +1,4 @@
-﻿using Guider.Application.UseCases.Appointments.Dto;
-using Guider.Domain.Entities;
-using Guider.Domain.Enums;
-using MediatR;
+﻿using Guider.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Payment.command.UserPayment
 {
-    public class CreateOrUpdatePaymentIntentCommand : IRequest<CreateOrUpdatePaymentIntentCommand>
+    public class userPaymentReturnDto
     {
         public AppointmentState State { get; set; }
 
@@ -18,8 +15,9 @@ namespace Guider.Application.UseCases.Payment.command.UserPayment
         public float Duration { get; set; }
         public int ClientId { get; set; }
         public int ConsultantId { get; set; }
-        public string? PaymentIntentId { get; set; }
-        public string? ClientSecretKey { get; set; }
+        public string PaymentIntentId {  get; set; }
+        public string clientSecretKey { get; set;}
+
 
     }
 }
