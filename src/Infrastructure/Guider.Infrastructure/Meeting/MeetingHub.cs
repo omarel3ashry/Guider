@@ -1,10 +1,8 @@
 ﻿using Guider.Application.Contracts.Infrastructure;
 using Guider.Application.Models.Meeting;
-using Guider.Identity.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using System.Runtime.Intrinsics.Arm;
 using System.Security.Claims;
 
 namespace Guider.Infrastructure.Meeting
@@ -81,14 +79,16 @@ namespace Guider.Infrastructure.Meeting
 
         }
 
-        public async Task SendMessage(int userId, string msg)
+        public async Task<bool> SendMessage(int userId, string msg)
         {
             string? connectionId = _connections.GetConnection(userId);
 
             if (connectionId != null)
             {
                 await Clients.Client(connectionId).ReceiveMessage(msg);
+                return true;
             }
+            return false;
         }
 
         public async Task CloseMeeting(int userId)
