@@ -1,12 +1,11 @@
-﻿using Guider.Application.UseCases.Consultants.Query.GetAll;
-using Guider.Application.UseCases.Consultants.Query.GetDetails;
-using Guider.Application.UseCases.Consultants.Command.DeleteConsultant;
+﻿using Guider.Application.UseCases.Consultants.Command.DeleteConsultant;
 using Guider.Application.UseCases.Consultants.Command.UpdateBankAccount;
 using Guider.Application.UseCases.Consultants.Command.UpdateConsultant;
 using Guider.Application.UseCases.Consultants.Command.UpdateImage;
 using Guider.Application.UseCases.Consultants.Query.ConsultantPagination;
-using Guider.Application.UseCases.Consultants.Query.ConsultantSearch.Query;
-using Guider.Application.UseCases.Consultants.Query.ConsultantPagination.Query;
+using Guider.Application.UseCases.Consultants.Query.ConsultantSearch;
+using Guider.Application.UseCases.Consultants.Query.GetAll;
+using Guider.Application.UseCases.Consultants.Query.GetDetails;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,28 +23,18 @@ namespace Guider.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ConsultantDto>>> GetConsultants()
+        public async Task<ActionResult> GetConsultants()
         {
             var result = await _mediator.Send(new GetConsultantListQuery());
             return Ok(result);
         }
 
-        [HttpGet("consultant")]
-        public async Task<IActionResult> SearchConsultantsByName([FromQuery] string consultantName)
+        [HttpGet("search")]
+        public async Task<ActionResult<PaginatedConsultantDto>> SearchConsultants([FromQuery] string searchQuery, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            if (string.IsNullOrEmpty(consultantName))
-            {
-                return BadRequest("Consultant name cannot be empty.");
-            }
-
-            var consultants = await _mediator.Send(new ConsultantSearchQuery(consultantName));
-
-            if (consultants.Count == 0)
-            {
-                return NotFound($"No consultants found matching the search query: {consultantName}");
-            }
-
-            return Ok(consultants);
+            var query = new ConsultantSearchQuery(searchQuery, page, pageSize);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         [HttpGet("pagination")]
@@ -60,13 +49,6 @@ namespace Guider.WebApi.Controllers
             }
 
             return Ok(result);
-        }
-
-        [HttpGet("all", Name = "GetAllConsultants")]
-        public async Task<ActionResult<List<ConsultantVM>>> GetAllConsultants()
-        {
-            var consultants = await _mediator.Send(new GetConsultantListQuery());
-            return Ok(consultants);
         }
 
         [HttpGet("{id}", Name = "GetconsultantById")]

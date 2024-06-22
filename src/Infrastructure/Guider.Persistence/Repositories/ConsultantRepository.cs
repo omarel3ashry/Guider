@@ -1,5 +1,6 @@
 ﻿using Guider.Application.Contracts.Persistence;
 using Guider.Domain.Entities;
+using Guider.Domain.Enums;
 using Guider.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,22 +22,27 @@ namespace Guider.Persistence.Repositories
                     .ThenInclude(a => a.Client)
                .ToListAsync();
         }
-        public async Task<List<Consultant>> GetSortedByHourlyRateAsync(bool ascending)
+        public async Task<(List<Consultant> Consultants, int TotalCount)> GetSortedByHourlyRateAsync(bool ascending, int page, int pageSize)
         {
-            var query = _context.Consultants
-               .Include(c => c.User)
-               .Include(c => c.SubCategory)
-                   .ThenInclude(sc => sc.Category);
+            var baseQuery = _context.Consultants
+                .Include(c => c.User)
+                .Include(c => c.SubCategory)
+                    .ThenInclude(sc => sc.Category)
+                .AsQueryable();
 
-            if (ascending)
-            {
-                return await query.OrderBy(c => c.HourlyRate).ToListAsync();
-            }
-            else
-            {
-                return await query.OrderByDescending(c => c.HourlyRate).ToListAsync();
-            }
+            var sortedQuery = ascending
+                ? baseQuery.OrderBy(c => c.HourlyRate)
+                : baseQuery.OrderByDescending(c => c.HourlyRate);
+
+            var totalCount = await sortedQuery.CountAsync();
+            var consultants = await sortedQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (consultants, totalCount);
         }
+
         public async Task<List<Consultant>> GetConsultantsByUserNameAsync(string searchQuery)
         {
             var consultants = await _context.Consultants
@@ -66,6 +72,61 @@ namespace Guider.Persistence.Repositories
 
             return (consultants, totalCount);
         }
+        public async Task<(List<Consultant> Consultants, int TotalCount)> SearchConsultantsAsync(string searchQuery, int page, int pageSize)
+        {
+            var query = _context.Consultants
+                .Include(c => c.User)
+                .Include(c => c.SubCategory)
+                    .ThenInclude(sc => sc.Category)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(c => c.User.UserName.Contains(searchQuery));
+            }
+
+            var totalCount = await query.CountAsync();
+            var consultants = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (consultants, totalCount);
+        }
+
+        public async Task<IQueryable<Consultant>> GetSortedByAverageRateAsync(bool ascending)
+        {
+            var consultants = _context.Consultants
+            .Include(c => c.User)
+            .Include(c => c.SubCategory)
+            .ThenInclude(sc => sc.Category)
+            .AsQueryable();
+
+            consultants = ascending
+                ? consultants.OrderBy(c => c.AverageRate)
+                : consultants.OrderByDescending(c => c.AverageRate);
+
+            return  consultants;
+        }
+        public async Task UpdateConsultantAverageRate(int consultantId)
+        {
+            var consultant = await _context.Consultants
+                .Include(c => c.Appointments)
+                .FirstOrDefaultAsync(c => c.Id == consultantId);
+
+            if (consultant != null)
+            {
+                var endedAppointments = consultant.Appointments.Where(a => a.State == AppointmentState.Completed);
+                consultant.AverageRate = endedAppointments.Any()
+                    ? endedAppointments.Average(a => a.Rate)
+                    : 0;
+
+                _context.Consultants.Update(consultant);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+       
         public async Task<List<Consultant>> GetConsultantsWithsubCategoryAndSchedule()
         {
             return await _context.Consultants

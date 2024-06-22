@@ -16,10 +16,11 @@ namespace Guider.WebApi.Controllers
             _mediator = mediator;   
         }
         [HttpGet("sortRate")]
-        public async Task<ActionResult<List<SortAppointementByRateDto>>> SortRate([FromQuery]bool ascending)
+        public async Task<IActionResult> SortRate([FromQuery] bool ascending, int page = 1, int pagesize = 5)
         {
-            var query = new SortAppointmentByRateQuery(ascending);
-            return await _mediator.Send(query);
+            var query = new SortAppointmentByRateQuery(ascending, page, pagesize);
+            var response = await _mediator.Send(query);
+            return Ok(response);
         }
     }
 }

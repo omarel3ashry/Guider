@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Guider.Application.UseCases.SubCategories.Query;
+using Guider.Application.UseCases.SubCategories.Query.getSubCategoryList;
 using Guider.Domain.Entities;
 
 namespace Guider.Application.UseCases.SubCategories
@@ -8,6 +9,8 @@ namespace Guider.Application.UseCases.SubCategories
     {
         public SubCategoryProfile()
         {
+            CreateMap<SubCategory, subCategoryDto>();
+
             CreateMap<Consultant, SubCategorySearchDto>()
                 .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name))

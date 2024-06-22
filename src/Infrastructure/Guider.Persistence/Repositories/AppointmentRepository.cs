@@ -1,5 +1,6 @@
 ﻿using Guider.Application.Contracts.Persistence;
 using Guider.Domain.Entities;
+using Guider.Domain.Enums;
 using Guider.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,24 +13,39 @@ namespace Guider.Persistence.Repositories
 
         }
 
-        public async Task<List<Appointment>> GetSortedByRateAsync(bool ascending)
+
+
+        public async Task<float> CalculateAverageRate(int CounsultantId)
         {
-            var query = _context.Appointment
-               .Include(a => a.Consultant)
-                   .ThenInclude(c => c.User)
-               .Include(a => a.Consultant)
-                   .ThenInclude(c => c.SubCategory)
-                       .ThenInclude(sc => sc.Category)
-               .AsQueryable();
-            if (ascending)
+           var Appointments = await _context.Appointment
+        .Where(a => a.ConsultantId == CounsultantId)
+        .ToListAsync();
+
+            if (!Appointments.Any())
             {
-                return await query.OrderBy(c => c.Rate).ToListAsync();
+                return 0; 
             }
-            else
+
+            return Appointments.Average(a => a.Rate);
+        }
+
+        public async Task UpdateAppointmentStateAsync(int appointmentId, AppointmentState newState,float? rate)
+        {
+            var appointment = await _context.Appointment.FindAsync(appointmentId);
+            if (appointment != null)
             {
-                return await query.OrderByDescending(c => c.Rate).ToListAsync();
+                appointment.State = newState;
+                if (newState == AppointmentState.Completed && rate.HasValue)
+                {
+                    appointment.Rate = rate.Value;
+                }
+                _context.Appointment.Update(appointment);
+                await _context.SaveChangesAsync();
+               
             }
         }
+
+
 
         public async Task UpdateRangeAsync(IEnumerable<Appointment> appointments)
         {

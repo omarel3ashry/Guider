@@ -1,7 +1,6 @@
-﻿using Guider.Application.UseCases.Consultants.Query.ConsultantSort;
-using Guider.Application.UseCases.Consultants.Query.ConsultantSort.Query;
+﻿using Guider.Application.UseCases.Consultants.Query.ConsultantPagination;
+using Guider.Application.UseCases.Consultants.Query.ConsultantSort;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
@@ -18,11 +17,12 @@ namespace Guider.WebApi.Controllers
         }
 
         [HttpGet("sortHourlyRate")]
-        public async Task<ActionResult<List<SortByHourlyRateDto>>> SortHourlyRate([FromQuery] bool ascending)
+        public async Task<ActionResult<PaginatedConsultantDto>> SortHourlyRate([FromQuery] bool ascending, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var query = new SortByHourlyRateQuery(ascending);
+            var query = new SortByHourlyRateQuery(ascending, page, pageSize);
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
     }
 }

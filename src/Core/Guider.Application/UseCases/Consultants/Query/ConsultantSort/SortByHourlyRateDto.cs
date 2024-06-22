@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
+namespace Guider.Application.UseCases.Consultants.Query.ConsultantSort
 {
-    public class SortAppointementByRateDto
+    public class SortByHourlyRateDto
     {
         public int Id { get; set; }
         public string ConsultantName { get; set; }
@@ -14,7 +14,7 @@ namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
         public string SubCategoryName { get; set; }
         public float Rate { get; set; }
         public float HourlyRate { get; set; }
+        public float AverageRate { get; set; }
         public string Image { get; set; }
-
     }
 }

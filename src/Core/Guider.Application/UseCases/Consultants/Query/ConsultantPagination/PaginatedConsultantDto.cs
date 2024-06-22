@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Guider.Application.UseCases.Consultants.Query.ConsultantPagination.Query
+namespace Guider.Application.UseCases.Consultants.Query.ConsultantPagination
 {
     public class PaginatedConsultantDto
     {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Guider.Application.UseCases.Consultants.Query.ConsultantPagination.Query
+namespace Guider.Application.UseCases.Consultants.Query.ConsultantPagination
 {
     public class GetPaginatedConsultantsQuery : IRequest<PaginatedConsultantDto>
     {
