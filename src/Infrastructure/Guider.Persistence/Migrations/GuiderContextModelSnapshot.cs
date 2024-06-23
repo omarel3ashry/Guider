@@ -235,7 +235,7 @@ namespace Guider.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AdminId")
+                    b.Property<int?>("AdminId")
                         .HasColumnType("int");
 
                     b.Property<float>("Amount")
@@ -246,6 +246,10 @@ namespace Guider.Persistence.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentIntentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -585,11 +589,9 @@ namespace Guider.Persistence.Migrations
 
             modelBuilder.Entity("Guider.Domain.Entities.Transaction", b =>
                 {
-                    b.HasOne("Guider.Domain.Entities.Admin", "Admin")
+                    b.HasOne("Guider.Domain.Entities.Admin", null)
                         .WithMany("Transactions")
-                        .HasForeignKey("AdminId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("AdminId");
 
                     b.HasOne("Guider.Domain.Entities.Appointment", "Appointment")
                         .WithMany("Transactions")
@@ -602,8 +604,6 @@ namespace Guider.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Admin");
 
                     b.Navigation("Appointment");
 

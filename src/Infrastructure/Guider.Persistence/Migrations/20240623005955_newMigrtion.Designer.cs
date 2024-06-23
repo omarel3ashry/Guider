@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Guider.Persistence.Migrations
 {
     [DbContext(typeof(GuiderContext))]
-    [Migration("20240618173027_h")]
-    partial class h
+    [Migration("20240623005955_newMigrtion")]
+    partial class newMigrtion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,9 +64,6 @@ namespace Guider.Persistence.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ClientSecretKey")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ConsultantId")
                         .HasColumnType("int");
 
@@ -75,9 +72,6 @@ namespace Guider.Persistence.Migrations
 
                     b.Property<float>("Duration")
                         .HasColumnType("real");
-
-                    b.Property<string>("PaymentIntentId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Rate")
                         .HasColumnType("real");
@@ -150,6 +144,9 @@ namespace Guider.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("AverageRate")
+                        .HasColumnType("real");
 
                     b.Property<string>("BankAccount")
                         .IsRequired()
@@ -327,8 +324,7 @@ namespace Guider.Persistence.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -391,19 +387,19 @@ namespace Guider.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 11,
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 12,
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 13,
                             Name = "Consultant",
                             NormalizedName = "CONSULTANT"
                         });

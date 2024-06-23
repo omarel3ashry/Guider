@@ -20,8 +20,8 @@ namespace Guider.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Appointment>> CreateOrUpdatePaymentIntent(CreateOrUpdatePaymentIntentCommand CreateOrUpdatePaymentIntentCommand)
-        {
+        public async Task<ActionResult<CreateOrUpdatePaymentIntentCommand>> CreateOrUpdatePaymentIntent(CreateOrUpdatePaymentIntentCommand CreateOrUpdatePaymentIntentCommand)
+     {
             try
             {
 

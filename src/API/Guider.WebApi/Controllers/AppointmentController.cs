@@ -1,7 +1,6 @@
-﻿using Guider.Application.UseCases.Appointments.Dto;
+﻿using Guider.Application.UseCases.Appointments.command.insertAppointment;
+using Guider.Application.UseCases.Appointments.Dto;
 using Guider.Application.UseCases.Appointments.Query;
-using Guider.Application.UseCases.Appointments.Command.updateAppointment;
-using Guider.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +17,6 @@ namespace Guider.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateAppointmentState( [FromBody] updateAppointmentStateCommand request)
-        {
-            
-             await _mediator.Send(request);
-            return NoContent();
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<AppointmentToReturnDto>> GetAppointment(int id)
         {
@@ -33,7 +24,12 @@ namespace Guider.WebApi.Controllers
             var result = await _mediator.Send(GetAppointmentQuery);
             return Ok(result);
         }
-    }
+        [HttpPost]
+        public async Task<ActionResult<AppointmentToReturnDto>> addAppointment(AddAppointmentCommand AddAppointmentCommand)
+        {
+            var result = await _mediator.Send(AddAppointmentCommand);
+            return Ok(result);
+        }
 
-
     }
+}

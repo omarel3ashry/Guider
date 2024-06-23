@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Guider.Application.UseCases.Appointments.command.insertAppointment;
 using Guider.Application.UseCases.Appointments.Dto;
 using Guider.Domain.Entities;
 using System;
@@ -17,6 +18,7 @@ namespace Guider.Application.UseCases.Appointments
             CreateMap<AppointmentToUpdateDto, Appointment>()
                     .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Appointment, AppointmentToReturnDto>();
+            CreateMap<AddAppointmentCommand, Appointment>();
         }
 
 

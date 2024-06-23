@@ -7,7 +7,6 @@ namespace Guider.Application.UseCases.Payment.command.UserPayment
     {
         public AppointmentState State { get; set; }
 
-        public DateTime Date { get; set; }
         public float Duration { get; set; }
         public int ClientId { get; set; }
         public int ConsultantId { get; set; }

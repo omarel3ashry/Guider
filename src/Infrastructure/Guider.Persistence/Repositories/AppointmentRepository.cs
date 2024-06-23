@@ -13,7 +13,13 @@ namespace Guider.Persistence.Repositories
 
         }
 
+        public async Task<Appointment> Addappointment(Appointment appointment)
+        {
+            var result = await _context.Appointment.AddAsync(appointment); 
+            await _context.SaveChangesAsync();
+            return result.Entity;
 
+        }
 
         public async Task<float> CalculateAverageRate(int CounsultantId)
         {
