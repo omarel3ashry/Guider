@@ -159,5 +159,25 @@ namespace Guider.Persistence.Repositories
                 .Include(e => e.Appointments)
                 .FirstOrDefaultAsync(c => c.Id == id && !c.User.IsDeleted);
         }
+
+        public async Task<IQueryable<Consultant>> getConsultantsbyCategoryId(int categoryId)
+        {
+            var consultants = _context.Consultants.Where(c=>c.SubCategory.CategoryId==categoryId)
+           .Include(c => c.User)
+           .Include(c => c.SubCategory)
+           .ThenInclude(sc => sc.Category)
+           .AsQueryable();
+            return consultants;
+        }
+
+        public async Task<IQueryable<Consultant>> getConsultantsbySubCategoryId(int subcategoryId)
+        {
+            var consultants = _context.Consultants.Where(c => c.SubCategory.Id == subcategoryId)
+           .Include(c => c.User)
+           .Include(c => c.SubCategory)
+           .ThenInclude(sc => sc.Category)
+           .AsQueryable();
+            return consultants;
+        }
     }
 }

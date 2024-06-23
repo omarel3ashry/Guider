@@ -21,5 +21,7 @@ namespace Guider.Application.Contracts.Persistence
         Task<List<Consultant>> GetConsultantsWithsubCategoryAndSchedule();
         Task<Consultant> GetConsultantWithsubCategoryAndSchedule(int id);
         Task<Consultant> GetConsultantWithUserByIdAsync(int id);
+        Task<IQueryable<Consultant>> getConsultantsbyCategoryId(int categoryId);
+        Task<IQueryable<Consultant>> getConsultantsbySubCategoryId(int subcategoryId);
     }
 }
