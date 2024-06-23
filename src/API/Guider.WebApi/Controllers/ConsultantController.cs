@@ -5,6 +5,8 @@ using Guider.Application.UseCases.Consultants.Command.UpdateImage;
 using Guider.Application.UseCases.Consultants.Query.ConsultantPagination;
 using Guider.Application.UseCases.Consultants.Query.ConsultantSearch;
 using Guider.Application.UseCases.Consultants.Query.GetAll;
+using Guider.Application.UseCases.Consultants.Query.GetConsultantBySubCategoryId;
+using Guider.Application.UseCases.Consultants.Query.GetConsultantsByCategoryId;
 using Guider.Application.UseCases.Consultants.Query.GetDetails;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -100,6 +102,31 @@ namespace Guider.WebApi.Controllers
             }
 
             return BadRequest(result);
+        }
+        [HttpGet("getConsultantsByCategoryId")]
+        public async Task<IActionResult> getConsultantsByCategoryId(int categoryId,int page,int pageSize)
+        {
+            var query = new getConsultantsByCategoryIdQuery()
+            {
+                categoryId = categoryId,
+                Page = page,
+                PageSize = pageSize
+            };
+            var response= await _mediator.Send(query);
+            return Ok(response);
+        }
+
+        [HttpGet("getConsultantsBySubCategoryId")]
+        public async Task<IActionResult> getConsultantsBySubCategoryId(int subCategoryId, int page, int pageSize)
+        {
+            var query = new GetConsultantBySubCategoryIdQuery()
+            {
+                SubCategoryId = subCategoryId,
+                Page = page,
+                PageSize = pageSize
+            };
+            var response = await _mediator.Send(query);
+            return Ok(response);
         }
     }
 }
