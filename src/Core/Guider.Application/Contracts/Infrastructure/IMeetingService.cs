@@ -5,6 +5,7 @@ namespace Guider.Application.Contracts.Infrastructure
     public interface IMeetingService
     {
         public Task<bool> RequestMeeting(int userId);
+
         public Task<bool> JoinMeeting(int userId);
 
         public Task StartMeeting(int userId, string sdp);
@@ -13,7 +14,7 @@ namespace Guider.Application.Contracts.Infrastructure
 
         public Task AddCandidate(int userId, IceCandidate candidate);
 
-        public Task SendMessage(int userId, string msg);
+        public Task<bool> SendMessage(int userId, string msg);
 
         public Task CloseMeeting(int userId);
     }
