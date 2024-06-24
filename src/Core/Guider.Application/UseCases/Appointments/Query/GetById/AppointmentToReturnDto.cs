@@ -1,11 +1,6 @@
 ﻿using Guider.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Guider.Application.UseCases.Appointments.Dto
+namespace Guider.Application.UseCases.Appointments.Query.GetById
 {
     public class AppointmentToReturnDto
     {
@@ -16,7 +11,7 @@ namespace Guider.Application.UseCases.Appointments.Dto
         public DateTime Date { get; set; }
         public int ClientId { get; set; }
         public int ConsultantId { get; set; }
-      
+
 
 
 

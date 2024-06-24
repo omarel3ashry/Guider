@@ -5,15 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Guider.Persistence.Repositories
 {
-    public class TransactionRepository : ITransactionRepository
+    public class TransactionRepository : BaseRepository<Transaction>, ITransactionRepository
     {
-        protected readonly GuiderContext _context;
+        public TransactionRepository(GuiderContext context) : base(context) { }
 
-        public TransactionRepository(GuiderContext context)
-        {
-
-            _context = context;
-        }
 
         public async Task<Transaction> GetByAppointmentIdAsync(int appoinmentid)
         {

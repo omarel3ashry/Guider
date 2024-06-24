@@ -2,7 +2,7 @@
 using Guider.Domain.Entities;
 using MediatR;
 
-namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
+namespace Guider.Application.UseCases.Appointments.Query.AppointmentSort
 {
     public class SortAppointmentByRateQuery : IRequest<PaginatedList<SortconsultantByRateDto, Consultant>>
     {

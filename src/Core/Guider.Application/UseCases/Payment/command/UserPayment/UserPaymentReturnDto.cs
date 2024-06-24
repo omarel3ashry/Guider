@@ -1,6 +1,6 @@
 ﻿using Guider.Domain.Enums;
 
-namespace Guider.Application.UseCases.Payment.command.UserPayment
+namespace Guider.Application.UseCases.Payment.Command.UserPayment
 {
     public class UserPaymentReturnDto
     {

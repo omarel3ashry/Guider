@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 
-namespace Guider.Application.UseCases.Payment.command.UserPayment
+namespace Guider.Application.UseCases.Payment.Command.UserPayment
 {
     public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, CreateOrUpdatePaymentIntentCommand>
     {

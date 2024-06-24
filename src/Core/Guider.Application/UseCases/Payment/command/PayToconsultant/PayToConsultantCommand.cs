@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Guider.Application.UseCases.Payment.command.PayToconsultant
+namespace Guider.Application.UseCases.Payment.Command.PayToConsultant
 {
     public class PayToConsultantCommand:IRequest<bool>
     {

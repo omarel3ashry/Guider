@@ -4,7 +4,7 @@ using Guider.Application.Responses;
 using Guider.Domain.Entities;
 using MediatR;
 
-namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
+namespace Guider.Application.UseCases.Appointments.Query.AppointmentSort
 {
     public class SortAppointementByRateQueryHandler : IRequestHandler<SortAppointmentByRateQuery, PaginatedList<SortconsultantByRateDto, Consultant>>
     {
@@ -13,7 +13,7 @@ namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
 
         public SortAppointementByRateQueryHandler(IConsultantRepository consultantRepository, IMapper mapper)
         {
-           
+
             _mapper = mapper;
             _consultantRepository = consultantRepository;
         }

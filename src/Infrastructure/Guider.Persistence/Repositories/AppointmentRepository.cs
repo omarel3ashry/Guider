@@ -13,9 +13,16 @@ namespace Guider.Persistence.Repositories
 
         }
 
-        public async Task<Appointment> Addappointment(Appointment appointment)
+        public async Task<Appointment?> GetWithTransactionAsync(int id)
         {
-            var result = await _context.Appointment.AddAsync(appointment); 
+            return await _context.Appointment
+                                 .Include(e => e.Transactions)
+                                 .FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task<Appointment> AddAppointment(Appointment appointment)
+        {
+            var result = await _context.Appointment.AddAsync(appointment);
             await _context.SaveChangesAsync();
             return result.Entity;
 
@@ -23,19 +30,19 @@ namespace Guider.Persistence.Repositories
 
         public async Task<float> CalculateAverageRate(int CounsultantId)
         {
-           var Appointments = await _context.Appointment
-        .Where(a => a.ConsultantId == CounsultantId)
-        .ToListAsync();
+            var Appointments = await _context.Appointment
+         .Where(a => a.ConsultantId == CounsultantId)
+         .ToListAsync();
 
             if (!Appointments.Any())
             {
-                return 0; 
+                return 0;
             }
 
             return Appointments.Average(a => a.Rate);
         }
 
-        public async Task UpdateAppointmentStateAsync(int appointmentId, AppointmentState newState,float? rate)
+        public async Task UpdateAppointmentStateAsync(int appointmentId, AppointmentState newState, float? rate)
         {
             var appointment = await _context.Appointment.FindAsync(appointmentId);
             if (appointment != null)
@@ -47,7 +54,7 @@ namespace Guider.Persistence.Repositories
                 }
                 _context.Appointment.Update(appointment);
                 await _context.SaveChangesAsync();
-               
+
             }
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Guider.Application.UseCases.Appointments.AppointmentSort.Query
+namespace Guider.Application.UseCases.Appointments.Query.AppointmentSort
 {
     public class SortconsultantByRateDto
     {

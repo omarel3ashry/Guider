@@ -1,7 +1,7 @@
 ﻿using Guider.Domain.Enums;
 using MediatR;
 
-namespace Guider.Application.UseCases.Payment.command.UserPayment
+namespace Guider.Application.UseCases.Payment.Command.UserPayment
 {
     public class CreateOrUpdatePaymentIntentCommand : IRequest<CreateOrUpdatePaymentIntentCommand>
     {
