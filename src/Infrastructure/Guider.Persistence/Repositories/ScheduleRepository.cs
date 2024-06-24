@@ -32,25 +32,30 @@ namespace Guider.Persistence.Repositories
                 .FirstOrDefaultAsync(s => s.ConsultantId == consultantId && s.Date.Date == date.Date);
         }
 
-        public async Task<bool> UpdateScheduleAsync(int consultantId, DateTime date, List<Schedule> updatedSchedule)
+        public async Task<bool> UpdateScheduleAsync(Schedule currentSchedule, List<Schedule> newSchedules)
         {
-            var existingSchedule = await GetScheduleByConsultantIdAndDateAsync(consultantId, date);
+            //var existingSchedule = await GetScheduleByConsultantIdAndDateAsync(consultantId, date);
 
-            if (existingSchedule == null)
-            {
-                return false;
-            }
+            //if (existingSchedule == null)
+            //{
+            //    return false;
+            //}
 
             // Remove the existing schedule
-            _context.Schedules.Remove(existingSchedule);
-            await _context.Schedules.AddRangeAsync(updatedSchedule);
+            _context.Schedules.Remove(currentSchedule);
+            await _context.Schedules.AddRangeAsync(newSchedules);
             return await _context.SaveChangesAsync()>0;
         }
-        public async Task DeleteAsync(Schedule entity)
-        {
-            _context.Schedules.Remove(entity);
-            await _context.SaveChangesAsync();
-        }
 
+        public async Task<bool> UpdateScheduleStateAsync(int consultantId, DateTime date, bool isReserved, int timeSpan)
+        {
+            var schedules= await _context.Schedules.Where(s => s.ConsultantId == consultantId).ToListAsync();
+            for (int i = 0; i < timeSpan; i++)
+            {
+                schedules.FirstOrDefault(e => e.Date == date.AddHours(i))!.IsReserved=isReserved;
+            }
+            await _context.Schedules.AddRangeAsync(schedules);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

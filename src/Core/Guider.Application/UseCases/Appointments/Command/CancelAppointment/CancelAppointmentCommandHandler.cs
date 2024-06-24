@@ -12,12 +12,15 @@ namespace Guider.Application.UseCases.Appointments.Command.CancelAppointment
     {
         private readonly IAppointmentRepository _appointmentRepo;
         private readonly ITransactionRepository _transactionRepo;
+        private readonly IScheduleRepository _scheduleRepo;
 
         public CancelAppointmentCommandHandler(IAppointmentRepository appointmentRepo,
-                                               ITransactionRepository transactionRepo)
+                                               ITransactionRepository transactionRepo,
+                                               IScheduleRepository scheduleRepo)
         {
             _appointmentRepo = appointmentRepo;
             _transactionRepo = transactionRepo;
+            _scheduleRepo = scheduleRepo;
         }
 
         public async Task<BaseResponse> Handle(CancelAppointmentCommand request, CancellationToken cancellationToken)
@@ -60,6 +63,7 @@ namespace Guider.Application.UseCases.Appointments.Command.CancelAppointment
             {
                 appointment.State = AppointmentState.Canceled;
                 await _appointmentRepo.UpdateAsync(appointment);
+                await _scheduleRepo.UpdateScheduleStateAsync(appointment.ConsultantId, appointment.Date, false,(int)appointment.Duration);
                 return new BaseResponse() { Message = "Appointment canceled and refund was sent." };
             }
             return new BaseResponse() { Success = false, Message = "Failed to cancel the appointment!" };

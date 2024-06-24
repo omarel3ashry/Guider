@@ -44,9 +44,6 @@ namespace Guider.Application.UseCases.Schedules.Command.UpdateSchedule
                 schedules.Add(new Schedule { ConsultantId = request.ConsultantId, Date = request.NewDate.AddHours(i), IsReserved = false });
             }
 
-
-            
-
             return await _scheduleRepository.UpdateScheduleAsync(existingSchedule, schedules);
         }
     }
