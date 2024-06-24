@@ -12,6 +12,6 @@ namespace Guider.Application.Contracts.Persistence
         Task<bool> AddSchedulesAsync(List<Schedule> schedules);
         Task<List<Schedule>> GetSchedulesByConsultantIdAsync(int consultantId);
         Task<Schedule> GetScheduleByConsultantIdAndDateAsync(int consultantId, DateTime date);
-        Task<bool> UpdateScheduleAsync(int consultantId, DateTime date, Schedule schedule);
+        Task<bool> UpdateScheduleAsync(Schedule currentSchedule, List<Schedule> newSchedules);
     }
 }

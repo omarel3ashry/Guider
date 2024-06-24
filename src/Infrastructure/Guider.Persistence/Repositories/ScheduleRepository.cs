@@ -32,7 +32,7 @@ namespace Guider.Persistence.Repositories
                 .FirstOrDefaultAsync(s => s.ConsultantId == consultantId && s.Date.Date == date.Date);
         }
 
-        public async Task<bool> UpdateScheduleAsync(int consultantId, DateTime date, Schedule updatedSchedule)
+        public async Task<bool> UpdateScheduleAsync(int consultantId, DateTime date, List<Schedule> updatedSchedule)
         {
             var existingSchedule = await GetScheduleByConsultantIdAndDateAsync(consultantId, date);
 
@@ -43,9 +43,8 @@ namespace Guider.Persistence.Repositories
 
             // Remove the existing schedule
             _context.Schedules.Remove(existingSchedule);
-            await _context.SaveChangesAsync();
-
-            return await AddAsync(updatedSchedule);
+            await _context.Schedules.AddRangeAsync(updatedSchedule);
+            return await _context.SaveChangesAsync()>0;
         }
         public async Task DeleteAsync(Schedule entity)
         {
