@@ -34,7 +34,8 @@ namespace Guider.Application.UseCases.Schedules.Command.UpdateSchedule
             {
                 ConsultantId = request.ConsultantId,
                 Date = request.NewDate,
-                Timespan = request.TimeSpan
+                IsReserved = false
+                
             };
 
             return await _scheduleRepository.UpdateScheduleAsync(request.ConsultantId, request.Date, updatedSchedule);

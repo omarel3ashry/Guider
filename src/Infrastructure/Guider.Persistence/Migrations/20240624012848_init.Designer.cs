@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Guider.Persistence.Migrations
 {
     [DbContext(typeof(GuiderContext))]
-    [Migration("20240623005955_newMigrtion")]
-    partial class newMigrtion
+    [Migration("20240624012848_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -199,8 +199,8 @@ namespace Guider.Persistence.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Timespan")
-                        .HasColumnType("real");
+                    b.Property<bool>("IsReserved")
+                        .HasColumnType("bit");
 
                     b.HasKey("ConsultantId", "Date");
 

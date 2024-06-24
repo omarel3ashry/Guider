@@ -196,8 +196,8 @@ namespace Guider.Persistence.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Timespan")
-                        .HasColumnType("real");
+                    b.Property<bool>("IsReserved")
+                        .HasColumnType("bit");
 
                     b.HasKey("ConsultantId", "Date");
 

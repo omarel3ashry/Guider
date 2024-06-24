@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Guider.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class newMigrtion : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -303,7 +303,7 @@ namespace Guider.Persistence.Migrations
                 {
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ConsultantId = table.Column<int>(type: "int", nullable: false),
-                    Timespan = table.Column<float>(type: "real", nullable: false)
+                    IsReserved = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
