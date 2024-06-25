@@ -1,6 +1,6 @@
-﻿using Guider.Application.UseCases.Payment.command.PayToconsultant;
-using Guider.Application.UseCases.Payment.command.Refund;
-using Guider.Application.UseCases.Payment.command.UserPayment;
+﻿using Guider.Application.UseCases.Payment.Command.PayToConsultant;
+using Guider.Application.UseCases.Payment.Command.Refund;
+using Guider.Application.UseCases.Payment.Command.UserPayment;
 using Guider.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

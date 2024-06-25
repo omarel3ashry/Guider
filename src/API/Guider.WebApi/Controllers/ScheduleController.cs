@@ -36,7 +36,7 @@ namespace Guider.WebApi.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("consultant/{consultantId}")]
+        [HttpGet("{consultantId}")]
         public async Task<IActionResult> GetSchedulesForConsultant(int consultantId)
         {
             try
@@ -50,7 +50,7 @@ namespace Guider.WebApi.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpPut("consultant/{consultantId}/{date}")]
+        [HttpPut("{consultantId}/{date}")]
         public async Task<IActionResult> UpdateSchedule(int consultantId, DateTime date, [FromBody] UpdateScheduleCommand command)
         {
             try
@@ -73,7 +73,8 @@ namespace Guider.WebApi.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpDelete("consultant/{consultantId}/{date}")]
+
+        [HttpDelete("{consultantId}/{date}")]
         public async Task<IActionResult> DeleteSchedule(int consultantId, DateTime date)
         {
             try

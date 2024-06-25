@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Transaction = Guider.Domain.Entities.Transaction;
 
 
-namespace Guider.Application.UseCases.Payment.command.PayToconsultant
+namespace Guider.Application.UseCases.Payment.Command.PayToConsultant
 {
     public class PayToConsultantCommandHandler : IRequestHandler<PayToConsultantCommand, bool>
     {

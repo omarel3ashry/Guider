@@ -1,6 +1,5 @@
-﻿using Guider.Application.UseCases.Appointments.AppointmentSort.Query;
+﻿using Guider.Application.UseCases.Appointments.Query.AppointmentSort;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
@@ -13,8 +12,9 @@ namespace Guider.WebApi.Controllers
 
         public SortRateController(IMediator mediator)
         {
-            _mediator = mediator;   
+            _mediator = mediator;
         }
+
         [HttpGet("sortRate")]
         public async Task<IActionResult> SortRate([FromQuery] bool ascending, int page = 1, int pagesize = 5)
         {

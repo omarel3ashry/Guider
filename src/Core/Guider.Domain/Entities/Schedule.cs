@@ -4,7 +4,7 @@
     {
         public DateTime Date { get; set; }
         public int ConsultantId { get; set; }
-        public float Timespan { get; set; }
+        public bool IsReserved { get; set; }
 
         public Consultant Consultant { get; set; }
     }

@@ -10,13 +10,11 @@ namespace Guider.Application.UseCases.Schedules.Command.CreateSchedule
 
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IConsultantRepository _consultantRepository;
-        private readonly IMapper _mapper;
 
         public CreateScheduleCommandHandler(IScheduleRepository scheduleRepository, IConsultantRepository consultantRepository, IMapper mapper)
         {
             _scheduleRepository = scheduleRepository;
             _consultantRepository = consultantRepository;
-            _mapper = mapper;
         }
 
         public async Task<bool> Handle(CreateScheduleCommand request, CancellationToken cancellationToken)
@@ -28,10 +26,13 @@ namespace Guider.Application.UseCases.Schedules.Command.CreateSchedule
                 throw new ArgumentException("Invalid ConsultantId");
             }
 
-            var schedules = request.Schedules.Select(s => _mapper.Map<Schedule>(s)).ToList();
-            foreach (var schedule in schedules)
+            List<Schedule> schedules = new List<Schedule>();
+            foreach (var schedule in request.Schedules)
             {
-                schedule.ConsultantId = request.ConsultantId;
+                for (int i = 0; i < schedule.TimeSpan; i++)
+                {
+                    schedules.Add(new Schedule{ ConsultantId=request.ConsultantId,Date=schedule.Date.AddHours(i),IsReserved=false});
+                }
             }
 
             return await _scheduleRepository.AddSchedulesAsync(schedules);

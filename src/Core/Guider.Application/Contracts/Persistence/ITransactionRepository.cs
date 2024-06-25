@@ -2,7 +2,7 @@
 
 namespace Guider.Application.Contracts.Persistence
 {
-    public interface ITransactionRepository 
+    public interface ITransactionRepository : IRepository<Transaction>
     {
         Task<Transaction> GetByAppointmentIdAsync(int appoinmentid);
     }

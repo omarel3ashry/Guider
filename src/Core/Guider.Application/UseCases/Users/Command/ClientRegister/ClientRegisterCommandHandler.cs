@@ -11,10 +11,10 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
     {
         private readonly IMapper _mapper;
         private readonly IValidator<ClientRegisterCommand> _validator;
-        private readonly IRegisterUserRepository<Client> _userRepository;
+        private readonly IRegisterUserRepository<Domain.Entities.Client> _userRepository;
 
         public ClientRegisterCommandHandler(IMapper mapper, IValidator<ClientRegisterCommand> validator,
-                                            IRegisterUserRepository<Client> userRepository)
+                                            IRegisterUserRepository<Domain.Entities.Client> userRepository)
         {
             _mapper = mapper;
             _validator = validator;
@@ -34,7 +34,7 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
 
             if (!result.Success)
                 return result;
-            var client = _mapper.Map<Client>(request);
+            var client = _mapper.Map<Domain.Entities.Client>(request);
             client.UserId = result.Id;
             //save into database using client repository
             return result;

@@ -6,19 +6,19 @@ using MediatR;
 using Stripe;
 using Transaction = Guider.Domain.Entities.Transaction;
 
-namespace Guider.Application.UseCases.Payment.command.Refund
+namespace Guider.Application.UseCases.Payment.Command.Refund
 {
     public class RefundPaymentHandler : IRequestHandler<RefundPaymentCommand, Stripe.Refund>
     {
         private readonly IAppointmentRepository _appointmentRepository;
-        private readonly IMapper _mapper;
-        private readonly IRepository<Transaction> _transactionRepo;
         private readonly ITransactionRepository _transactionRepository;
-        public RefundPaymentHandler(IAppointmentRepository appointmentRepository, IMapper mapper, IRepository<Transaction> transactionRepo, ITransactionRepository transactionRepository)
+        private readonly IMapper _mapper;
+        public RefundPaymentHandler(IAppointmentRepository appointmentRepository,
+                                    ITransactionRepository transactionRepository,
+                                    IMapper mapper)
         {
             _appointmentRepository = appointmentRepository;
             _mapper = mapper;
-            _transactionRepo = transactionRepo;
             _transactionRepository = transactionRepository;
         }
         public async Task<Stripe.Refund> Handle(RefundPaymentCommand request, CancellationToken cancellationToken)
@@ -50,7 +50,7 @@ namespace Guider.Application.UseCases.Payment.command.Refund
             };
             // Send the command to add a transaction
             var mappedtransaction = _mapper.Map<Transaction>(TransactionToAddDto);
-            await _transactionRepo.AddAsync(mappedtransaction);
+            await _transactionRepository.AddAsync(mappedtransaction);
             return refund;
         }
     }
