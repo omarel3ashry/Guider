@@ -6,7 +6,6 @@ namespace Guider.Application.UseCases.Appointments.Command.CancelAppointment
     public class CancelAppointmentCommand : IRequest<BaseResponse>
     {
         public int AppointmentId { get; set; }
-        public int ClientId { get; set; }
         public int ClientUserId { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace Guider.Persistence.Repositories
         public async Task<Appointment?> GetWithTransactionAsync(int id)
         {
             return await _context.Appointment
+                                 .Include(e => e.Client)
                                  .Include(e => e.Transactions)
                                  .FirstOrDefaultAsync(e => e.Id == id);
         }

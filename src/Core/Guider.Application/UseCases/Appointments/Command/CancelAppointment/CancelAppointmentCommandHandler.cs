@@ -30,8 +30,8 @@ namespace Guider.Application.UseCases.Appointments.Command.CancelAppointment
             if (appointment == null)
                 throw new NotFoundException("Appointment not found!");
 
-            //if (request.ClientId != appointment.ClientId)
-            //    throw new NotAuthorizedException("You are not authorized to do this action!");
+            if (request.ClientUserId != appointment.Client.UserId)
+                throw new NotAuthorizedException("You are not authorized to do this action!");
 
             var transaction = appointment.Transactions.FirstOrDefault(e => e.Type == TransactionType.Reservation);
 

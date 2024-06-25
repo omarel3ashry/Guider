@@ -3,6 +3,7 @@ using Guider.Application.UseCases.Appointments.Command.CancelAppointment;
 using Guider.Application.UseCases.Appointments.Query.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Guider.WebApi.Controllers
 {
@@ -37,9 +38,9 @@ namespace Guider.WebApi.Controllers
             var cancelAppointCommand = new CancelAppointmentCommand()
             {
                 AppointmentId = appointmentId,
-                ClientUserId = int.Parse(User.Claims.FirstOrDefault(e => e.Type == "sid")?.Value ?? "0"),
-                ClientId = int.Parse(User.Claims.FirstOrDefault(e => e.Type == "clientId")?.Value ?? "0")
+                ClientUserId = int.Parse(User.Claims.FirstOrDefault(e => e.Type == JwtRegisteredClaimNames.Sid)?.Value ?? "0")
             };
+
             var result = await _mediator.Send(cancelAppointCommand);
             return Ok(result);
         }
