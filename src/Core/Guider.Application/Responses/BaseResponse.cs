@@ -4,7 +4,7 @@ namespace Guider.Application.Responses
 {
     public class BaseResponse<T> : BaseResponse
     {
-        public T Result { get; set; }
+        public T? Result { get; set; }
     }
 
     public class BaseResponse

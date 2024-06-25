@@ -30,8 +30,8 @@ namespace Guider.Application.UseCases.Appointments.Command.CancelAppointment
             if (appointment == null)
                 throw new NotFoundException("Appointment not found!");
 
-            if (request.ClientId != appointment.ClientId)
-                throw new NotAuthorizedException("You are not authorized to do this action!");
+            //if (request.ClientId != appointment.ClientId)
+            //    throw new NotAuthorizedException("You are not authorized to do this action!");
 
             var transaction = appointment.Transactions.FirstOrDefault(e => e.Type == TransactionType.Reservation);
 
@@ -63,7 +63,7 @@ namespace Guider.Application.UseCases.Appointments.Command.CancelAppointment
             {
                 appointment.State = AppointmentState.Canceled;
                 await _appointmentRepo.UpdateAsync(appointment);
-                await _scheduleRepo.UpdateScheduleStateAsync(appointment.ConsultantId, appointment.Date, false,(int)appointment.Duration);
+                await _scheduleRepo.UpdateScheduleStateAsync(appointment.ConsultantId, appointment.Date, false, appointment.Duration);
                 return new BaseResponse() { Message = "Appointment canceled and refund was sent." };
             }
             return new BaseResponse() { Success = false, Message = "Failed to cancel the appointment!" };

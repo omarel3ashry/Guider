@@ -9,7 +9,5 @@ namespace Guider.Application.Contracts.Persistence
         public Task<float> CalculateAverageRate(int CounsultantId);
         public Task UpdateAppointmentStateAsync(int appointmentId, AppointmentState newState, float? rate);
         public Task UpdateRangeAsync(IEnumerable<Appointment> appointments);
-        public Task<Appointment> AddAppointment(Appointment appointment);
-
     }
 }

@@ -1,9 +1,7 @@
-﻿using Guider.Application.UseCases.Appointments.Command.CancelAppointment;
-using Guider.Application.UseCases.Appointments.Command.InsertAppointment;
-using Guider.Application.UseCases.Appointments.Query;
+﻿using Guider.Application.UseCases.Appointments.Command.AddAppointment;
+using Guider.Application.UseCases.Appointments.Command.CancelAppointment;
 using Guider.Application.UseCases.Appointments.Query.GetById;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
@@ -19,7 +17,7 @@ namespace Guider.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppointmentToReturnDto>> GetAppointment(int id)
+        public async Task<ActionResult<AppointmentDto>> GetAppointment(int id)
         {
             var GetAppointmentQuery = new GetAppointmentQuery() { Id = id };
             var result = await _mediator.Send(GetAppointmentQuery);
@@ -27,14 +25,14 @@ namespace Guider.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AppointmentToReturnDto>> addAppointment(AddAppointmentCommand AddAppointmentCommand)
+        public async Task<ActionResult<AppointmentDto>> AddAppointment(AddAppointmentCommand AddAppointmentCommand)
         {
             var result = await _mediator.Send(AddAppointmentCommand);
             return Ok(result);
         }
 
-        [HttpPost("cancel")]
-        public async Task<ActionResult<AppointmentToReturnDto>> CancelAppointment(int appointmentId)
+        [HttpPatch("cancel")]
+        public async Task<ActionResult<AppointmentDto>> CancelAppointment(int appointmentId)
         {
             var cancelAppointCommand = new CancelAppointmentCommand()
             {

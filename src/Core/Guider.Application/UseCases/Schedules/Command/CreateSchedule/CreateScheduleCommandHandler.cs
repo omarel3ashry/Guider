@@ -26,16 +26,13 @@ namespace Guider.Application.UseCases.Schedules.Command.CreateSchedule
                 throw new ArgumentException("Invalid ConsultantId");
             }
 
-            var schedulesDtos = request.Schedules;
             List<Schedule> schedules = new List<Schedule>();
-            foreach (var schedule in schedulesDtos)
+            foreach (var schedule in request.Schedules)
             {
                 for (int i = 0; i < schedule.TimeSpan; i++)
                 {
                     schedules.Add(new Schedule{ ConsultantId=request.ConsultantId,Date=schedule.Date.AddHours(i),IsReserved=false});
                 }
-                
-
             }
 
             return await _scheduleRepository.AddSchedulesAsync(schedules);

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Guider.Application.UseCases.Appointments.Command.InsertAppointment;
+using Guider.Application.UseCases.Appointments.Command.AddAppointment;
 using Guider.Application.UseCases.Appointments.Query.GetById;
 using Guider.Domain.Entities;
 
@@ -10,7 +10,7 @@ namespace Guider.Application.UseCases.Appointments
         public AppointmentProfile()
         {
 
-            CreateMap<Appointment, AppointmentToReturnDto>();
+            CreateMap<Appointment, AppointmentDto>();
             CreateMap<AddAppointmentCommand, Appointment>();
         }
 

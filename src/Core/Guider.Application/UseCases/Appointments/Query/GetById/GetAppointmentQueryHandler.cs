@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Appointments.Query.GetById
 {
-    public class GetAppointmentQueryHandler : IRequestHandler<GetAppointmentQuery, AppointmentToReturnDto>
+    public class GetAppointmentQueryHandler : IRequestHandler<GetAppointmentQuery, AppointmentDto>
     {
         private readonly IMapper _mapper;
         private readonly IRepository<Appointment> _AppointmentRepo;
@@ -21,14 +21,14 @@ namespace Guider.Application.UseCases.Appointments.Query.GetById
             _AppointmentRepo = AppointmentRepo;
         }
 
-        public async Task<AppointmentToReturnDto> Handle(GetAppointmentQuery request, CancellationToken cancellationToken)
+        public async Task<AppointmentDto> Handle(GetAppointmentQuery request, CancellationToken cancellationToken)
         {
             var appointment = await _AppointmentRepo.GetByIdAsync(request.Id);
             if (appointment == null)
             {
                 throw new NotFoundException("there is no appointment with this id");
             }
-            return _mapper.Map<AppointmentToReturnDto>(appointment);
+            return _mapper.Map<AppointmentDto>(appointment);
         }
     }
 }

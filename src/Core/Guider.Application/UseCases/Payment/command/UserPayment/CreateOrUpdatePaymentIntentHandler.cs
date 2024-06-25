@@ -7,28 +7,23 @@ using Stripe;
 
 namespace Guider.Application.UseCases.Payment.Command.UserPayment
 {
-    public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, CreateOrUpdatePaymentIntentCommand>
+    public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, UserPaymentDto>
     {
         private readonly IConfiguration _configuration;
-        private readonly IAppointmentRepository _appointmentRepository;
-        private readonly IRepository<Appointment> _appointmentRepo;
-        private readonly IMapper _mapper;
         private readonly IRepository<Consultant> _consultantrepository;
-        public CreateOrUpdatePaymentIntentHandler(IConfiguration configuration, IAppointmentRepository appointmentRepository, IRepository<Appointment> appointmentRepo, IRepository<Consultant> consultantrepository, IMapper mapper)
+        private readonly IMapper _mapper;
+        public CreateOrUpdatePaymentIntentHandler(IConfiguration configuration,
+                                                  IRepository<Consultant> consultantrepository,
+                                                  IMapper mapper)
         {
             _configuration = configuration;
-            _appointmentRepo = appointmentRepo;
-            _mapper = mapper;
-            _appointmentRepository = appointmentRepository;
             _consultantrepository = consultantrepository;
-
+            _mapper = mapper;
         }
 
-        public async Task<CreateOrUpdatePaymentIntentCommand> Handle(CreateOrUpdatePaymentIntentCommand request, CancellationToken cancellationToken)
+        public async Task<UserPaymentDto> Handle(CreateOrUpdatePaymentIntentCommand request, CancellationToken cancellationToken)
         {
             StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
-            //var appointment = await _appointmentRepository.GetAppointmentByIdAsync(request.AppointmentId);
-            //if (appointment == null) throw new ArgumentException("Appointment not found.");
             //calculate the amount
             var consultant = await _consultantrepository.GetByIdAsync(request.ConsultantId);
             var amount = request.Duration * consultant.HourlyRate;
@@ -56,8 +51,7 @@ namespace Guider.Application.UseCases.Payment.Command.UserPayment
                 await paymentIntentService.UpdateAsync(request.PaymentIntentId, updateOptions);
             }
 
-
-            return request;
+            return _mapper.Map<UserPaymentDto>(request);
         }
     }
 }

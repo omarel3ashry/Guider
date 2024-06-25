@@ -8,24 +8,13 @@ namespace Guider.Persistence.Repositories
 {
     public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRepository
     {
-        public AppointmentRepository(GuiderContext context) : base(context)
-        {
-
-        }
+        public AppointmentRepository(GuiderContext context) : base(context) { }
 
         public async Task<Appointment?> GetWithTransactionAsync(int id)
         {
             return await _context.Appointment
                                  .Include(e => e.Transactions)
                                  .FirstOrDefaultAsync(e => e.Id == id);
-        }
-
-        public async Task<Appointment> AddAppointment(Appointment appointment)
-        {
-            var result = await _context.Appointment.AddAsync(appointment);
-            await _context.SaveChangesAsync();
-            return result.Entity;
-
         }
 
         public async Task<float> CalculateAverageRate(int CounsultantId)
@@ -57,8 +46,6 @@ namespace Guider.Persistence.Repositories
 
             }
         }
-
-
 
         public async Task UpdateRangeAsync(IEnumerable<Appointment> appointments)
         {
