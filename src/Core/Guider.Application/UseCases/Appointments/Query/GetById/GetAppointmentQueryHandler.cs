@@ -3,11 +3,6 @@ using Guider.Application.Contracts.Persistence;
 using Guider.Application.Exceptions;
 using Guider.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Appointments.Query.GetById
 {

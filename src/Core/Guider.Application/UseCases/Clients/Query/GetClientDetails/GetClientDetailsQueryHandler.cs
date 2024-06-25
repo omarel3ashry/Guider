@@ -1,12 +1,6 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
-using Guider.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Clients.Query.GetClientDetails
 {
@@ -14,13 +8,13 @@ namespace Guider.Application.UseCases.Clients.Query.GetClientDetails
     {
         private readonly IMapper _mapper;
         private readonly IClientRepository _clientRepository;
-        
 
-        public GetClientDetailsQueryHandler(IMapper mapper,IClientRepository clientRepository)
+
+        public GetClientDetailsQueryHandler(IMapper mapper, IClientRepository clientRepository)
         {
             _mapper = mapper;
             _clientRepository = clientRepository;
-           
+
         }
         public async Task<ClienttoReturnVM> Handle(GetClientDetailsQuery request, CancellationToken cancellationToken)
         {
@@ -30,7 +24,7 @@ namespace Guider.Application.UseCases.Clients.Query.GetClientDetails
 
             return clienttoReturn;
 
-            
+
 
 
 

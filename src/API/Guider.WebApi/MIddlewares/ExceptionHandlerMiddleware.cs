@@ -1,7 +1,6 @@
 ﻿using Guider.Application.Exceptions;
 using System.Net;
 using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Guider.WebApi.MIddlewares
 {

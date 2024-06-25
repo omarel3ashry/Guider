@@ -31,7 +31,7 @@ namespace Guider.Application.UseCases.Schedules.Command.CreateSchedule
             {
                 for (int i = 0; i < schedule.TimeSpan; i++)
                 {
-                    schedules.Add(new Schedule{ ConsultantId=request.ConsultantId,Date=schedule.Date.AddHours(i),IsReserved=false});
+                    schedules.Add(new Schedule { ConsultantId = request.ConsultantId, Date = schedule.Date.AddHours(i), IsReserved = false });
                 }
             }
 

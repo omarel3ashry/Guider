@@ -2,11 +2,6 @@
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Clients.Command.UpdateImage
 {
@@ -14,19 +9,19 @@ namespace Guider.Application.UseCases.Clients.Command.UpdateImage
     {
         private readonly IValidator<UpdateClientImageCommand> _validator;
         private readonly IClientRepository _clientRepository;
-        
 
-        public UpdateImageCommandHandler(IValidator<UpdateClientImageCommand> validator,IClientRepository clientRepository)
+
+        public UpdateImageCommandHandler(IValidator<UpdateClientImageCommand> validator, IClientRepository clientRepository)
         {
             _validator = validator;
             _clientRepository = clientRepository;
-            
+
         }
         public async Task<BaseResponse<string>> Handle(UpdateClientImageCommand request, CancellationToken cancellationToken)
         {
 
             var ClientToUpdate = await _clientRepository.GetByIdAsync(request.Id);
-           
+
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
@@ -49,5 +44,5 @@ namespace Guider.Application.UseCases.Clients.Command.UpdateImage
             return response;
         }
     }
-    }
+}
 

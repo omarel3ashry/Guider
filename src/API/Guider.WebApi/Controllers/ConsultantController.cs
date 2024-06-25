@@ -104,7 +104,7 @@ namespace Guider.WebApi.Controllers
             return BadRequest(result);
         }
         [HttpGet("getConsultantsByCategoryId")]
-        public async Task<IActionResult> getConsultantsByCategoryId(int categoryId,int page,int pageSize)
+        public async Task<IActionResult> getConsultantsByCategoryId(int categoryId, int page, int pageSize)
         {
             var query = new getConsultantsByCategoryIdQuery()
             {
@@ -112,7 +112,7 @@ namespace Guider.WebApi.Controllers
                 Page = page,
                 PageSize = pageSize
             };
-            var response= await _mediator.Send(query);
+            var response = await _mediator.Send(query);
             return Ok(response);
         }
 

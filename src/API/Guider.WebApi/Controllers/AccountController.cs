@@ -2,7 +2,6 @@
 using Guider.Application.UseCases.Users.Command.ConsultantRegister;
 using Guider.Application.UseCases.Users.Command.Login;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
@@ -18,7 +17,7 @@ namespace Guider.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("login", Name ="UserLogin")]
+        [HttpPost("login", Name = "UserLogin")]
         public async Task<IActionResult> Login(LoginCommand loginCommand)
         {
             var response = await _mediator.Send(loginCommand);

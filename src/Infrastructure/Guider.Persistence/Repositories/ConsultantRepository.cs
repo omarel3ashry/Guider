@@ -106,7 +106,7 @@ namespace Guider.Persistence.Repositories
                 ? consultants.OrderBy(c => c.AverageRate)
                 : consultants.OrderByDescending(c => c.AverageRate);
 
-            return  consultants;
+            return consultants;
         }
         public async Task UpdateConsultantAverageRate(int consultantId)
         {
@@ -126,7 +126,7 @@ namespace Guider.Persistence.Repositories
             }
         }
 
-       
+
         public async Task<List<Consultant>> GetConsultantsWithsubCategoryAndSchedule()
         {
             return await _context.Consultants
@@ -162,7 +162,7 @@ namespace Guider.Persistence.Repositories
 
         public async Task<IQueryable<Consultant>> getConsultantsbyCategoryId(int categoryId)
         {
-            var consultants = _context.Consultants.Where(c=>c.SubCategory.CategoryId==categoryId)
+            var consultants = _context.Consultants.Where(c => c.SubCategory.CategoryId == categoryId)
            .Include(c => c.User)
            .Include(c => c.SubCategory)
            .ThenInclude(sc => sc.Category)

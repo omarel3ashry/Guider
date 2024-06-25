@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Guider.Application.UseCases.Clients.Command.UpdateImage
 {
-    public class UpdateClientImageCommand:IRequest<BaseResponse<string>>
+    public class UpdateClientImageCommand : IRequest<BaseResponse<string>>
     {
         public int Id { get; set; }
         public int UserId { get; set; }

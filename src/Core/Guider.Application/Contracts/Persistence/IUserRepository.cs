@@ -1,6 +1,4 @@
-﻿using Guider.Application.Responses;
-using Guider.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Guider.Domain.Entities;
 
 namespace Guider.Application.Contracts.Persistence
 {

@@ -4,7 +4,7 @@ namespace Guider.Application.UseCases.Clients.Query.GetClientDetails
 {
     public class AppointmentDTO
     {
-        
+
         public int Id { get; set; }
         public float Rate { get; set; }
         public AppointmentState State { get; set; }

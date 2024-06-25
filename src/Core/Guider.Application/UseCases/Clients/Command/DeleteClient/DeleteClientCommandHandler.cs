@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Exceptions;
-using Guider.Domain.Entities;
 using Guider.Domain.Enums;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Clients.Command.DeleteClient
 {
@@ -18,7 +12,7 @@ namespace Guider.Application.UseCases.Clients.Command.DeleteClient
         private readonly IClientRepository _clientRepository;
         private readonly IAppointmentRepository _appointmentRepository;
 
-        public DeleteClientCommandHandler(IMapper mapper,IClientRepository clientRepository,IAppointmentRepository appointmentRepository)
+        public DeleteClientCommandHandler(IMapper mapper, IClientRepository clientRepository, IAppointmentRepository appointmentRepository)
         {
             _mapper = mapper;
             _clientRepository = clientRepository;
@@ -34,7 +28,7 @@ namespace Guider.Application.UseCases.Clients.Command.DeleteClient
 
             // Mark the associated user as deleted
             client.User.IsDeleted = true;
-            
+
 
             await CancelFutureAppointments(client);
 
@@ -59,6 +53,6 @@ namespace Guider.Application.UseCases.Clients.Command.DeleteClient
             await _appointmentRepository.UpdateRangeAsync(futureAppointments);
 
         }
-           
-        }
+
     }
+}

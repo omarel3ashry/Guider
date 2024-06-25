@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using FluentValidation;
-using Guider.Application.Contracts.Persistence;
-using Guider.Application.Responses;
-using Guider.Application.Exceptions;
-using MediatR;
+﻿using FluentValidation;
 using Guider.Application.Contracts.Identity;
+using Guider.Application.Contracts.Persistence;
+using Guider.Application.Exceptions;
+using Guider.Application.Responses;
+using MediatR;
 
 namespace Guider.Application.UseCases.Users.Command.Login
 {
@@ -14,7 +13,7 @@ namespace Guider.Application.UseCases.Users.Command.Login
         private readonly IValidator<LoginCommand> _validator;
         private readonly IUserRepository _userRepository;
 
-        public LoginCommandHandler(IValidator<LoginCommand> validator,IUserRepository userRepository,
+        public LoginCommandHandler(IValidator<LoginCommand> validator, IUserRepository userRepository,
                                    ITokenFactory tokenFactory)
         {
             _validator = validator;
@@ -29,7 +28,7 @@ namespace Guider.Application.UseCases.Users.Command.Login
             if (!validationResult.IsValid)
                 throw new Exceptions.ValidationException(validationResult);
 
-            var validLogin = await _userRepository.LoginAsync(request.Email,request.Password);
+            var validLogin = await _userRepository.LoginAsync(request.Email, request.Password);
 
             if (!validLogin)
                 throw new BadRequestException("Invalid Email/UserName or password!");
@@ -37,7 +36,7 @@ namespace Guider.Application.UseCases.Users.Command.Login
             var user = await _userRepository.GetByEmailAsync(request.Email);
 
             var token = await _tokenFactory.GenerateToken(user);
-            return new BaseResponse<string> {Message = $"{user.UserName} Authenticated Successfully", Result = token};
+            return new BaseResponse<string> { Message = $"{user.UserName} Authenticated Successfully", Result = token };
 
         }
     }
