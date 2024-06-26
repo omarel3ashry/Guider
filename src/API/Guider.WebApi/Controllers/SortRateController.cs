@@ -1,4 +1,6 @@
 ﻿using Guider.Application.UseCases.Appointments.Query.AppointmentSort;
+using Guider.Application.UseCases.SubCategories.Query.sortbyAvgRate;
+using Guider.Application.UseCases.SubCategories.Query.sortbyhourlyRate;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,13 @@ namespace Guider.WebApi.Controllers
         public async Task<IActionResult> SortRate([FromQuery] bool ascending, int page = 1, int pagesize = 5)
         {
             var query = new SortAppointmentByRateQuery(ascending, page, pagesize);
+            var response = await _mediator.Send(query);
+            return Ok(response);
+        }
+        [HttpGet("sortRateBySubCategory")]
+        public async Task<IActionResult> sortRateBySubCategory([FromQuery] bool ascending, int page = 1, int pagesize = 5, [FromQuery] int subcategoryId = 0)
+        {
+            var query = new sortByAvgRateQuery(ascending, page, pagesize,subcategoryId);
             var response = await _mediator.Send(query);
             return Ok(response);
         }

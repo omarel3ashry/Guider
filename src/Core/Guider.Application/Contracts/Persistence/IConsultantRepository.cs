@@ -11,6 +11,9 @@ namespace Guider.Application.Contracts.Persistence
         Task<List<Consultant>> GetConsultantsByUserNameAsync(string searchQuery);
         Task<(List<Consultant> Consultants, int TotalCount)> GetPaginatedConsultantsAsync(int page, int pageSize);
         Task<IQueryable<Consultant>> GetSortedByAverageRateAsync(bool ascending);
+        Task<IQueryable<Consultant>> GetSubCategorySortedByAverageRateAsync(bool ascending,int subcategoryId);
+        Task<IQueryable<Consultant>> GetSubCategorySortedByHourlyRateAsync(bool ascending, int subcategoryId);
+
         Task UpdateConsultantAverageRate(int consultantId);
 
         Task<List<Consultant>> GetConsultantsWithsubCategoryAndSchedule();

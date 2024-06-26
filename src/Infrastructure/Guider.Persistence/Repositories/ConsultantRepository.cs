@@ -179,5 +179,37 @@ namespace Guider.Persistence.Repositories
            .AsQueryable();
             return consultants;
         }
+
+        public async Task<IQueryable<Consultant>> GetSubCategorySortedByAverageRateAsync(bool ascending, int subcategoryId)
+        {
+            var consultants = _context.Consultants
+            .Include(c => c.User)
+            .Include(c => c.SubCategory)
+            .ThenInclude(sc => sc.Category)
+            .Where(c=>c.SubCategoryId == subcategoryId)
+            .AsQueryable();
+
+            consultants = ascending
+                ? consultants.OrderBy(c => c.AverageRate)
+                : consultants.OrderByDescending(c => c.AverageRate);
+
+            return consultants;
+        }
+
+        public async Task<IQueryable<Consultant>> GetSubCategorySortedByHourlyRateAsync(bool ascending, int subcategoryId)
+        {
+            var consultants = _context.Consultants
+             .Include(c => c.User)
+             .Include(c => c.SubCategory)
+             .ThenInclude(sc => sc.Category)
+             .Where(c => c.SubCategoryId == subcategoryId)
+             .AsQueryable();
+
+            consultants = ascending
+                ? consultants.OrderBy(c => c.HourlyRate)
+                : consultants.OrderByDescending(c => c.HourlyRate);
+
+            return consultants;
+        }
     }
 }
