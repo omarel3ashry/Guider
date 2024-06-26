@@ -9,16 +9,20 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
 {
     public class ConsultantRegisterCommandHandler : IRequestHandler<ConsultantRegisterCommand, AuthenticationResponse>
     {
-        private readonly IMapper _mapper;
-        private readonly IValidator<ConsultantRegisterCommand> _validator;
+        private readonly IConsultantRepository _consultantRepository;
         private readonly IRegisterUserRepository<Consultant> _userRepository;
+        private readonly IValidator<ConsultantRegisterCommand> _validator;
+        private readonly IMapper _mapper;
 
-        public ConsultantRegisterCommandHandler(IMapper mapper, IValidator<ConsultantRegisterCommand> validator,
-                                                IRegisterUserRepository<Consultant> userRepository)
+        public ConsultantRegisterCommandHandler(IConsultantRepository consultantRepository,
+                                                IRegisterUserRepository<Consultant> userRepository,
+                                                IValidator<ConsultantRegisterCommand> validator,
+                                                IMapper mapper)
         {
-            _mapper = mapper;
-            _validator = validator;
+            _consultantRepository = consultantRepository;
             _userRepository = userRepository;
+            _validator = validator;
+            _mapper = mapper;
         }
 
         public async Task<AuthenticationResponse> Handle(ConsultantRegisterCommand request, CancellationToken cancellationToken)
@@ -35,7 +39,9 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
                 return result;
             var consultant = _mapper.Map<Consultant>(request);
             consultant.UserId = result.Id;
-            //save into database using consultant repository
+
+            await _consultantRepository.AddAsync(consultant);
+
             return result;
         }
     }

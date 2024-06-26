@@ -13,7 +13,7 @@ namespace Guider.Application.UseCases.Users
         {
             CreateMap<ClientRegisterCommand, User>()
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => new MailAddress(src.Email).User));
-            CreateMap<ClientRegisterCommand, Domain.Entities.Client>();
+            CreateMap<ClientRegisterCommand, Client>();
             CreateMap<ConsultantRegisterCommand, User>()
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => new MailAddress(src.Email).User));
             CreateMap<ConsultantRegisterCommand, Consultant>();

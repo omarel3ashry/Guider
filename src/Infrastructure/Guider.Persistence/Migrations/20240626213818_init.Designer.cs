@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Guider.Persistence.Migrations
 {
     [DbContext(typeof(GuiderContext))]
-    [Migration("20240624200952_init")]
+    [Migration("20240626213818_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -118,12 +118,10 @@ namespace Guider.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BankAccount")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -149,7 +147,6 @@ namespace Guider.Persistence.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("BankAccount")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -162,7 +159,6 @@ namespace Guider.Persistence.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
