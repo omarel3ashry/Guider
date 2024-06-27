@@ -26,9 +26,11 @@ namespace Guider.Identity.Authentication
         public async Task<string> GenerateToken(User user)
         {
             var roles = await _userRepository.GetUserRolesAsync(user);
+            var id = await _userRepository.GetId(user.Id, roles[0]);
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sid, user.Id.ToString()),
+                new Claim("id",id.ToString()),
                 new Claim(ClaimTypes.Name,$"{user.FirstName} {user.LastName}" ),
                 new Claim(ClaimTypes.Role, roles[0])
             };

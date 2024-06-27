@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Guider.Persistence.Migrations
 {
     [DbContext(typeof(GuiderContext))]
-    [Migration("20240626213818_init")]
+    [Migration("20240627002419_init")]
     partial class init
     {
         /// <inheritdoc />
