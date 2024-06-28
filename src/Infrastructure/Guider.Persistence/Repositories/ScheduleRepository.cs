@@ -23,7 +23,7 @@ namespace Guider.Persistence.Repositories
         public async Task<List<Schedule>> GetSchedulesByConsultantIdAsync(int consultantId)
         {
             return await _context.Schedules
-                .Where(s => s.ConsultantId == consultantId)
+                .Where(e => e.ConsultantId == consultantId && !e.IsReserved)
                 .ToListAsync();
         }
         public async Task<Schedule> GetScheduleByConsultantIdAndDateAsync(int consultantId, DateTime date)
