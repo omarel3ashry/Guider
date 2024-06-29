@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Guider.Application.UseCases.Appointments.Query.GetAllForConsultant;
+using Guider.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Guider.Application.Responses
@@ -28,6 +30,13 @@ namespace Guider.Application.Responses
             var totalCount = await query.CountAsync();
             var sourceItems = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             var destItems = mapper.Map<List<TDest>>(sourceItems);
+            return new PaginatedList<TDest, TSource>(destItems, page, pageSize, totalCount);
+        }
+        public static async Task<PaginatedList<TDest, TSource>> CreateWithProjectToAsync(IQueryable<TSource> query, IMapper mapper, int page, int pageSize)
+        {
+            var totalCount = await query.CountAsync();
+            var sourceItems = query.Skip((page - 1) * pageSize).Take(pageSize);
+            var destItems = await mapper.ProjectTo<TDest>(sourceItems).ToListAsync();
             return new PaginatedList<TDest, TSource>(destItems, page, pageSize, totalCount);
         }
 
