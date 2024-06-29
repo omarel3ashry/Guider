@@ -18,9 +18,11 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
                                                 IRegisterUserRepository<Consultant> userRepository,
                                                 IValidator<ConsultantRegisterCommand> validator,
                                                 IMapper mapper)
+
         {
             _consultantRepository = consultantRepository;
             _userRepository = userRepository;
+
             _validator = validator;
             _mapper = mapper;
         }
@@ -39,9 +41,10 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
                 return result;
             var consultant = _mapper.Map<Consultant>(request);
             consultant.UserId = result.Id;
-
-            await _consultantRepository.AddAsync(consultant);
-
+            
+            bool created = await _consultantRepository.AddAsync(consultant);
+            if (!created)
+                throw new Exceptions.BadRequestException("Error in create Consultant");
             return result;
         }
     }
