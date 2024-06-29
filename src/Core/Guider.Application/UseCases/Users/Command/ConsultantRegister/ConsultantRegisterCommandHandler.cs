@@ -12,13 +12,16 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
         private readonly IMapper _mapper;
         private readonly IValidator<ConsultantRegisterCommand> _validator;
         private readonly IRegisterUserRepository<Consultant> _userRepository;
+        private readonly IRepository<Consultant> _consultantRepository;
 
         public ConsultantRegisterCommandHandler(IMapper mapper, IValidator<ConsultantRegisterCommand> validator,
-                                                IRegisterUserRepository<Consultant> userRepository)
+                                                IRegisterUserRepository<Consultant> userRepository,
+                                                IRepository<Consultant> consultantRepository)
         {
             _mapper = mapper;
             _validator = validator;
             _userRepository = userRepository;
+            _consultantRepository = consultantRepository;
         }
 
         public async Task<AuthenticationResponse> Handle(ConsultantRegisterCommand request, CancellationToken cancellationToken)
@@ -35,7 +38,9 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
                 return result;
             var consultant = _mapper.Map<Consultant>(request);
             consultant.UserId = result.Id;
-            //save into database using consultant repository
+            bool created = await _consultantRepository.AddAsync(consultant);
+            if (!created)
+                throw new Exceptions.BadRequestException("Error in create Consultant");
             return result;
         }
     }
