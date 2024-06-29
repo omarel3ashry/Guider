@@ -1,5 +1,4 @@
-﻿using Guider.Domain.Entities;
-using Guider.Domain.Enums;
+﻿using Guider.Domain.Enums;
 
 namespace Guider.Application.UseCases.Consultants.Query.GetAll
 {

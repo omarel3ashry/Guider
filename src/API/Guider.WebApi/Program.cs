@@ -15,22 +15,7 @@ namespace Guider.WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            //builder.Services.AddSerilog((service, config) =>
-            //{
-            //    config.ReadFrom.Configuration(builder.Configuration)
-            //          .ReadFrom.Services(service)
-            //          .Enrich.FromLogContext()
-            //          .WriteTo.MSSqlServer(connectionString: "Data Source=.;Initial Catalog=MyDB;Integrated Security=True;Encrypt=False;Trust Server Certificate=True",
-            //                               sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
-            //                               {
-            //                                   TableName = "Logs",
-            //                                   BatchPostingLimit = 5,
-            //                                   AutoCreateSqlTable = true
-            //                               }
 
-            //                               )
-            //          .WriteTo.Console();
-            //});
 
 
             builder.Services.AddControllers();
@@ -39,6 +24,20 @@ namespace Guider.WebApi
                             .AddInfrastructureService()
                             .AddPersistanceService(builder.Configuration)
                             .AddIdentityServices(builder.Configuration);
+            //builder.Services.AddSerilog((service, config) =>
+            //{
+            //    config.ReadFrom.Configuration(builder.Configuration)
+            //          .ReadFrom.Services(service)
+            //          .Enrich.FromLogContext()
+            //          .WriteTo.MSSqlServer(connectionString: builder.Configuration.GetConnectionString("DevConnection"),
+            //                               sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+            //                               {
+            //                                   TableName = "Logs",
+            //                                   AutoCreateSqlTable = true
+            //                               }
+            //                               )
+            //          .WriteTo.Console();
+            //});
 
 
             builder.Services.AddCors(

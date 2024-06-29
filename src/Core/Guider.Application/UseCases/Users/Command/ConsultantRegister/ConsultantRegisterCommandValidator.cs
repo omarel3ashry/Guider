@@ -24,7 +24,7 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .MinimumLength(8).WithMessage("{PropertyName} must be at least 8 Charachers.")
                 .MaximumLength(50).WithMessage("{PropertyName} should not exceed 50 Charachers.");
-            RuleFor(e=> e.Bio)
+            RuleFor(e => e.Bio)
                 .NotNull().WithMessage("{PropertyName} is required.")
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .MinimumLength(50).WithMessage("{PropertyName} must be at least 50 Charachers.")

@@ -2,16 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Persistence.Data
 {
-    public class GuiderContext : IdentityDbContext<User, IdentityRole<int>,int>
+    public class GuiderContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Appointment> Appointment { get; set; }

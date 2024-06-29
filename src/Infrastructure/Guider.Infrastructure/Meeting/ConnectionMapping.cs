@@ -33,7 +33,7 @@
             string? connection;
 
             _connections.TryGetValue(key, out connection);
-            
+
             return connection;
         }
 

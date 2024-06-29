@@ -9,19 +9,22 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
 {
     public class ConsultantRegisterCommandHandler : IRequestHandler<ConsultantRegisterCommand, AuthenticationResponse>
     {
-        private readonly IMapper _mapper;
-        private readonly IValidator<ConsultantRegisterCommand> _validator;
+        private readonly IConsultantRepository _consultantRepository;
         private readonly IRegisterUserRepository<Consultant> _userRepository;
-        private readonly IRepository<Consultant> _consultantRepository;
+        private readonly IValidator<ConsultantRegisterCommand> _validator;
+        private readonly IMapper _mapper;
 
-        public ConsultantRegisterCommandHandler(IMapper mapper, IValidator<ConsultantRegisterCommand> validator,
+        public ConsultantRegisterCommandHandler(IConsultantRepository consultantRepository,
                                                 IRegisterUserRepository<Consultant> userRepository,
-                                                IRepository<Consultant> consultantRepository)
+                                                IValidator<ConsultantRegisterCommand> validator,
+                                                IMapper mapper)
+
         {
-            _mapper = mapper;
-            _validator = validator;
-            _userRepository = userRepository;
             _consultantRepository = consultantRepository;
+            _userRepository = userRepository;
+
+            _validator = validator;
+            _mapper = mapper;
         }
 
         public async Task<AuthenticationResponse> Handle(ConsultantRegisterCommand request, CancellationToken cancellationToken)
@@ -38,6 +41,7 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
                 return result;
             var consultant = _mapper.Map<Consultant>(request);
             consultant.UserId = result.Id;
+            
             bool created = await _consultantRepository.AddAsync(consultant);
             if (!created)
                 throw new Exceptions.BadRequestException("Error in create Consultant");

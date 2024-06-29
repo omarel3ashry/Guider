@@ -1,15 +1,10 @@
 ﻿using Guider.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Transactions.Dto
 {
     internal class TransactionToReturnDto
     {
-        public int id {  get; set; }
+        public int id { get; set; }
         public TransactionType Type { get; set; }
         public DateTime Date { get; set; }
         public float Amount { get; set; }

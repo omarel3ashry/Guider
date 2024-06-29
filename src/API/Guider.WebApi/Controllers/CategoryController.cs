@@ -31,7 +31,7 @@ namespace Guider.WebApi.Controllers
         public async Task<IActionResult> GetAllCategories()
         {
             var query = new getCategoryListQuery();
-            var result=await _mediator.Send(query);
+            var result = await _mediator.Send(query);
             if (result == null || result.Count == 0)
             {
                 return NotFound("No category found .");

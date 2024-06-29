@@ -1,9 +1,7 @@
-﻿using Guider.Application.UseCases.Categories.Query.GetListOfCategories;
-using Guider.Application.UseCases.SubCategories.Query;
+﻿using Guider.Application.UseCases.SubCategories.Query;
 using Guider.Application.UseCases.SubCategories.Query.getSubCategoryByCategoryId;
 using Guider.Application.UseCases.SubCategories.Query.getSubCategoryList;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
@@ -48,14 +46,14 @@ namespace Guider.WebApi.Controllers
             }
             return Ok(result);
         }
-        [HttpGet ("getbyId")]
+        [HttpGet("getbyId")]
         public async Task<IActionResult> getAllSubCategoriesByCategoryId(int categoryId)
         {
             var query = new getSubCategoryByCategoryIdQuery()
             {
-                categoryId=categoryId
+                categoryId = categoryId
             };
-            var result=await _mediator.Send(query);
+            var result = await _mediator.Send(query);
             if (result == null || result.Count == 0)
             {
                 return NotFound("No SubCategory found .");

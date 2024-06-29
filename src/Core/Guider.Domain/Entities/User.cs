@@ -8,6 +8,6 @@ namespace Guider.Domain.Entities
         public string LastName { get; set; }
         public bool IsDeleted { get; set; }
 
-         public IReadOnlyCollection<Transaction> Transactions { get; set; }
+        public IReadOnlyCollection<Transaction> Transactions { get; set; }
     }
 }

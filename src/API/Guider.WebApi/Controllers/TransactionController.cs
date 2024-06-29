@@ -1,6 +1,5 @@
 ﻿using Guider.Application.UseCases.Transactions.Command.AddTransaction;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
@@ -12,13 +11,13 @@ namespace Guider.WebApi.Controllers
         private readonly IMediator _mediator;
         public TransactionController(IMediator mediator)
         {
-            
+
             _mediator = mediator;
         }
 
         [HttpPost]
         public async Task<ActionResult<bool>> PostTransaction(AddTransactionCommand AddTransactionCommand)
-         {
+        {
             var transaction = await _mediator.Send(AddTransactionCommand);
             return Ok(transaction);
         }

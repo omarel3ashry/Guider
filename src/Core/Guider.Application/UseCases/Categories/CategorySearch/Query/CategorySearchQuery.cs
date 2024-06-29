@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Collections.Generic;
 
 namespace Guider.Application.UseCases.Categories.CategorySearch.Query
 {

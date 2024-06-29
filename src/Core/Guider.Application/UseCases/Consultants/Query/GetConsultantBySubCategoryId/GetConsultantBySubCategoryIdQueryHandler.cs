@@ -2,14 +2,8 @@
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
 using Guider.Application.UseCases.Consultants.Query.ConsultantPagination;
-using Guider.Application.UseCases.Consultants.Query.GetConsultantsByCategoryId;
 using Guider.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Consultants.Query.GetConsultantBySubCategoryId
 {
@@ -20,7 +14,7 @@ namespace Guider.Application.UseCases.Consultants.Query.GetConsultantBySubCatego
         public GetConsultantBySubCategoryIdQueryHandler(IMapper mapper, IConsultantRepository consultantRepository)
         {
             _mapper = mapper;
-            _consultantRepository=consultantRepository;
+            _consultantRepository = consultantRepository;
         }
         public async Task<PaginatedList<ConsultantDto, Consultant>> Handle(GetConsultantBySubCategoryIdQuery request, CancellationToken cancellationToken)
         {

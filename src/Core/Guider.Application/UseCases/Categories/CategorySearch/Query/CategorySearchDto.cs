@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Guider.Application.UseCases.Categories.CategorySearch.Query
+﻿namespace Guider.Application.UseCases.Categories.CategorySearch.Query
 {
     public class CategorySearchDto
     {

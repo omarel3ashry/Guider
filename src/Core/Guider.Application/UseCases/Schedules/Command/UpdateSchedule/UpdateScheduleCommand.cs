@@ -1,14 +1,9 @@
 ﻿
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Schedules.Command.UpdateSchedule
 {
-    public class UpdateScheduleCommand:IRequest<bool>
+    public class UpdateScheduleCommand : IRequest<bool>
     {
         public int ConsultantId { get; set; }
         public DateTime Date { get; set; }

@@ -1,11 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Guider.Application.Responses
+﻿namespace Guider.Application.Responses
 {
     public class AuthenticationResponse
     {

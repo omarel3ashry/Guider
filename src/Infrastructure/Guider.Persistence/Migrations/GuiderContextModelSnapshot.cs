@@ -67,8 +67,8 @@ namespace Guider.Persistence.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Duration")
-                        .HasColumnType("real");
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<float>("Rate")
                         .HasColumnType("real");
@@ -115,12 +115,10 @@ namespace Guider.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BankAccount")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -146,7 +144,6 @@ namespace Guider.Persistence.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("BankAccount")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -159,7 +156,6 @@ namespace Guider.Persistence.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -196,8 +192,8 @@ namespace Guider.Persistence.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Timespan")
-                        .HasColumnType("real");
+                    b.Property<bool>("IsReserved")
+                        .HasColumnType("bit");
 
                     b.HasKey("ConsultantId", "Date");
 

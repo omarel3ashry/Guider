@@ -13,7 +13,7 @@ namespace Guider.Persistence.Repositories
 
         public async Task<List<SubCategory>> getbyCategoryId(int categoryId)
         {
-         return await _context.SubCategories.Where(s=>s.CategoryId== categoryId).ToListAsync();
+            return await _context.SubCategories.Where(s => s.CategoryId == categoryId).ToListAsync();
 
         }
 

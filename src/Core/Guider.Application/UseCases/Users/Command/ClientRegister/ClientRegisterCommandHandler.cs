@@ -9,18 +9,22 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
 {
     public class ClientRegisterCommandHandler : IRequestHandler<ClientRegisterCommand, AuthenticationResponse>
     {
+        private readonly IClientRepository _clientRepository;
         private readonly IMapper _mapper;
         private readonly IValidator<ClientRegisterCommand> _validator;
         private readonly IRegisterUserRepository<Client> _userRepository;
         private readonly IRepository<Client> _clientRepository;
 
-        public ClientRegisterCommandHandler(IMapper mapper, IValidator<ClientRegisterCommand> validator,
-                                            IRegisterUserRepository<Client> userRepository, IRepository<Client> clientRepository)
+        public ClientRegisterCommandHandler(IClientRepository clientRepository,
+                                            IRegisterUserRepository<Client> userRepository,
+                                            IValidator<ClientRegisterCommand> validator,
+                                            IMapper mapper)
         {
-            _mapper = mapper;
-            _validator = validator;
-            _userRepository = userRepository;
             _clientRepository = clientRepository;
+            _userRepository = userRepository;
+            _validator = validator;
+            _mapper = mapper;
+
         }
 
         public async Task<AuthenticationResponse> Handle(ClientRegisterCommand request, CancellationToken cancellationToken)
@@ -36,8 +40,10 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
 
             if (!result.Success)
                 return result;
+
             var client = _mapper.Map<Client>(request);
             client.UserId = result.Id;
+            
             bool created = await _clientRepository.AddAsync(client);
             if (!created)
                 throw new Exceptions.BadRequestException("Error in create Client");

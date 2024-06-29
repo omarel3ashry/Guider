@@ -33,7 +33,7 @@ namespace Guider.Persistence.Repositories
                     Errors = roleResult.Errors.Select(e => e.Description).ToArray()
                 };
 
-            return new AuthenticationResponse() { Success = roleResult.Succeeded , Id = user.Id };
+            return new AuthenticationResponse() { Success = roleResult.Succeeded, Id = user.Id };
         }
     }
 }

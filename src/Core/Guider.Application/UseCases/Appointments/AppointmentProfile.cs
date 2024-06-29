@@ -1,27 +1,21 @@
 ﻿using AutoMapper;
-using Guider.Application.UseCases.Appointments.command.insertAppointment;
-using Guider.Application.UseCases.Appointments.Dto;
+using Guider.Application.UseCases.Appointments.Command.AddAppointment;
+using Guider.Application.UseCases.Appointments.Query.GetAllForConsultant;
+using Guider.Application.UseCases.Appointments.Query.GetById;
 using Guider.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Appointments
 {
-    internal class AppointmentProfile: Profile
+    internal class AppointmentProfile : Profile
     {
         public AppointmentProfile()
         {
-
-            CreateMap<AppointmentToUpdateDto, Appointment>()
-                    .ForMember(dest => dest.Id, opt => opt.Ignore());
-            CreateMap<Appointment, AppointmentToReturnDto>();
+            CreateMap<Appointment, AppointmentDto>();
             CreateMap<AddAppointmentCommand, Appointment>();
+            CreateMap<Appointment, AppointmentListDto>()
+                .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => src.Consultant.User.FirstName))
+                .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.Consultant.SubCategory.Name))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Consultant.SubCategory.Category.Name));
         }
-
-
-
     }
 }

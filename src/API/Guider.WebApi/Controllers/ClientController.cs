@@ -1,9 +1,9 @@
-﻿using Guider.Application.UseCases.client.Command.DeleteClient;
-using Guider.Application.UseCases.client.Command.UpdateBankAccount;
-using Guider.Application.UseCases.client.Command.UpdateClient;
-using Guider.Application.UseCases.client.Command.UpdateImage;
-using Guider.Application.UseCases.client.Query.GetAllClients;
-using Guider.Application.UseCases.client.Query.GetClientDetails;
+﻿using Guider.Application.UseCases.Clients.Command.DeleteClient;
+using Guider.Application.UseCases.Clients.Command.UpdateBankAccount;
+using Guider.Application.UseCases.Clients.Command.UpdateClient;
+using Guider.Application.UseCases.Clients.Command.UpdateImage;
+using Guider.Application.UseCases.Clients.Query.GetAllClients;
+using Guider.Application.UseCases.Clients.Query.GetClientDetails;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

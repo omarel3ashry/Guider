@@ -1,20 +1,13 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
-using Guider.Application.UseCases.Appointments.Query;
-using Guider.Application.UseCases.Transactions.Command.AddTransaction;
 using Guider.Application.UseCases.Transactions.Dto;
 using Guider.Domain.Enums;
 using MediatR;
 using Stripe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Transaction = Guider.Domain.Entities.Transaction;
 
 
-namespace Guider.Application.UseCases.Payment.command.PayToconsultant
+namespace Guider.Application.UseCases.Payment.Command.PayToConsultant
 {
     public class PayToConsultantCommandHandler : IRequestHandler<PayToConsultantCommand, bool>
     {

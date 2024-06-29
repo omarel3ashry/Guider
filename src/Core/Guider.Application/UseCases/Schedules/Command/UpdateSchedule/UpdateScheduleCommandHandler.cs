@@ -2,11 +2,6 @@
 using Guider.Application.Contracts.Persistence;
 using Guider.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Schedules.Command.UpdateSchedule
 {
@@ -30,14 +25,21 @@ namespace Guider.Application.UseCases.Schedules.Command.UpdateSchedule
                 throw new ArgumentException("Schedule not found for the given consultant and date.");
             }
 
-            var updatedSchedule = new Schedule
-            {
-                ConsultantId = request.ConsultantId,
-                Date = request.NewDate,
-                Timespan = request.TimeSpan
-            };
+            //var updatedSchedule = new Schedule
+            //{
+            //    ConsultantId = request.ConsultantId,
+            //    Date = request.NewDate,
+            //    IsReserved = false
 
-            return await _scheduleRepository.UpdateScheduleAsync(request.ConsultantId, request.Date, updatedSchedule);
+            //};
+            List<Schedule> schedules = new List<Schedule>();
+
+            for (int i = 0; i < request.TimeSpan; i++)
+            {
+                schedules.Add(new Schedule { ConsultantId = request.ConsultantId, Date = request.NewDate.AddHours(i), IsReserved = false });
+            }
+
+            return await _scheduleRepository.UpdateScheduleAsync(existingSchedule, schedules);
         }
     }
 }
