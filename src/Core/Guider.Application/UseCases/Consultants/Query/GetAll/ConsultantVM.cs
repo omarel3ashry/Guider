@@ -12,7 +12,7 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-
+        public float? AverageRate { get; set; }
         public string SubCategoryName { get; set; }
         public string CategoryName { get; set; }
         public List<ScheduledDto> Schedules { get; set; }

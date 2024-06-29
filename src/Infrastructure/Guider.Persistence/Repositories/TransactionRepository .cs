@@ -18,5 +18,15 @@ namespace Guider.Persistence.Repositories
             return transaction;
         }
 
+        public async Task<List<Transaction>> GetTransactionsByUserId(int userId)
+        {
+
+            return await _context.Transactions
+                  .Include(t => t.Appointment).ThenInclude(a=>a.Client).ThenInclude(a=>a.User).Include(t => t.Appointment)
+            .ThenInclude(a => a.Consultant)
+                .ThenInclude(c => c.User)
+                  .Where(t => t.UserId == userId)
+                  .ToListAsync();
+        }
     }
 }

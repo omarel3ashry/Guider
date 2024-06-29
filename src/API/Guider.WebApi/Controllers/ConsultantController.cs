@@ -18,7 +18,7 @@ namespace Guider.WebApi.Controllers
     public class ConsultantController : ControllerBase
     {
         private readonly IMediator _mediator;
-
+        private readonly string _path = @"wwwroot\Images\";
         public ConsultantController(IMediator mediator)
         {
             _mediator = mediator;
@@ -127,6 +127,28 @@ namespace Guider.WebApi.Controllers
             };
             var response = await _mediator.Send(query);
             return Ok(response);
+        }
+
+
+        [HttpPut("UploadProfileImage")]
+        public async Task<IActionResult> UploadProfileImage(int Id, int UserId, IFormFile formFile)
+        {
+            UpdateConsultantImageCommand command = new UpdateConsultantImageCommand() { Id = Id, UserId = UserId };
+            string fileExe = formFile.FileName.Split('.').Last();
+            string imagePath = $"Reviewer\\{command.Id}_img.{fileExe}";
+            string fullPath = _path + imagePath;
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+            using (FileStream stream = System.IO.File.Create(fullPath))
+            {
+                await formFile.CopyToAsync(stream);
+            }
+            Console.WriteLine("successful upload ! " + imagePath);
+            command.Image = imagePath;
+            var response = await _mediator.Send(command);
+            return Ok(imagePath);
         }
     }
 }

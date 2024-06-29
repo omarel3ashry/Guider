@@ -9,6 +9,9 @@ namespace Guider.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Schedule> builder)
         {
             builder.HasKey(e => new { e.ConsultantId, e.Date });
+            
+
+
 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Guider.Application.UseCases.Transactions.Command.AddTransaction;
+using Guider.Application.UseCases.Transactions.Query.GetTransactionQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,15 @@ namespace Guider.WebApi.Controllers
             return Ok(transaction);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<TransactionReturnDto>> getTranscaction(int userId)
+        {
+
+            var query = new getTransactionByUserIdQuery() { UserId = userId };
+            var response= await _mediator.Send(query);
+            return Ok(response);
+
+        }
 
     }
 }
