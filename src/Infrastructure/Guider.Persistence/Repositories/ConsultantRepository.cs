@@ -211,5 +211,22 @@ namespace Guider.Persistence.Repositories
 
             return consultants;
         }
+        public async Task<List<Category>> GetCategoriesWithConsultantsAsync()
+        {
+            return await _context.Categories
+                .Include(c => c.SubCategories)
+                    .ThenInclude(sc => sc.Consultants)
+                .ToListAsync();
+        }
+        public async Task<List<Consultant>> GetTopConsultantsByAverageRateAsync()
+        {
+            return await _context.Consultants
+                 .Include(c => c.User)
+                 .Include(c => c.SubCategory)
+                .Where(c => c.AverageRate.HasValue)
+                .OrderByDescending(c => c.AverageRate)
+                .Take(4)
+                .ToListAsync();
+        }
     }
 }
