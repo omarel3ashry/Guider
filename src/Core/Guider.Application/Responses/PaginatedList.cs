@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Guider.Application.UseCases.Appointments.Query.GetAllForConsultant;
-using Guider.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Guider.Application.Responses

@@ -17,7 +17,7 @@ namespace Guider.Application
         {
             services.AddMediatR(config =>
                     config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
-            services.AddTransient<IRequestHandler<GetAllAppointmentsForUserQuery<Consultant>,BaseResponse<PaginatedList<AppointmentListDto,Appointment>>>, GetAllAppointmentsForUserHandler<Consultant>>();
+            services.AddTransient<IRequestHandler<GetAllAppointmentsForUserQuery<Consultant>, BaseResponse<PaginatedList<AppointmentListDto, Appointment>>>, GetAllAppointmentsForUserHandler<Consultant>>();
             services.AddTransient<IRequestHandler<GetAllAppointmentsForUserQuery<Client>, BaseResponse<PaginatedList<AppointmentListDto, Appointment>>>, GetAllAppointmentsForUserHandler<Client>>();
             services.AddTransient<IRequestHandler<GetAppointmentsStatsForUserQuery<Client>, BaseResponse<AppointmentsStatsDto>>, GetAppointmentsStatsForUserQueryHandler<Client>>();
             services.AddTransient<IRequestHandler<GetAppointmentsStatsForUserQuery<Consultant>, BaseResponse<AppointmentsStatsDto>>, GetAppointmentsStatsForUserQueryHandler<Consultant>>();

@@ -4,11 +4,6 @@ using Guider.Application.Responses;
 using Guider.Application.UseCases.Appointments.Query.AppointmentSort;
 using Guider.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.SubCategories.Query.sortbyAvgRate
 {
@@ -16,10 +11,10 @@ namespace Guider.Application.UseCases.SubCategories.Query.sortbyAvgRate
     {
         private readonly IConsultantRepository _consultantRepository;
         private readonly IMapper _mapper;
-        public sortByAvgRateQueryHandler(IMapper mapper,IConsultantRepository consultantRepository)
+        public sortByAvgRateQueryHandler(IMapper mapper, IConsultantRepository consultantRepository)
         {
-                _mapper = mapper;
-                _consultantRepository = consultantRepository;
+            _mapper = mapper;
+            _consultantRepository = consultantRepository;
         }
         public async Task<PaginatedList<SortconsultantByRateDto, Consultant>> Handle(sortByAvgRateQuery request, CancellationToken cancellationToken)
         {

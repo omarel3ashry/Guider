@@ -2,8 +2,8 @@
 
 namespace Guider.Domain.Entities
 {
-    public class Consultant:Consumer
-    {     
+    public class Consultant : Consumer
+    {
         public string Bio { get; set; }
         public float HourlyRate { get; set; }
         public bool IsActive { get; set; }
@@ -12,6 +12,6 @@ namespace Guider.Domain.Entities
         public float? AverageRate { get; set; }
         public SubCategory SubCategory { get; set; }
         public IReadOnlyCollection<Schedule> Schedules { get; set; }
-  
+
     }
 }

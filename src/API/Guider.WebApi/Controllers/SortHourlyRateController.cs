@@ -27,9 +27,9 @@ namespace Guider.WebApi.Controllers
 
 
         [HttpGet("sortHourlyRateBySubCategory")]
-        public async Task<ActionResult<PaginatedConsultantDto>> sortHourlyRateBySubCategory([FromQuery] bool ascending, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int subcategoryId=0)
+        public async Task<ActionResult<PaginatedConsultantDto>> sortHourlyRateBySubCategory([FromQuery] bool ascending, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int subcategoryId = 0)
         {
-            var query = new sortByHourlyRateQuery(ascending, page, pageSize,subcategoryId);
+            var query = new sortByHourlyRateQuery(ascending, page, pageSize, subcategoryId);
             var result = await _mediator.Send(query);
             return Ok(result);
         }

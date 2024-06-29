@@ -37,14 +37,14 @@ namespace Guider.WebApi.Controllers
             Enum.TryParse(role!.Value, out UserRole parsedRole);
             object? result;
             if (parsedRole == UserRole.Client)
-                result = await _mediator.Send(new GetAppointmentsStatsForUserQuery<Client>{ Id = int.Parse(id!.Value) });
+                result = await _mediator.Send(new GetAppointmentsStatsForUserQuery<Client> { Id = int.Parse(id!.Value) });
             else
                 result = await _mediator.Send(new GetAppointmentsStatsForUserQuery<Consultant> { Id = int.Parse(id!.Value) });
             return Ok(result);
         }
 
         [HttpGet]
-        public async Task<ActionResult<AppointmentDto>> GetUserAppointments(int state, int pageSize = 5, int page = 1)
+        public async Task<ActionResult<AppointmentDto>> GetUserAppointments(int state, int page = 1, int pageSize = 5)
         {
             var id = HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id");
             var role = HttpContext.User.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Role);

@@ -5,7 +5,6 @@ using Guider.Infrastructure.Meeting;
 using Guider.Persistence;
 using Guider.WebApi.MIddlewares;
 using Microsoft.OpenApi.Models;
-using Serilog;
 
 namespace Guider.WebApi
 {
@@ -16,7 +15,7 @@ namespace Guider.WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            
+
 
 
             builder.Services.AddControllers();

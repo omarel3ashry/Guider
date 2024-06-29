@@ -2,8 +2,8 @@
 
 namespace Guider.Domain.Entities
 {
-    public class Client :Consumer
+    public class Client : Consumer
     {
-        
+
     }
 }

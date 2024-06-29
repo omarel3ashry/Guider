@@ -1,14 +1,9 @@
 ﻿using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
-using Guider.Application.UseCases.Appointments.Query.GetAllForConsultant;
 using Guider.Domain.Common;
-using Guider.Domain.Entities;
+using Guider.Domain.Enums;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Guider.Application.UseCases.Appointments.Query.GetAppointmentsStatsForUser
 {
@@ -23,8 +18,17 @@ namespace Guider.Application.UseCases.Appointments.Query.GetAppointmentsStatsFor
         public async Task<BaseResponse<AppointmentsStatsDto>> Handle(GetAppointmentsStatsForUserQuery<T> request, CancellationToken cancellationToken)
         {
             var response = new BaseResponse<AppointmentsStatsDto>();
-            var appointments =await _appointmentRepository.GetStatsForUser<T>(request.Id);
-            //response.Result = await PaginatedList<AppointmentListDto, Appointment>.CreateAsync(appointments, _mapper, request.Page, request.PageSize);
+            var statsQuery = _appointmentRepository.GetStatsForUser<T>(request.Id);
+            var statsDto = await statsQuery.Select(e => new AppointmentsStatsDto()
+            {
+                CompletedCount = e.Where(e => e.State == AppointmentState.Completed).Count(),
+                CompletedHours = e.Where(e => e.State == AppointmentState.Completed).Sum(e => e.Duration),
+                UpcomingCount = e.Where(e => e.State == AppointmentState.Pending).Count(),
+                UpcomingHours = e.Where(e => e.State == AppointmentState.Pending).Sum(e => e.Duration),
+                CanceledCount = e.Where(e => e.State == AppointmentState.Canceled).Count(),
+            }).FirstOrDefaultAsync();
+
+            response.Result = statsDto;
             return response;
         }
     }

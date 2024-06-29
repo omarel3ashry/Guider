@@ -1,5 +1,4 @@
 ﻿using Guider.Application.Contracts.Persistence;
-using Guider.Application.UseCases.Appointments.Query.GetAppointmentsStatsForUser;
 using Guider.Domain.Common;
 using Guider.Domain.Entities;
 using Guider.Domain.Enums;
@@ -56,30 +55,21 @@ namespace Guider.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IQueryable<Appointment> GetAllForUser<T>(int id, int state) where T:Consumer
+        public IQueryable<Appointment> GetAllForUser<T>(int id, int state) where T : Consumer
         {
             return _context.Set<T>()
-                .Include(e => e.Appointments.Where(e => e.State == (AppointmentState)state))
-                .Where(e=>e.Id==id)
-                .SelectMany(e => e.Appointments);
-       
-        }
-        public async Task<AppointmentsStatsDto> GetStatsForUser<T>(int id) where T:Consumer
-        {
-           var x= await _context.Set<T>()
-               .Include(e => e.Appointments)
-               .Where(e => e.Id == id)
-               .Select(e => e.Appointments)
-               .Select(e => new AppointmentsStatsDto()
-               {
-                   CompletedCount = e.Where(e => e.State == AppointmentState.Completed).Count(),
-                   CompletedHours = e.Where(e => e.State == AppointmentState.Completed).Sum(e => e.Duration),
-                   UpcomingCount = e.Where(e => e.State == AppointmentState.Pending).Count(),
-                   UpcomingHours = e.Where(e => e.State == AppointmentState.Pending).Sum(e => e.Duration),
-                   CanceledCount = e.Where(e => e.State == AppointmentState.Canceled).Count(),
-               }).FirstOrDefaultAsync();
+                .Include(e => e.Appointments)
+                .Where(e => e.Id == id)
+                .SelectMany(e => e.Appointments)
+                .Where(e => e.State == (AppointmentState)state);
 
-            return x;
+        }
+        public IQueryable<IReadOnlyCollection<Appointment>> GetStatsForUser<T>(int id) where T : Consumer
+        {
+            return _context.Set<T>()
+                           .Include(e => e.Appointments)
+                           .Where(e => e.Id == id)
+                           .Select(e => e.Appointments);
         }
     }
 }

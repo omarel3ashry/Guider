@@ -15,11 +15,11 @@ namespace Guider.Persistence.Repositories
             _userManager = userManager;
             _context = context;
         }
-        public async Task<int> GetId(int userId,string role)
+        public async Task<int> GetId(int userId, string role)
         {
             if (role == "Client")
             {
-                var client= await _context.Clients.FirstOrDefaultAsync(e => e.UserId == userId);
+                var client = await _context.Clients.FirstOrDefaultAsync(e => e.UserId == userId);
                 return client.Id;
             }
             else
