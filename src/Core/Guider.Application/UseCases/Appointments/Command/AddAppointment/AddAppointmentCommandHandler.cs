@@ -45,7 +45,7 @@ namespace Guider.Application.UseCases.Appointments.Command.AddAppointment
 
             if (added)
             {
-                var createdAppointment = await _appointmentRepository.GetWithIncludesAsync(appointment.Id);
+                var createdAppointment = await _appointmentRepository.GetWithClientAndConsultantAsync(appointment.Id);
                 _backgroundJob.ScheduleAppointment(request.Date, createdAppointment!.Client.UserId, createdAppointment.Consultant.UserId, appointment.Id);
                 await _scheduleRepository.UpdateScheduleStateAsync(request.ConsultantId, request.Date, true, request.Duration);
                 var appointmentDto = _mapper.Map<AppointmentDto>(appointment);

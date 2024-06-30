@@ -27,16 +27,16 @@ namespace Guider.Infrastructure.Meeting
             return base.OnConnectedAsync();
         }
         [AllowAnonymous]
-        public async Task MeetingNotification(int clientUserId, int consultantUserId,int appointmentId)
+        public async Task MeetingNotification(int clientUserId, int consultantUserId, int appointmentId)
         {
-            string? clientConnectionId= _connections.GetConnection(clientUserId);
-            string? consultantConnectionId= _connections.GetConnection(consultantUserId);
+            string? clientConnectionId = _connections.GetConnection(clientUserId);
+            string? consultantConnectionId = _connections.GetConnection(consultantUserId);
 
-            if(clientConnectionId!=null)
-                await Clients.Client(clientConnectionId).MeetingStarted(appointmentId);
+            if (clientConnectionId != null)
+                await Clients.Client(clientConnectionId).MeetingStarted(appointmentId, clientUserId, consultantUserId);
 
             if (consultantConnectionId != null)
-                await Clients.Client(consultantConnectionId).MeetingStarted(appointmentId);
+                await Clients.Client(consultantConnectionId).MeetingStarted(appointmentId, clientUserId, consultantUserId);
         }
 
         public async Task<bool> RequestMeeting(int userId)

@@ -10,7 +10,12 @@ namespace Guider.Application.UseCases.Appointments
     {
         public AppointmentProfile()
         {
-            CreateMap<Appointment, AppointmentDto>();
+            CreateMap<Appointment, AppointmentDto>()
+                .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => src.Consultant.User.FirstName))
+                .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.Consultant.SubCategory.Name))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Consultant.SubCategory.Category.Name))
+                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.User.FirstName));
+
             CreateMap<AddAppointmentCommand, Appointment>();
             CreateMap<Appointment, AppointmentListDto>()
                 .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => src.Consultant.User.FirstName))

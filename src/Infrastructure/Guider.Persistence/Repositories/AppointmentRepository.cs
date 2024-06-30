@@ -11,6 +11,19 @@ namespace Guider.Persistence.Repositories
     {
         public AppointmentRepository(GuiderContext context) : base(context) { }
 
+        public async Task<Appointment?> GetWithIncludesAsync(int id)
+        {
+            return await _context.Appointment
+                                 .Include(e => e.Client)
+                                    .ThenInclude(e => e.User)
+                                 .Include(e => e.Consultant)
+                                    .ThenInclude(e => e.User)
+                                 .Include(e => e.Consultant)
+                                    .ThenInclude(e => e.SubCategory)
+                                        .ThenInclude(e => e.Category)
+                                 .FirstOrDefaultAsync(e => e.Id == id);
+        }
+
         public async Task<Appointment?> GetWithTransactionAsync(int id)
         {
             return await _context.Appointment
@@ -72,12 +85,12 @@ namespace Guider.Persistence.Repositories
                            .Select(e => e.Appointments);
         }
 
-        public async Task<Appointment?> GetWithIncludesAsync(int id)
+        public async Task<Appointment?> GetWithClientAndConsultantAsync(int id)
         {
             return await _context.Appointment
-                .Include(e=>e.Client)
-                .Include(e=>e.Consultant)
-                .FirstOrDefaultAsync(e=>e.Id==id);
+                .Include(e => e.Client)
+                .Include(e => e.Consultant)
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
     }
 }
