@@ -135,7 +135,7 @@ namespace Guider.WebApi.Controllers
         {
             UpdateConsultantImageCommand command = new UpdateConsultantImageCommand() { Id = Id, UserId = UserId };
             string fileExe = formFile.FileName.Split('.').Last();
-            string imagePath = $"Reviewer\\{command.Id}_img.{fileExe}";
+            string imagePath = $"consultant\\{command.Id}_img.{fileExe}";
             string fullPath = _path + imagePath;
             if (System.IO.File.Exists(imagePath))
             {

@@ -8,5 +8,7 @@
         public string Email { get; set; }
         public string Image { get; set; }
         public string BankAccount { get; set; }
+        public List<AppointmentDTO> Appointments { get; set; }
+
     }
 }
