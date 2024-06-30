@@ -4,6 +4,7 @@ namespace Guider.Application.Contracts.Infrastructure
 {
     public interface IMeetingClient
     {
+        Task MeetingStarted(int appointmentId);
         Task ConsultantRequestMeeting(string consultantName);
         Task ClientJoined(string clientName);
         Task ConsultantInvite(string sdp);

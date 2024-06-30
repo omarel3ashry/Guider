@@ -71,6 +71,14 @@ namespace Guider.Persistence.Repositories
                            .Where(e => e.Id == id)
                            .Select(e => e.Appointments);
         }
+
+        public async Task<Appointment?> GetWithIncludesAsync(int id)
+        {
+            return await _context.Appointment
+                .Include(e=>e.Client)
+                .Include(e=>e.Consultant)
+                .FirstOrDefaultAsync(e=>e.Id==id);
+        }
     }
 }
 

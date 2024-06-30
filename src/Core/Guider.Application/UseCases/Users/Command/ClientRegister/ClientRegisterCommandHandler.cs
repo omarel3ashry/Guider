@@ -13,7 +13,6 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
         private readonly IMapper _mapper;
         private readonly IValidator<ClientRegisterCommand> _validator;
         private readonly IRegisterUserRepository<Client> _userRepository;
-        private readonly IRepository<Client> _clientRepository;
 
         public ClientRegisterCommandHandler(IClientRepository clientRepository,
                                             IRegisterUserRepository<Client> userRepository,

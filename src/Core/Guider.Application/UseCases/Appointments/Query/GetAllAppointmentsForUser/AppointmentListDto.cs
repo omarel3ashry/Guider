@@ -12,6 +12,7 @@ namespace Guider.Application.UseCases.Appointments.Query.GetAllForConsultant
         public int ClientId { get; set; }
         public int ConsultantId { get; set; }
         public string ConsultantName { get; set; }
+        public string ClientName { get; set; }
         public string SubCategoryName { get; set; }
         public string CategoryName { get; set; }
     }

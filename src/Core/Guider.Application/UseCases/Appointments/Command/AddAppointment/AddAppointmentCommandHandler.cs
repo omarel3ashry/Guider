@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Guider.Application.Contracts.Infrastructure;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
 using Guider.Application.UseCases.Appointments.Query.GetById;
@@ -14,15 +15,20 @@ namespace Guider.Application.UseCases.Appointments.Command.AddAppointment
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IValidator<AddAppointmentCommand> _validator;
         private readonly IMapper _mapper;
+        private readonly IBackgroundJob _backgroundJob;
+
         public AddAppointmentCommandHandler(IAppointmentRepository appointmentRepository,
                                             IScheduleRepository scheduleRepository,
                                             IValidator<AddAppointmentCommand> validator,
-                                            IMapper mapper)
+                                            IMapper mapper,
+                                            IBackgroundJob backgroundJob
+                                           )
         {
             _appointmentRepository = appointmentRepository;
             _scheduleRepository = scheduleRepository;
             _validator = validator;
             _mapper = mapper;
+            _backgroundJob = backgroundJob;
         }
 
         public async Task<BaseResponse<AppointmentDto>> Handle(AddAppointmentCommand request, CancellationToken cancellationToken)
@@ -36,8 +42,11 @@ namespace Guider.Application.UseCases.Appointments.Command.AddAppointment
 
             var added = await _appointmentRepository.AddAsync(appointment);
 
+
             if (added)
             {
+                var createdAppointment = await _appointmentRepository.GetWithIncludesAsync(appointment.Id);
+                _backgroundJob.ScheduleAppointment(request.Date, createdAppointment!.Client.UserId, createdAppointment.Consultant.UserId, appointment.Id);
                 await _scheduleRepository.UpdateScheduleStateAsync(request.ConsultantId, request.Date, true, request.Duration);
                 var appointmentDto = _mapper.Map<AppointmentDto>(appointment);
                 return new BaseResponse<AppointmentDto>() { Message = "Appointment reserved successfully.", Result = appointmentDto };
