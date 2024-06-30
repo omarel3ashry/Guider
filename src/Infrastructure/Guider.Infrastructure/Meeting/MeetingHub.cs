@@ -100,7 +100,8 @@ namespace Guider.Infrastructure.Meeting
 
             if (connectionId != null)
             {
-                await Clients.Client(connectionId).ReceiveMessage(msg);
+                string senderName = Context.User?.Identity?.Name ?? "";
+                await Clients.Client(connectionId).ReceiveMessage(senderName,msg);
                 return true;
             }
             return false;

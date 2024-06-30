@@ -10,7 +10,7 @@ namespace Guider.Application.Contracts.Infrastructure
         Task ConsultantInvite(string sdp);
         Task ClientAnswered(string sdp);
         Task ReceiveCandidate(IceCandidate candidate);
-        Task ReceiveMessage(string msg);
+        Task ReceiveMessage(string sender, string msg);
         Task MeetingClosed();
     }
 }

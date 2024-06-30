@@ -51,9 +51,9 @@ namespace Guider.WebApi.Controllers
             Enum.TryParse(role!.Value, out UserRole parsedRole);
             object? result;
             if (parsedRole == UserRole.Client)
-                result = await _mediator.Send(new GetAllAppointmentsForUserQuery<Consultant> { Id = int.Parse(id!.Value), PageSize = pageSize, Page = page, State = state });
-            else
                 result = await _mediator.Send(new GetAllAppointmentsForUserQuery<Client> { Id = int.Parse(id!.Value), PageSize = pageSize, Page = page, State = state });
+            else
+                result = await _mediator.Send(new GetAllAppointmentsForUserQuery<Consultant> { Id = int.Parse(id!.Value), PageSize = pageSize, Page = page, State = state });
             return Ok(result);
         }
 
