@@ -5,10 +5,12 @@ namespace Guider.Application.UseCases.Consultants.Command.UpdateConsultant
 {
     public class UpdateConsultantCommand : IRequest<BaseResponse<ConsultantUpdateDto>>
     {
-        public int ConsultantId { get; set; }
+        public int id { get; set; }
         public string Bio { get; set; }
         public float HourlyRate { get; set; }
-
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string email { get; set; }   
 
     }
 }

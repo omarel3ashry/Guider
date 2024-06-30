@@ -3,6 +3,7 @@ using FluentValidation;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Exceptions;
 using Guider.Application.Responses;
+using Guider.Domain.Entities;
 using MediatR;
 
 namespace Guider.Application.UseCases.Consultants.Command.UpdateConsultant
@@ -27,15 +28,19 @@ namespace Guider.Application.UseCases.Consultants.Command.UpdateConsultant
                 throw new Exceptions.ValidationException(validationResult);
 
             // Get the existing consultant
-            var consultant = await _consultantRepository.GetConsultantWithUserByIdAsync(request.ConsultantId);
+            var consultant = await _consultantRepository.GetConsultantWithUserByIdAsync(request.id);
             if (consultant == null)
             {
-                throw new NotFoundException($"Consultant with ID {request.ConsultantId} not found.");
+                throw new NotFoundException($"Consultant with ID {request.id} not found.");
             }
 
             // Update the consultant properties
             consultant.HourlyRate = request.HourlyRate;
             consultant.Bio = request.Bio;
+            consultant.User.LastName = request.lastName;
+            consultant.User.FirstName = request.firstName;
+            consultant.User.Email = request.email;
+
 
             // Save the changes
             await _consultantRepository.UpdateAsync(consultant);

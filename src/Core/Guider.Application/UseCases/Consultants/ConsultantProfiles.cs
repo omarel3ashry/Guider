@@ -23,7 +23,9 @@ namespace Guider.Application.UseCases.Consultants
 
             CreateMap<Schedule, ScheduledDto>();
 
-            CreateMap<Consultant, ConsultantUpdateDto>();
+            CreateMap<Consultant, ConsultantUpdateDto>().ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email));
 
             CreateMap<UpdateConsultantCommand, Consultant>().ForMember(dest => dest.Id, opt => opt.Ignore());
 

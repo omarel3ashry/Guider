@@ -65,11 +65,11 @@ namespace Guider.WebApi.Controllers
         [HttpPatch("edit/{id}")]
         public async Task<ActionResult<ConsultantUpdateDto>> UpdateConsultant(int id, UpdateConsultantCommand command)
         {
-            if (id != command.ConsultantId)
+            if (id != command.id)
             {
                 return BadRequest("Consultant ID mismatch.");
             }
-            command.ConsultantId = id;
+            command.id = id;
             var consultantDto = await _mediator.Send(command);
             return Ok(consultantDto);
         }
