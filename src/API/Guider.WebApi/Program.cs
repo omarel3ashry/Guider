@@ -81,6 +81,7 @@ namespace Guider.WebApi
 
             var app = builder.Build();
             var staticPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images");
+            app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(staticPath),
