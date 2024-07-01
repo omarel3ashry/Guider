@@ -1,8 +1,10 @@
 ﻿using Guider.Application.Contracts.Infrastructure;
 using Guider.Application.Models.Meeting;
+using Guider.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System.Diagnostics;
 using System.Security.Claims;
 
 namespace Guider.Infrastructure.Meeting
@@ -13,6 +15,7 @@ namespace Guider.Infrastructure.Meeting
     {
         private static readonly ConnectionMapping _connections = new ConnectionMapping();
 
+
         public override Task OnConnectedAsync()
         {
             var userIdClaim = ((ClaimsIdentity)Context.User.Identity).Claims
@@ -22,6 +25,29 @@ namespace Guider.Infrastructure.Meeting
             _connections.Add(userId, Context.ConnectionId);
 
             return base.OnConnectedAsync();
+        }
+        [AllowAnonymous]
+        public async Task NotifiyMeetingStart(int clientUserId, int consultantUserId, int appointmentId)
+        {
+            string? clientConnectionId = _connections.GetConnection(clientUserId);
+            string? consultantConnectionId = _connections.GetConnection(consultantUserId);
+
+            if (clientConnectionId != null)
+                await Clients.Client(clientConnectionId).MeetingStarted(appointmentId, clientUserId, consultantUserId);
+
+            if (consultantConnectionId != null)
+                await Clients.Client(consultantConnectionId).MeetingStarted(appointmentId, clientUserId, consultantUserId);
+        }
+        public async Task NotifiyMeetingEnd(int clientUserId, int consultantUserId)
+        {
+            string? clientConnectionId = _connections.GetConnection(clientUserId);
+            string? consultantConnectionId = _connections.GetConnection(consultantUserId);
+
+            if (clientConnectionId != null)
+                await Clients.Client(clientConnectionId).MeetingClosed();
+
+            if (consultantConnectionId != null)
+                await Clients.Client(consultantConnectionId).MeetingClosed();
         }
 
         public async Task<bool> RequestMeeting(int userId)
@@ -85,7 +111,8 @@ namespace Guider.Infrastructure.Meeting
 
             if (connectionId != null)
             {
-                await Clients.Client(connectionId).ReceiveMessage(msg);
+                string senderName = Context.User?.Identity?.Name ?? "";
+                await Clients.Client(connectionId).ReceiveMessage(senderName,msg);
                 return true;
             }
             return false;
@@ -100,6 +127,7 @@ namespace Guider.Infrastructure.Meeting
                 await Clients.Client(connectionId).MeetingClosed();
             }
         }
+        
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {

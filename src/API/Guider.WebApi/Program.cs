@@ -4,6 +4,7 @@ using Guider.Infrastructure;
 using Guider.Infrastructure.Meeting;
 using Guider.Persistence;
 using Guider.WebApi.MIddlewares;
+using Hangfire;
 using Microsoft.OpenApi.Models;
 
 namespace Guider.WebApi
@@ -16,12 +17,12 @@ namespace Guider.WebApi
 
             // Add services to the container.
 
-
+            
 
             builder.Services.AddControllers();
 
             builder.Services.AddApplicationService(builder.Configuration)
-                            .AddInfrastructureService()
+                            .AddInfrastructureService(builder.Configuration)
                             .AddPersistanceService(builder.Configuration)
                             .AddIdentityServices(builder.Configuration);
             //builder.Services.AddSerilog((service, config) =>
@@ -96,7 +97,7 @@ namespace Guider.WebApi
             app.UseCors("angularApp");
             app.MapControllers();
             app.MapHub<MeetingHub>($"/{app.Configuration["MeetingHub:path"]}");
-
+            app.UseHangfireDashboard();
             app.Run();
         }
     }

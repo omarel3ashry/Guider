@@ -11,6 +11,19 @@ namespace Guider.Persistence.Repositories
     {
         public AppointmentRepository(GuiderContext context) : base(context) { }
 
+        public async Task<Appointment?> GetWithIncludesAsync(int id)
+        {
+            return await _context.Appointment
+                                 .Include(e => e.Client)
+                                    .ThenInclude(e => e.User)
+                                 .Include(e => e.Consultant)
+                                    .ThenInclude(e => e.User)
+                                 .Include(e => e.Consultant)
+                                    .ThenInclude(e => e.SubCategory)
+                                        .ThenInclude(e => e.Category)
+                                 .FirstOrDefaultAsync(e => e.Id == id);
+        }
+
         public async Task<Appointment?> GetWithTransactionAsync(int id)
         {
             return await _context.Appointment
@@ -70,6 +83,27 @@ namespace Guider.Persistence.Repositories
                            .Include(e => e.Appointments)
                            .Where(e => e.Id == id)
                            .Select(e => e.Appointments);
+        }
+
+        public async Task<Appointment?> GetWithClientAndConsultantAsync(int id)
+        {
+            return await _context.Appointment
+                .Include(e => e.Client)
+                .Include(e => e.Consultant)
+                .FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task UpdateAppointmentRateAsync(int appointmentId, int rate)
+        {
+            var appointment = await _context.Appointment.Include(e=>e.Consultant)
+                .ThenInclude(e=>e.Appointments)
+                .FirstOrDefaultAsync(e=>e.Id==appointmentId);
+            if (appointment != null)
+            {
+                appointment.Rate = rate;
+                appointment.Consultant.AverageRate = appointment.Consultant.Appointments.Where(e=>e.State==AppointmentState.Completed&&e.Rate!=0).Average(e => e.Rate);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

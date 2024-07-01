@@ -9,10 +9,16 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Guider.Application\Guider.Application.csproj" />
     <ProjectReference Include="..\Guider.Identity\Guider.Identity.csproj" />
+    <ProjectReference Include="..\Guider.Persistence\Guider.Persistence.csproj" />
   </ItemGroup>
 	
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <PackageReference Include="Hangfire.AspNetCore" Version="1.8.14" />
+	  <PackageReference Include="Hangfire.SqlServer" Version="1.8.14" />
 	</ItemGroup>
 
 </Project>

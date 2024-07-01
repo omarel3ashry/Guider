@@ -1,5 +1,6 @@
 ﻿using Guider.Application.UseCases.Appointments.Command.AddAppointment;
 using Guider.Application.UseCases.Appointments.Command.CancelAppointment;
+using Guider.Application.UseCases.Appointments.Command.RateAppointment;
 using Guider.Application.UseCases.Appointments.Query.GetAllForConsultant;
 using Guider.Application.UseCases.Appointments.Query.GetAppointmentsStatsForUser;
 using Guider.Application.UseCases.Appointments.Query.GetById;
@@ -51,9 +52,9 @@ namespace Guider.WebApi.Controllers
             Enum.TryParse(role!.Value, out UserRole parsedRole);
             object? result;
             if (parsedRole == UserRole.Client)
-                result = await _mediator.Send(new GetAllAppointmentsForUserQuery<Consultant> { Id = int.Parse(id!.Value), PageSize = pageSize, Page = page, State = state });
-            else
                 result = await _mediator.Send(new GetAllAppointmentsForUserQuery<Client> { Id = int.Parse(id!.Value), PageSize = pageSize, Page = page, State = state });
+            else
+                result = await _mediator.Send(new GetAllAppointmentsForUserQuery<Consultant> { Id = int.Parse(id!.Value), PageSize = pageSize, Page = page, State = state });
             return Ok(result);
         }
 
@@ -74,6 +75,12 @@ namespace Guider.WebApi.Controllers
             };
 
             var result = await _mediator.Send(cancelAppointCommand);
+            return Ok(result);
+        }
+        [HttpPatch("rate")]
+        public async Task<ActionResult<AppointmentDto>> RateAppointment(RateAppointmentCommand command)
+        {
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 
