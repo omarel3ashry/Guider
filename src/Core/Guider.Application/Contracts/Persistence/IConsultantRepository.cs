@@ -21,6 +21,8 @@ namespace Guider.Application.Contracts.Persistence
         Task<Consultant> GetConsultantWithUserByIdAsync(int id);
         Task<IQueryable<Consultant>> getConsultantsbyCategoryId(int categoryId);
         Task<IQueryable<Consultant>> getConsultantsbySubCategoryId(int subcategoryId);
+        Task<List<Category>> GetCategoriesWithConsultantsAsync();
+        Task<List<Consultant>> GetTopConsultantsByAverageRateAsync();
 
         IQueryable<Consultant> GetAllByFilters(int categoryId, int subCategoryId, bool sortByPrice, bool sortAsc);
         IQueryable<Consultant> GetAllByName(string name);

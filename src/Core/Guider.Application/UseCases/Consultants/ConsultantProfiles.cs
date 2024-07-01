@@ -6,6 +6,8 @@ using Guider.Application.UseCases.Consultants.Query.ConsultantSearch;
 using Guider.Application.UseCases.Consultants.Query.ConsultantSort;
 using Guider.Application.UseCases.Consultants.Query.GetAll;
 using Guider.Application.UseCases.Consultants.Query.GetFiltered;
+using Guider.Application.UseCases.Consultants.Query.GetConsultantsCountByCategory;
+using Guider.Application.UseCases.Consultants.Query.TopConsultants;
 using Guider.Domain.Entities;
 
 namespace Guider.Application.UseCases.Consultants
@@ -52,6 +54,16 @@ namespace Guider.Application.UseCases.Consultants
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
                 .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name));
 
+            CreateMap<Category, ConsultantsCountByCategoryDto>()
+            .ForMember(dest => dest.ConsultantsCount,
+                     opt => opt.MapFrom(src => src.SubCategories.Sum(sc => sc.Consultants.Count)))
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Name));
+
+            CreateMap<Consultant, TopConsultantsDto>()
+                 .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
+                //.ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
+                .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name)).ReverseMap();
             CreateMap<Consultant, FilteredConsultantDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name))

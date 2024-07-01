@@ -42,7 +42,7 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
 
             var client = _mapper.Map<Client>(request);
             client.UserId = result.Id;
-            
+
             bool created = await _clientRepository.AddAsync(client);
             if (!created)
                 throw new Exceptions.BadRequestException("Error in create Client");

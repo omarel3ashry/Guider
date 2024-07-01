@@ -7,9 +7,11 @@ using Guider.Application.UseCases.Consultants.Query.ConsultantSearch;
 using Guider.Application.UseCases.Consultants.Query.GetAll;
 using Guider.Application.UseCases.Consultants.Query.GetConsultantBySubCategoryId;
 using Guider.Application.UseCases.Consultants.Query.GetConsultantsByCategoryId;
+using Guider.Application.UseCases.Consultants.Query.GetConsultantsCountByCategory;
 using Guider.Application.UseCases.Consultants.Query.GetDetails;
 using Guider.Application.UseCases.Consultants.Query.GetFiltered;
 using Guider.Application.UseCases.Consultants.Query.GetFilteredByName;
+using Guider.Application.UseCases.Consultants.Query.TopConsultants;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -158,6 +160,20 @@ namespace Guider.WebApi.Controllers
             };
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+        [HttpGet("consultants-count")]
+        public async Task<ActionResult> GetConsultantsCountByCategory()
+        {
+            var result = await _mediator.Send(new GetConsultantsCountByCategoryQuery());
+            return Ok(result);
+        }
+
+        [HttpGet("top")]
+        public async Task<ActionResult<List<ConsultantDto>>> GetTopConsultants()
+        {
+            var topConsultants = await _mediator.Send(new GetTopConsultantsQuery());
+            return Ok(topConsultants);
         }
     }
 }
