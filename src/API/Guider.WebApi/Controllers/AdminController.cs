@@ -4,6 +4,11 @@ using Guider.Application.UseCases.Admin.Query.GetUnVerifiedConsultants;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
+using System.Net;
+using Guider.Application.Contracts.Infrastructure;
+using Guider.Domain.Entities;
+using Guider.Domain.Enums;
 
 namespace Guider.WebApi.Controllers
 {
@@ -12,10 +17,14 @@ namespace Guider.WebApi.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IMailFactory _mailFactory;
+        private readonly IMailService _mailService;
 
-        public AdminController(IMediator mediator)
+        public AdminController(IMediator mediator, IMailFactory mailFactory, IMailService mailService)
         {
             _mediator = mediator;
+            _mailFactory = mailFactory;
+            _mailService = mailService;
         }
 
         [HttpGet("UnVerifiedConsultants", Name = "GetAllUnVerifiedConsultants")]
@@ -39,6 +48,18 @@ namespace Guider.WebApi.Controllers
             var res = await _mediator.Send(command);
             return Ok(res);
         }
+
+        [HttpGet("mail", Name = "SendMail")]
+        public async Task<ActionResult> SendMail()
+        {
+            var user = new User { Email = "mohamed3bdelrahman99@gmail.com", FirstName = "Moahmed" };
+            var mes =_mailFactory.GenerateMailMssage(MailType.ConfirmConsultant,user);
+            await _mailService.SendMailAsync(mes);
+
+            return Ok();
+        }
+
+
 
 
 
