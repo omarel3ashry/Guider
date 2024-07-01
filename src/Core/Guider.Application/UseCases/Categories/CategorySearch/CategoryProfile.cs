@@ -17,6 +17,7 @@ namespace Guider.Application.UseCases.Categories.CategorySearch
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
 
             CreateMap<Category, CategoryDto>();
+            CreateMap<SubCategory, SubCategoryDto>();
         }
     }
 }

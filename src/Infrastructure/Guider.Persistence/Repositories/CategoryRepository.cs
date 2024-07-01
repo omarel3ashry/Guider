@@ -15,9 +15,14 @@ namespace Guider.Persistence.Repositories
         {
             return await _context.Categories
                                  .Include(c => c.SubCategories)
-                                 .ThenInclude(sc => sc.Consultants)
-                                 .ThenInclude(c => c.User)
+                                    .ThenInclude(sc => sc.Consultants)
+                                        .ThenInclude(c => c.User)
                                  .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<List<Category>> GetAllWithSubCategories()
+        {
+            return await _context.Categories.Include(c => c.SubCategories).ToListAsync();
         }
 
         public async Task<List<Category>> GetAllAsync()

@@ -8,6 +8,8 @@ using Guider.Application.UseCases.Consultants.Query.GetAll;
 using Guider.Application.UseCases.Consultants.Query.GetConsultantBySubCategoryId;
 using Guider.Application.UseCases.Consultants.Query.GetConsultantsByCategoryId;
 using Guider.Application.UseCases.Consultants.Query.GetDetails;
+using Guider.Application.UseCases.Consultants.Query.GetFiltered;
+using Guider.Application.UseCases.Consultants.Query.GetFilteredByName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,7 +55,7 @@ namespace Guider.WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}", Name = "GetconsultantById")]
+        [HttpGet("{id:int}", Name = "GetconsultantById")]
         public async Task<ActionResult> GetConsultantById(int id)
         {
             var consultant = await _mediator.Send(new GetConsultantDetailsQuery { Id = id });
@@ -74,7 +76,7 @@ namespace Guider.WebApi.Controllers
             return Ok(consultantDto);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteConsultant([FromRoute] DeleteConsultantCommand command)
         {
             var deletedConsultantId = await _mediator.Send(command);
@@ -127,6 +129,35 @@ namespace Guider.WebApi.Controllers
             };
             var response = await _mediator.Send(query);
             return Ok(response);
+        }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> FilterConsultants(int categoryId, int subCategoryId, bool sortByPrice = true, bool sortAsc = true, int page = 1, int pageSize = 10)
+        {
+            var query = new GetFilteredQuery()
+            {
+                CategoryId = categoryId,
+                SubCategoryId = subCategoryId,
+                SortByPrice = sortByPrice,
+                SortAsc = sortAsc,
+                Page = page,
+                PageSize = pageSize
+            };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> FilterConsultantsByName(string name, int page = 1, int pageSize = 10)
+        {
+            var query = new GetByNameQuery()
+            {
+                Name = name,
+                Page = page,
+                PageSize = pageSize
+            };
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
     }
 }
