@@ -1,6 +1,7 @@
 ﻿using Guider.Application.Contracts.Infrastructure;
 using Guider.Infrastructure.Images;
 using Guider.Infrastructure.Jobs;
+using Guider.Infrastructure.Mail;
 using Guider.Infrastructure.Meeting;
 using Hangfire;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,8 @@ namespace Guider.Infrastructure
             services.AddScoped<IBackgroundJob, BackgroundJobs>();
             services.AddSingleton<MeetingHub>();
             services.AddScoped<IImageService, ImageToLocalService>();
+            services.AddScoped<IMailFactory, MailFactory>();
+            services.AddScoped<IMailService, MailService>();
             return services;
         }
     }
