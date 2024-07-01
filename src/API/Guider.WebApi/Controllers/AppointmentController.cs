@@ -1,5 +1,6 @@
 ﻿using Guider.Application.UseCases.Appointments.Command.AddAppointment;
 using Guider.Application.UseCases.Appointments.Command.CancelAppointment;
+using Guider.Application.UseCases.Appointments.Command.RateAppointment;
 using Guider.Application.UseCases.Appointments.Query.GetAllForConsultant;
 using Guider.Application.UseCases.Appointments.Query.GetAppointmentsStatsForUser;
 using Guider.Application.UseCases.Appointments.Query.GetById;
@@ -74,6 +75,12 @@ namespace Guider.WebApi.Controllers
             };
 
             var result = await _mediator.Send(cancelAppointCommand);
+            return Ok(result);
+        }
+        [HttpPatch("rate")]
+        public async Task<ActionResult<AppointmentDto>> RateAppointment(RateAppointmentCommand command)
+        {
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 

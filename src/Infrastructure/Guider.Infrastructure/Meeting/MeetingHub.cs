@@ -27,7 +27,7 @@ namespace Guider.Infrastructure.Meeting
             return base.OnConnectedAsync();
         }
         [AllowAnonymous]
-        public async Task MeetingNotification(int clientUserId, int consultantUserId, int appointmentId)
+        public async Task NotifiyMeetingStart(int clientUserId, int consultantUserId, int appointmentId)
         {
             string? clientConnectionId = _connections.GetConnection(clientUserId);
             string? consultantConnectionId = _connections.GetConnection(consultantUserId);
@@ -37,6 +37,17 @@ namespace Guider.Infrastructure.Meeting
 
             if (consultantConnectionId != null)
                 await Clients.Client(consultantConnectionId).MeetingStarted(appointmentId, clientUserId, consultantUserId);
+        }
+        public async Task NotifiyMeetingEnd(int clientUserId, int consultantUserId)
+        {
+            string? clientConnectionId = _connections.GetConnection(clientUserId);
+            string? consultantConnectionId = _connections.GetConnection(consultantUserId);
+
+            if (clientConnectionId != null)
+                await Clients.Client(clientConnectionId).MeetingClosed();
+
+            if (consultantConnectionId != null)
+                await Clients.Client(consultantConnectionId).MeetingClosed();
         }
 
         public async Task<bool> RequestMeeting(int userId)
@@ -116,6 +127,7 @@ namespace Guider.Infrastructure.Meeting
                 await Clients.Client(connectionId).MeetingClosed();
             }
         }
+        
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {

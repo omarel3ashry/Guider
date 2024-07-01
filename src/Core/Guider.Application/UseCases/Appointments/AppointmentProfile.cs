@@ -21,7 +21,9 @@ namespace Guider.Application.UseCases.Appointments
                 .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => src.Consultant.User.FirstName))
                 .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.Consultant.SubCategory.Name))
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Consultant.SubCategory.Category.Name))
-                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.User.FirstName));
+                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.User.FirstName))
+                .ForMember(dest => dest.ClientUserId, opt => opt.MapFrom(src => src.Client.UserId))
+                .ForMember(dest => dest.ConsultantUserId, opt => opt.MapFrom(src => src.Consultant.UserId));
         }
     }
 }
