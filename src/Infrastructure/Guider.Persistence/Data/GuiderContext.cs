@@ -16,6 +16,7 @@ namespace Guider.Persistence.Data
         public DbSet<Consultant> Consultants { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
         public GuiderContext(DbContextOptions options) : base(options) { }
 
 

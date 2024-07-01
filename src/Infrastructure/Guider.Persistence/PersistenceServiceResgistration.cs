@@ -32,6 +32,7 @@ namespace Guider.Persistence
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<IAttachmentRepository, AttachmentRepository>();
 
             return services;
         }

@@ -1,5 +1,7 @@
 ﻿using Guider.Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using System.Runtime.Serialization.Formatters;
 
 
 namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
@@ -13,5 +15,7 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
         public string Bio { get; set; }
         public float HourlyRate { get; set; }
         public int SubCategoryId { get; set; }
+        public IFormFileCollection Files { get; set; }
+
     }
 }

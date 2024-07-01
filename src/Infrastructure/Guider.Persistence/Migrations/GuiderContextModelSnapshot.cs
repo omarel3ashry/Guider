@@ -88,6 +88,29 @@ namespace Guider.Persistence.Migrations
                     b.ToTable("Appointment");
                 });
 
+            modelBuilder.Entity("Guider.Domain.Entities.Attachment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ConsultantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultantId");
+
+                    b.ToTable("Attachments");
+                });
+
             modelBuilder.Entity("Guider.Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -531,6 +554,17 @@ namespace Guider.Persistence.Migrations
                     b.Navigation("Consultant");
                 });
 
+            modelBuilder.Entity("Guider.Domain.Entities.Attachment", b =>
+                {
+                    b.HasOne("Guider.Domain.Entities.Consultant", "Consultant")
+                        .WithMany("Attachments")
+                        .HasForeignKey("ConsultantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Consultant");
+                });
+
             modelBuilder.Entity("Guider.Domain.Entities.Client", b =>
                 {
                     b.HasOne("Guider.Domain.Entities.User", "User")
@@ -680,6 +714,8 @@ namespace Guider.Persistence.Migrations
             modelBuilder.Entity("Guider.Domain.Entities.Consultant", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Attachments");
 
                     b.Navigation("Schedules");
                 });
