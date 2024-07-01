@@ -12,6 +12,7 @@ namespace Guider.Domain.Entities
         public float? AverageRate { get; set; }
         public SubCategory SubCategory { get; set; }
         public IReadOnlyCollection<Schedule> Schedules { get; set; }
+        public IReadOnlyCollection<Attachment> Attachments { get; set; }
 
     }
 }

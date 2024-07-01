@@ -26,5 +26,7 @@ namespace Guider.Application.Contracts.Persistence
 
         IQueryable<Consultant> GetAllByFilters(int categoryId, int subCategoryId, bool sortByPrice, bool sortAsc);
         IQueryable<Consultant> GetAllByName(string name);
+        Task<List<Consultant>> GetUnVerifiedConsultants();
+        Task<Consultant> GetConsultantWithsubCategoryUserAndAttachmentsById(int id);
     }
 }

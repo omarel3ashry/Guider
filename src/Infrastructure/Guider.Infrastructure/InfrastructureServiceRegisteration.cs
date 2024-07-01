@@ -1,4 +1,5 @@
 ﻿using Guider.Application.Contracts.Infrastructure;
+using Guider.Infrastructure.Images;
 using Guider.Infrastructure.Jobs;
 using Guider.Infrastructure.Meeting;
 using Hangfire;
@@ -19,6 +20,7 @@ namespace Guider.Infrastructure
             services.AddSignalR();
             services.AddScoped<IBackgroundJob, BackgroundJobs>();
             services.AddSingleton<MeetingHub>();
+            services.AddScoped<IImageService, ImageToLocalService>();
             return services;
         }
     }

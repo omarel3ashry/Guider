@@ -1,5 +1,6 @@
 ﻿using Guider.Application.Contracts.Persistence;
 using Guider.Domain.Entities;
+using Guider.Persistence.Consts;
 using Guider.Persistence.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,15 +18,19 @@ namespace Guider.Persistence.Repositories
         }
         public async Task<int> GetId(int userId, string role)
         {
-            if (role == "Client")
+            if (role == ConstRole.Client)
             {
                 var client = await _context.Clients.FirstOrDefaultAsync(e => e.UserId == userId);
                 return client.Id;
             }
-            else
+            else if (role == ConstRole.Consultant)
             {
                 var consultant = await _context.Consultants.FirstOrDefaultAsync(e => e.UserId == userId);
                 return consultant.Id;
+            }
+            else
+            {
+                return userId;
             }
         }
         public async Task<User> GetByEmailAsync(string email)

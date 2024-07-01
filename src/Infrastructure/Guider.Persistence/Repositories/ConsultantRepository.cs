@@ -250,5 +250,22 @@ namespace Guider.Persistence.Repositories
                            .Include(e => e.User)
                            .Where(e => e.User.UserName.Contains(name.Replace(" ", ".").ToLower()));
         }
+
+        public  async Task<List<Consultant>> GetUnVerifiedConsultants()
+        {
+            return await _context.Consultants.Where(e => !e.IsVerified)
+                .Include(e => e.User)
+                .Include(e => e.SubCategory)
+                .ToListAsync();
+        }
+
+        public async Task<Consultant> GetConsultantWithsubCategoryUserAndAttachmentsById(int id)
+        {
+            return await _context.Consultants
+               .Include(c => c.User)
+               .Include(e => e.SubCategory)
+               .Include(e=> e.Attachments)
+               .FirstOrDefaultAsync(c => c.Id == id && !c.User.IsDeleted);
+        }
     }
 }
