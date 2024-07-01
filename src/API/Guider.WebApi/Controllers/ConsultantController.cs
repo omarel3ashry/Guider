@@ -131,9 +131,9 @@ namespace Guider.WebApi.Controllers
 
 
         [HttpPut("UploadProfileImage")]
-        public async Task<IActionResult> UploadProfileImage(int Id, int UserId, IFormFile formFile)
+        public async Task<IActionResult> UploadProfileImage(int Id, IFormFile formFile)
         {
-            UpdateConsultantImageCommand command = new UpdateConsultantImageCommand() { Id = Id, UserId = UserId };
+            UpdateConsultantImageCommand command = new UpdateConsultantImageCommand() { Id = Id};
             string fileExe = formFile.FileName.Split('.').Last();
             string imagePath = $"consultant\\{command.Id}_img.{fileExe}";
             string fullPath = _path + imagePath;
