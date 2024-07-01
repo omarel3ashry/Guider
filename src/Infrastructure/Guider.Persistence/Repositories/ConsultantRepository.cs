@@ -212,9 +212,12 @@ namespace Guider.Persistence.Repositories
             return consultants;
         }
 
-        public  async Task<List<Consultant>> GetNotVerifiedConsultants()
+        public  async Task<List<Consultant>> GetUnVerifiedConsultants()
         {
-            return await _context.Consultants.Where(e => !e.IsVerified).ToListAsync();
+            return await _context.Consultants.Where(e => !e.IsVerified)
+                .Include(e => e.User)
+                .Include(e => e.SubCategory)
+                .ToListAsync();
         }
 
         public async Task<Consultant> GetConsultantWithsubCategoryUserAndAttachmentsById(int id)
