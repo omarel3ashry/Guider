@@ -5,6 +5,7 @@ using Guider.Application.UseCases.Consultants.Query.ConsultantPagination;
 using Guider.Application.UseCases.Consultants.Query.ConsultantSearch;
 using Guider.Application.UseCases.Consultants.Query.ConsultantSort;
 using Guider.Application.UseCases.Consultants.Query.GetAll;
+using Guider.Application.UseCases.Consultants.Query.GetFiltered;
 using Guider.Domain.Entities;
 
 namespace Guider.Application.UseCases.Consultants
@@ -51,6 +52,10 @@ namespace Guider.Application.UseCases.Consultants
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
                 .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name));
 
+            CreateMap<Consultant, FilteredConsultantDto>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
+                .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name));
         }
     }
 }

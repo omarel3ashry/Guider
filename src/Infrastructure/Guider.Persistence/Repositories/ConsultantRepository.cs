@@ -211,5 +211,27 @@ namespace Guider.Persistence.Repositories
 
             return consultants;
         }
+
+        public IQueryable<Consultant> GetAllByFilters(int categoryId, int subCategoryId, bool sortByPrice, bool sortAsc)
+        {
+            var query = _context.Consultants.Where(e => e.IsActive);
+
+            if (subCategoryId != 0)
+                query = _context.Consultants.Where(e => e.SubCategoryId == subCategoryId);
+            else query = _context.Consultants.Include(e => e.SubCategory).Where(e => e.SubCategory.CategoryId == categoryId);
+
+            if (sortByPrice)
+                query = sortAsc ? query.OrderBy(e => e.HourlyRate) : query.OrderByDescending(e => e.HourlyRate);
+            else query = sortAsc ? query.OrderBy(e => e.AverageRate) : query.OrderByDescending(e => e.AverageRate);
+
+            return query;
+        }
+
+        public IQueryable<Consultant> GetAllByName(string name)
+        {
+            return _context.Consultants
+                           .Include(e => e.User)
+                           .Where(e => e.User.UserName.Contains(name.Replace(" ", ".").ToLower()));
+        }
     }
 }
