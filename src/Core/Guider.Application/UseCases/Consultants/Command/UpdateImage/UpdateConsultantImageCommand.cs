@@ -6,7 +6,6 @@ namespace Guider.Application.UseCases.Consultants.Command.UpdateImage
     public class UpdateConsultantImageCommand : IRequest<BaseResponse<string>>
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
         public string Image { get; set; }
     }
 }

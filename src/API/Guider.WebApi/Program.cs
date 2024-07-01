@@ -4,6 +4,7 @@ using Guider.Infrastructure;
 using Guider.Infrastructure.Meeting;
 using Guider.Persistence;
 using Guider.WebApi.MIddlewares;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -78,6 +79,12 @@ namespace Guider.WebApi
             });
 
             var app = builder.Build();
+            var staticPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images");
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(staticPath),
+                RequestPath = "/wwwroot/Images"
+            });
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
