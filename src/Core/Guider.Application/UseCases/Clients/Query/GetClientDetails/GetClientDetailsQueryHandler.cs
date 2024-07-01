@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Guider.Application.UseCases.Clients.Query.GetClientDetails
 {
-    public class GetClientDetailsQueryHandler : IRequestHandler<GetClientDetailsQuery, ClienttoReturnVM>
+    public class GetClientDetailsQueryHandler : IRequestHandler<GetClientDetailsQuery, UserClientDto>
     {
         private readonly IMapper _mapper;
         private readonly IClientRepository _clientRepository;
@@ -16,11 +16,11 @@ namespace Guider.Application.UseCases.Clients.Query.GetClientDetails
             _clientRepository = clientRepository;
 
         }
-        public async Task<ClienttoReturnVM> Handle(GetClientDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<UserClientDto> Handle(GetClientDetailsQuery request, CancellationToken cancellationToken)
         {
             var Client = await _clientRepository.GetClientWithAppointments(request.Id);
 
-            var clienttoReturn = _mapper.Map<ClienttoReturnVM>(Client);
+            var clienttoReturn = _mapper.Map<UserClientDto>(Client);
 
             return clienttoReturn;
 

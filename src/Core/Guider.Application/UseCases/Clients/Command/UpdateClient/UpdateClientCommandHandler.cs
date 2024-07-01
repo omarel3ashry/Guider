@@ -36,6 +36,7 @@ namespace Guider.Application.UseCases.Clients.Command.UpdateClient
             // Update the consultant properties
             client.User.LastName = request.LastName;
             client.User.FirstName = request.FirstName;
+            client.User.Email = request.Email;
 
             // Save the changes
             await _clientRepository.UpdateAsync(client);
