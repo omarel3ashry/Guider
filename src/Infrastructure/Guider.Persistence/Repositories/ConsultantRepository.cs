@@ -186,7 +186,7 @@ namespace Guider.Persistence.Repositories
             .Include(c => c.User)
             .Include(c => c.SubCategory)
             .ThenInclude(sc => sc.Category)
-            .Where(c=>c.SubCategoryId == subcategoryId)
+            .Where(c => c.SubCategoryId == subcategoryId)
             .AsQueryable();
 
             consultants = ascending

@@ -47,7 +47,7 @@ namespace Guider.WebApi.MIddlewares
                     statusCode = HttpStatusCode.Unauthorized;
                     break;
                 case Exception:
-                    statusCode = HttpStatusCode.BadRequest;
+                    statusCode = HttpStatusCode.InternalServerError;
                     break;
             }
 

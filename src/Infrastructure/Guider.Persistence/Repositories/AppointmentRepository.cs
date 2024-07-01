@@ -1,4 +1,5 @@
 ﻿using Guider.Application.Contracts.Persistence;
+using Guider.Domain.Common;
 using Guider.Domain.Entities;
 using Guider.Domain.Enums;
 using Guider.Persistence.Data;
@@ -53,5 +54,23 @@ namespace Guider.Persistence.Repositories
             _context.Appointment.UpdateRange(appointments);
             await _context.SaveChangesAsync();
         }
+
+        public IQueryable<Appointment> GetAllForUser<T>(int id, int state) where T : Consumer
+        {
+            return _context.Set<T>()
+                .Include(e => e.Appointments)
+                .Where(e => e.Id == id)
+                .SelectMany(e => e.Appointments)
+                .Where(e => e.State == (AppointmentState)state);
+
+        }
+        public IQueryable<IReadOnlyCollection<Appointment>> GetStatsForUser<T>(int id) where T : Consumer
+        {
+            return _context.Set<T>()
+                           .Include(e => e.Appointments)
+                           .Where(e => e.Id == id)
+                           .Select(e => e.Appointments);
+        }
     }
 }
+

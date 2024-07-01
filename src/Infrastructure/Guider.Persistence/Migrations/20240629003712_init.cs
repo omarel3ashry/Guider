@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -245,13 +244,13 @@ namespace Guider.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Bio = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     HourlyRate = table.Column<float>(type: "real", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    BankAccount = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false),
-                    AverageRate = table.Column<float>(type: "real", nullable: true)
+                    AverageRate = table.Column<float>(type: "real", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    BankAccount = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

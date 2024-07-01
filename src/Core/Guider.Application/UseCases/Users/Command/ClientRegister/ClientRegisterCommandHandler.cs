@@ -13,6 +13,7 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
         private readonly IMapper _mapper;
         private readonly IValidator<ClientRegisterCommand> _validator;
         private readonly IRegisterUserRepository<Client> _userRepository;
+        private readonly IRepository<Client> _clientRepository;
 
         public ClientRegisterCommandHandler(IClientRepository clientRepository,
                                             IRegisterUserRepository<Client> userRepository,
@@ -23,6 +24,7 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
             _userRepository = userRepository;
             _validator = validator;
             _mapper = mapper;
+
         }
 
         public async Task<AuthenticationResponse> Handle(ClientRegisterCommand request, CancellationToken cancellationToken)
@@ -41,8 +43,10 @@ namespace Guider.Application.UseCases.Users.Command.ClientRegister
 
             var client = _mapper.Map<Client>(request);
             client.UserId = result.Id;
-
-            await _clientRepository.AddAsync(client);
+            
+            bool created = await _clientRepository.AddAsync(client);
+            if (!created)
+                throw new Exceptions.BadRequestException("Error in create Client");
 
             return result;
 

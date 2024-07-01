@@ -30,6 +30,13 @@ namespace Guider.Application.Responses
             var destItems = mapper.Map<List<TDest>>(sourceItems);
             return new PaginatedList<TDest, TSource>(destItems, page, pageSize, totalCount);
         }
+        public static async Task<PaginatedList<TDest, TSource>> CreateWithProjectToAsync(IQueryable<TSource> query, IMapper mapper, int page, int pageSize)
+        {
+            var totalCount = await query.CountAsync();
+            var sourceItems = query.Skip((page - 1) * pageSize).Take(pageSize);
+            var destItems = await mapper.ProjectTo<TDest>(sourceItems).ToListAsync();
+            return new PaginatedList<TDest, TSource>(destItems, page, pageSize, totalCount);
+        }
 
     }
 }

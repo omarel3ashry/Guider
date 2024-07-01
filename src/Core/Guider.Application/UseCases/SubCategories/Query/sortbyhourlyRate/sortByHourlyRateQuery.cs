@@ -2,11 +2,6 @@
 using Guider.Application.UseCases.Appointments.Query.AppointmentSort;
 using Guider.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.SubCategories.Query.sortbyhourlyRate
 {
@@ -16,7 +11,7 @@ namespace Guider.Application.UseCases.SubCategories.Query.sortbyhourlyRate
         public bool Ascending { get; }
         public int Page { get; }
         public int PageSize { get; }
-        public int SubCategoryId {  get; }
+        public int SubCategoryId { get; }
 
         public sortByHourlyRateQuery(bool ascending, int page, int pageSize, int subCategoryId)
         {

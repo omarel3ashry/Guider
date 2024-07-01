@@ -5,7 +5,6 @@ using Guider.Infrastructure.Meeting;
 using Guider.Persistence;
 using Guider.WebApi.MIddlewares;
 using Microsoft.OpenApi.Models;
-using Serilog;
 
 namespace Guider.WebApi
 {
