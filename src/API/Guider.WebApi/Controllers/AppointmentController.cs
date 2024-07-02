@@ -65,16 +65,17 @@ namespace Guider.WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("cancel")]
-        public async Task<ActionResult<AppointmentDto>> CancelAppointment(int appointmentId)
+        [HttpPost("cancel")]
+        public async Task<ActionResult<AppointmentDto>> CancelAppointment(CancelAppointmentCommand command)
         {
-            var cancelAppointCommand = new CancelAppointmentCommand()
-            {
-                AppointmentId = appointmentId,
-                ClientUserId = int.Parse(User.Claims.FirstOrDefault(e => e.Type == JwtRegisteredClaimNames.Sid)?.Value ?? "0")
-            };
+            command.ClientUserId = int.Parse(User.Claims.FirstOrDefault(e => e.Type == JwtRegisteredClaimNames.Sid)?.Value ?? "0");
+            //var cancelAppointCommand = new CancelAppointmentCommand()
+            //{
+            //    AppointmentId = appointmentId,
+            //    ClientUserId = int.Parse(User.Claims.FirstOrDefault(e => e.Type == JwtRegisteredClaimNames.Sid)?.Value ?? "0")
+            //};
 
-            var result = await _mediator.Send(cancelAppointCommand);
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
         [HttpPatch("rate")]
