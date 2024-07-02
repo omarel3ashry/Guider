@@ -80,6 +80,7 @@ namespace Guider.WebApi
             });
 
             var app = builder.Build();
+            app.UseStaticFiles();
             var staticPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images");
             app.UseStaticFiles(new StaticFileOptions
             {
