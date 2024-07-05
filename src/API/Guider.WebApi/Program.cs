@@ -1,9 +1,9 @@
 using Guider.Application;
+using Guider.Application.Middlewares;
 using Guider.Identity;
 using Guider.Infrastructure;
 using Guider.Infrastructure.Meeting;
 using Guider.Persistence;
-using Guider.WebApi.MIddlewares;
 using Hangfire;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
@@ -18,7 +18,7 @@ namespace Guider.WebApi
 
             // Add services to the container.
 
-            
+
 
             builder.Services.AddControllers();
 

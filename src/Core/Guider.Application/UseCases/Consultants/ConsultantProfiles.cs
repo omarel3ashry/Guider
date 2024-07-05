@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using Guider.Application.UseCases.Appointments.Query.AppointmentSort;
 using Guider.Application.UseCases.Consultants.Command.UpdateConsultant;
-using Guider.Application.UseCases.Consultants.Query.ConsultantPagination;
-using Guider.Application.UseCases.Consultants.Query.ConsultantSearch;
-using Guider.Application.UseCases.Consultants.Query.ConsultantSort;
-using Guider.Application.UseCases.Consultants.Query.GetAll;
+using Guider.Application.UseCases.Consultants.Query;
 using Guider.Application.UseCases.Consultants.Query.GetFiltered;
-using Guider.Application.UseCases.Consultants.Query.GetConsultantsCountByCategory;
 using Guider.Application.UseCases.Consultants.Query.TopConsultants;
 using Guider.Domain.Entities;
 
@@ -17,7 +12,7 @@ namespace Guider.Application.UseCases.Consultants
         public ConsultantProfiles()
         {
 
-            CreateMap<Consultant, ConsultantVM>()
+            CreateMap<Consultant, ConsultantDto>()
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
@@ -26,45 +21,17 @@ namespace Guider.Application.UseCases.Consultants
 
             CreateMap<Schedule, ScheduledDto>();
 
+            CreateMap<Appointment, AppointmentDto>()
+            .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.User.FirstName + " " + src.Client.User.LastName));
+
             CreateMap<Consultant, ConsultantUpdateDto>().ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email));
 
             CreateMap<UpdateConsultantCommand, Consultant>().ForMember(dest => dest.Id, opt => opt.Ignore());
 
-            CreateMap<Appointment, AppointmentDto>()
-                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.User.FirstName + " " + src.Client.User.LastName));
-
-            CreateMap<Consultant, ConsultantDto>()
-                .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
-                .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name))
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name));
-
-            CreateMap<Consultant, ConsultantSearchDto>()
-                .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
-                .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name))
-                .ForMember(dest => dest.HourlyRate, opt => opt.MapFrom(src => src.HourlyRate));
-
-            CreateMap<Consultant, SortByHourlyRateDto>()
-                .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
-                .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name));
-
-            CreateMap<Consultant, SortconsultantByRateDto>()
-                .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
-                .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name));
-
-            CreateMap<Category, ConsultantsCountByCategoryDto>()
-            .ForMember(dest => dest.ConsultantsCount,
-                     opt => opt.MapFrom(src => src.SubCategories.Sum(sc => sc.Consultants.Count)))
-            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Name));
-
             CreateMap<Consultant, TopConsultantsDto>()
                  .ForMember(dest => dest.ConsultantName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
-                //.ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.SubCategory.Category.Name))
                 .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.SubCategory.Name)).ReverseMap();
             CreateMap<Consultant, FilteredConsultantDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))

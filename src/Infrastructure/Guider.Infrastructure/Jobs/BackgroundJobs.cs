@@ -1,16 +1,8 @@
 ﻿using Guider.Application.Contracts.Infrastructure;
 using Guider.Application.Contracts.Persistence;
-using Guider.Domain.Entities;
 using Guider.Domain.Enums;
 using Guider.Infrastructure.Meeting;
 using Hangfire;
-using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Infrastructure.Jobs
 {
@@ -25,15 +17,15 @@ namespace Guider.Infrastructure.Jobs
             //_appointmentRepository = appointmentRepository;
         }
 
-        public void ScheduleAppointment(DateTime time,int duration, int clientUserId, int consultantUserId, int appointmentId)
+        public void ScheduleAppointment(DateTime time, int duration, int clientUserId, int consultantUserId, int appointmentId)
         {
             //_backgroundClient.Schedule<MeetingHub>(
             //    (hub) => StartMeeting(hub, clientUserId, consultantUserId, appointmentId),
             //    time - DateTime.Now
             //    );
-            _backgroundClient.Schedule<IAppointmentRepository>((repo) => repo.UpdateAppointmentStateAsync(appointmentId,AppointmentState.Ongoing,0), time - DateTime.Now);
+            _backgroundClient.Schedule<IAppointmentRepository>((repo) => repo.UpdateAppointmentStateAsync(appointmentId, AppointmentState.Ongoing, 0), time - DateTime.Now);
             _backgroundClient.Schedule<MeetingHub>((hub) => hub.NotifiyMeetingStart(clientUserId, consultantUserId, appointmentId), time - DateTime.Now);
-            _backgroundClient.Schedule<IAppointmentRepository>((repo) => repo.UpdateAppointmentStateAsync(appointmentId,AppointmentState.Completed,0), time.AddHours(duration) - DateTime.Now);
+            _backgroundClient.Schedule<IAppointmentRepository>((repo) => repo.UpdateAppointmentStateAsync(appointmentId, AppointmentState.Completed, 0), time.AddHours(duration) - DateTime.Now);
             _backgroundClient.Schedule<MeetingHub>((hub) => hub.NotifiyMeetingEnd(clientUserId, consultantUserId), time - DateTime.Now);
         }
         //private async Task updateAppointment( int appointmentId)

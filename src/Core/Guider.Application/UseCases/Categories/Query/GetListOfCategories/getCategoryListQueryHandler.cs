@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
-using Guider.Domain.Entities;
 using MediatR;
 
 namespace Guider.Application.UseCases.Categories.Query.GetListOfCategories
@@ -17,12 +16,9 @@ namespace Guider.Application.UseCases.Categories.Query.GetListOfCategories
         }
         public async Task<List<CategoryDto>> Handle(getCategoryListQuery request, CancellationToken cancellationToken)
         {
-
             var categoryList = await _categoryrepository.GetAllWithSubCategories();
             var categoryListDto = _mapper.Map<List<CategoryDto>>(categoryList);
             return categoryListDto;
-
-
         }
     }
 }

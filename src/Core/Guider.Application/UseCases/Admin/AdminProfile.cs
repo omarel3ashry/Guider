@@ -2,11 +2,6 @@
 using Guider.Application.UseCases.Admin.Query.GetUnVerifiedConsultantDetailes;
 using Guider.Application.UseCases.Admin.Query.GetUnVerifiedConsultants;
 using Guider.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Admin
 {
@@ -25,7 +20,7 @@ namespace Guider.Application.UseCases.Admin
                 .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.User.LastName))
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.User.Email))
                 .ForMember(dest => dest.Attachments, src => src.MapFrom(src => src.Attachments.Select(e => e.ImageUrl).ToList()));
-                
+
 
 
         }

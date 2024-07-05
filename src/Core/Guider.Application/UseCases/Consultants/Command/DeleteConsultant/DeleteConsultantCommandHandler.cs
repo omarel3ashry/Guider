@@ -24,7 +24,7 @@ namespace Guider.Application.UseCases.Consultants.Command.DeleteConsultant
         }
         public async Task<BaseResponse<int>> Handle(DeleteConsultantCommand request, CancellationToken cancellationToken)
         {
-            var consultant = await _consultantRepository.GetConsultantWithUserByIdAsync(request.ConsultantId);
+            var consultant = await _consultantRepository.GetWithUserAsync(request.ConsultantId);
             if (consultant == null)
             {
                 throw new NotFoundException($"Consultant with ID {request.ConsultantId} not found.");

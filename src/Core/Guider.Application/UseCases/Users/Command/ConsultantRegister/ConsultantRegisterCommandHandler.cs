@@ -51,14 +51,14 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
             if (!created)
                 throw new Exceptions.BadRequestException("Error in create Consultant");
 
-            var urls = await _imageService.SaveImages(request.Files,consultant);
+            var urls = await _imageService.SaveImages(request.Files, consultant);
             if (urls.Count == 0)
                 throw new Exceptions.BadRequestException("Error in save Attachments to server");
 
             List<Attachment> attachments = new List<Attachment>();
-            foreach ( var url in urls)
+            foreach (var url in urls)
             {
-                attachments.Add(new Attachment {ImageUrl = url, ConsultantId = consultant.Id });
+                attachments.Add(new Attachment { ImageUrl = url, ConsultantId = consultant.Id });
             }
 
             var res = await _attachmentRepository.AddAttachmentsAsync(attachments);

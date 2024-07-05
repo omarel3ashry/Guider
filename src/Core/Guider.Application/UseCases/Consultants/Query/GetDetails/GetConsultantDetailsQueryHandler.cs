@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
-using Guider.Application.UseCases.Consultants.Query.GetAll;
 using MediatR;
 
 namespace Guider.Application.UseCases.Consultants.Query.GetDetails
 {
-    public class GetConsultantDetailsQueryHandler : IRequestHandler<GetConsultantDetailsQuery, BaseResponse<ConsultantVM>>
+    public class GetConsultantDetailsQueryHandler : IRequestHandler<GetConsultantDetailsQuery, BaseResponse<ConsultantDto>>
     {
         private readonly IMapper _mapper;
         private readonly IConsultantRepository _consultantRepository;
@@ -17,27 +16,22 @@ namespace Guider.Application.UseCases.Consultants.Query.GetDetails
             _consultantRepository = consultantRepository;
 
         }
-        public async Task<BaseResponse<ConsultantVM>> Handle(GetConsultantDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<ConsultantDto>> Handle(GetConsultantDetailsQuery request, CancellationToken cancellationToken)
         {
-            var consultant = await _consultantRepository.GetConsultantWithsubCategoryAndSchedule(request.Id);
+            var consultant = await _consultantRepository.GetWithIncludesAsync(request.Id);
 
+            var ConsultantToReturn = _mapper.Map<ConsultantDto>(consultant);
 
-
-            var ConsultantToReturn = _mapper.Map<ConsultantVM>(consultant);
-
-
-            var response = new BaseResponse<ConsultantVM>();
+            var response = new BaseResponse<ConsultantDto>();
             response.Result = ConsultantToReturn;
-            response.Success = ConsultantToReturn != null; // Concise assignment
+            response.Success = ConsultantToReturn != null;
 
-            if (!response.Success) // More descriptive check
+            if (!response.Success)
             {
-                response.Message = "No consultant found."; // Or a more specific message
+                response.Message = "No consultant found.";
             }
 
             return response;
         }
-
-
     }
 }

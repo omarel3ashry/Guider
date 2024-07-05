@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Guider.Application.Contracts.Infrastructure;
 using Guider.Application.Contracts.Persistence;
 using Guider.Domain.Entities;
 using MediatR;
@@ -18,7 +17,7 @@ namespace Guider.Application.UseCases.Transactions.Command.AddTransaction
         {
             _mapper = mapper;
             _transactionRepo = transactionRepo;
-            
+
         }
 
         public async Task<bool> Handle(AddTransactionCommand request, CancellationToken cancellationToken)

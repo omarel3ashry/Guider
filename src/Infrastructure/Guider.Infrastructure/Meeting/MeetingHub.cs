@@ -1,10 +1,8 @@
 ﻿using Guider.Application.Contracts.Infrastructure;
 using Guider.Application.Models.Meeting;
-using Guider.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using System.Diagnostics;
 using System.Security.Claims;
 
 namespace Guider.Infrastructure.Meeting
@@ -112,7 +110,7 @@ namespace Guider.Infrastructure.Meeting
             if (connectionId != null)
             {
                 string senderName = Context.User?.Identity?.Name ?? "";
-                await Clients.Client(connectionId).ReceiveMessage(senderName,msg);
+                await Clients.Client(connectionId).ReceiveMessage(senderName, msg);
                 return true;
             }
             return false;
@@ -127,7 +125,7 @@ namespace Guider.Infrastructure.Meeting
                 await Clients.Client(connectionId).MeetingClosed();
             }
         }
-        
+
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {

@@ -1,4 +1,4 @@
-﻿namespace Guider.Application.UseCases.Consultants.Query.GetAll
+﻿namespace Guider.Application.UseCases.Consultants.Query
 {
     public class ScheduledDto
     {

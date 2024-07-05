@@ -19,12 +19,11 @@ namespace Guider.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CreateOrUpdatePaymentIntentCommand>> CreateOrUpdatePaymentIntent(CreateOrUpdatePaymentIntentCommand CreateOrUpdatePaymentIntentCommand)
+        public async Task<IActionResult> CreateOrUpdatePaymentIntent(CreateOrUpdatePaymentIntentCommand command)
         {
             try
             {
-
-                var result = await _mediator.Send(CreateOrUpdatePaymentIntentCommand);
+                var result = await _mediator.Send(command);
                 return Ok(result);
             }
             catch (Exception ex)

@@ -1,4 +1,4 @@
-﻿namespace Guider.Application.UseCases.Categories.Query.GetListOfCategories
+﻿namespace Guider.Application.UseCases.Categories.Query
 {
     public class CategoryDto
     {

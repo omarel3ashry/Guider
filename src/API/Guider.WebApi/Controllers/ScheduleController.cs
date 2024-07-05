@@ -21,76 +21,33 @@ namespace Guider.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSchedules(CreateScheduleCommand command)
         {
-            try
-            {
-                var success = await _mediator.Send(command);
-                if (success)
-                {
-                    return Ok();
-                }
-                return StatusCode(500, "Failed to add schedules");
-            }
-
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = ex.Message });
-            }
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
+
         [HttpGet("{consultantId}")]
         public async Task<IActionResult> GetSchedulesForConsultant(int consultantId)
         {
-            try
-            {
-                var query = new GetSchedulesForConsultantQuery(consultantId);
-                var schedules = await _mediator.Send(query);
-                return Ok(schedules);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = ex.Message });
-            }
+            var query = new GetSchedulesForConsultantQuery(consultantId);
+            var schedules = await _mediator.Send(query);
+            return Ok(schedules);
         }
+
         [HttpPut("{consultantId}/{date}")]
         public async Task<IActionResult> UpdateSchedule(int consultantId, DateTime date, [FromBody] UpdateScheduleCommand command)
         {
-            try
-            {
-                command.ConsultantId = consultantId;
-                command.Date = date;
-                var success = await _mediator.Send(command);
-                if (success)
-                {
-                    return Ok();
-                }
-                return StatusCode(500, "Failed to update schedule");
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = ex.Message });
-            }
+            command.ConsultantId = consultantId;
+            command.Date = date;
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpDelete("{consultantId}/{date}")]
         public async Task<IActionResult> DeleteSchedule(int consultantId, DateTime date)
         {
-            try
-            {
-                var command = new DeleteScheduleCommand { ConsultantId = consultantId, Date = date };
-                var success = await _mediator.Send(command);
-
-                if (success)
-                    return Ok();
-
-                return NotFound(); // Handle not found scenario if necessary
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = ex.Message });
-            }
+            var command = new DeleteScheduleCommand { ConsultantId = consultantId, Date = date };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

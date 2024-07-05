@@ -1,12 +1,6 @@
 ﻿using Guider.Application.Contracts.Infrastructure;
 using Guider.Domain.Entities;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Infrastructure.Images
 {
@@ -17,7 +11,56 @@ namespace Guider.Infrastructure.Images
         {
             _path = @"wwwroot\";
         }
-        public async Task<List<string>> SaveImages(IFormFileCollection files,Consultant consultant)
+
+        public async Task<string> SaveImageAsync(IFormFile file, Client client)
+        {
+            try
+            {
+                string fileExe = file.FileName.Split('.').Last();
+                string imagePath = $"Images\\client\\cli_{client.Id}_pp.{fileExe}";
+                string fullPath = _path + imagePath;
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
+                using (FileStream stream = File.Create(fullPath))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                return imagePath;
+            }
+            catch (Exception e)
+            {
+                return string.Empty;
+            }
+        }
+
+        public async Task<string> SaveImageAsync(IFormFile file, Consultant consultant)
+        {
+            try
+            {
+                string fileExe = file.FileName.Split('.').Last();
+                string imagePath = $"Images\\consultant\\con_{consultant.Id}_pp.{fileExe}";
+                string fullPath = _path + imagePath;
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
+                using (FileStream stream = File.Create(fullPath))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                return imagePath;
+            }
+            catch (Exception e)
+            {
+                return string.Empty;
+            }
+        }
+
+        public async Task<List<string>> SaveImages(IFormFileCollection files, Consultant consultant)
         {
             try
             {
@@ -29,11 +72,11 @@ namespace Guider.Infrastructure.Images
                     string fileExe = file.FileName.Split('.').Last();
                     string imagePath = $"ConsultantAttachments\\Con{consultant.Id}_doc_{counter}.{fileExe}";
                     string fullPath = _path + imagePath;
-                    if (System.IO.File.Exists(fullPath))
+                    if (File.Exists(fullPath))
                     {
-                        System.IO.File.Delete(fullPath);
+                        File.Delete(fullPath);
                     }
-                    using (FileStream stream = System.IO.File.Create(fullPath))
+                    using (FileStream stream = File.Create(fullPath))
                     {
                         await file.CopyToAsync(stream);
                     }
@@ -41,10 +84,11 @@ namespace Guider.Infrastructure.Images
                 }
                 return imagesUrls;
             }
-            catch(Exception e) {
+            catch (Exception e)
+            {
                 return new List<string>();
             }
-           
+
         }
     }
 }
