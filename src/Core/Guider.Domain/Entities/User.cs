@@ -1,16 +1,13 @@
-﻿namespace Guider.Domain.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Guider.Domain.Entities
 {
-    public class User
+    public class User : IdentityUser<int>
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PassHash { get; set; }
-        public string Image { get; set; }
-        public string BankAccount { get; set; }
-        public bool isDeleted { get; set; }
+        public bool IsDeleted { get; set; }
 
-         public IReadOnlyCollection<Transaction> Transactions { get; set; }
+        public IReadOnlyCollection<Transaction> Transactions { get; set; }
     }
 }

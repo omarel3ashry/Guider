@@ -1,12 +1,9 @@
-﻿namespace Guider.Domain.Entities
+﻿using Guider.Domain.Common;
+
+namespace Guider.Domain.Entities
 {
-    public class Client
+    public class Client : Consumer
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
 
-        public User User { get; set; }
-
-        public IReadOnlyCollection<Appointment> Appointments { get; set; }
     }
 }

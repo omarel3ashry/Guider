@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Serilog" Version="4.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
@@ -16,12 +20,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Guider.Identity\Guider.Identity.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Guider.Infrastructure\Guider.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Core\Guider.Application\Guider.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Guider.Identity\Guider.Identity.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Guider.Persistence\Guider.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\ConsultantAttachments\" />
+    <Folder Include="wwwroot\Images\client\" />
+    <Folder Include="wwwroot\Images\consultant\" />
   </ItemGroup>
 
 </Project>

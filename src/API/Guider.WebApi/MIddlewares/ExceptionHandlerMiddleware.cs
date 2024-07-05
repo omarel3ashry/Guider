@@ -35,7 +35,7 @@ namespace Guider.WebApi.MIddlewares
             {
                 case ValidationException validationException:
                     statusCode = HttpStatusCode.BadRequest;
-                    result = JsonSerializer.Serialize(validationException.ValdationErrors);
+                    result = JsonSerializer.Serialize(new { errors = validationException.ValdationErrors });
                     break;
                 case BadRequestException:
                     statusCode = HttpStatusCode.BadRequest;
@@ -43,8 +43,11 @@ namespace Guider.WebApi.MIddlewares
                 case NotFoundException:
                     statusCode = HttpStatusCode.NotFound;
                     break;
+                case NotAuthorizedException:
+                    statusCode = HttpStatusCode.Unauthorized;
+                    break;
                 case Exception:
-                    statusCode = HttpStatusCode.BadRequest;
+                    statusCode = HttpStatusCode.InternalServerError;
                     break;
             }
 
@@ -52,7 +55,7 @@ namespace Guider.WebApi.MIddlewares
 
             if (result == string.Empty)
             {
-                result = JsonSerializer.Serialize(new { error = exception.Message });
+                result = JsonSerializer.Serialize(new { errors = new List<string> { exception.Message } });
             }
 
 
