@@ -38,7 +38,7 @@ Welcome to Guider Backend API repository! This API serves as the backend for the
 
 - [ASP.NET Core Web API](https://learn.microsoft.com/en-us/aspnet/core/web-api): A rich framework for building web apps and APIs using the Model-View-Controller design pattern.
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/): A proprietary relational database management system developed by Microsoft.
-- [Entity Framework (EF) Core](https://learn.microsoft.com/en-us/ef/core/): An open-source object-relational mapping (ORM) framework developed by Microsoft.
+- [Entity Framework (EF) Core](https://learn.microsoft.com/en-us/ef/core/): An object-relational mapping (ORM) framework developed by Microsoft.
 - [MediatR](https://www.nuget.org/packages/MediatR): Simple, unambitious mediator implementation in .NET
 - [WebRTC](https://webrtc.org/): Technology for real-time communication.
 - [SignalR](https://dotnet.microsoft.com/en-us/apps/aspnet/signalr): An open-source, real-time messaging framework developed by Microsoft.
@@ -46,7 +46,7 @@ Welcome to Guider Backend API repository! This API serves as the backend for the
 - [Stripe](https://stripe.com/): Payment processing API for secure transactions.
 - [Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity): an API that manages users, passwords, profile data, roles, claims, tokens, email confirmation, and more.
 - [Serilog](https://serilog.net/): Logging framework.
-- [AutoMapper](https://automapper.org/): A convention-based object-object mapper. Takes out all of the fuss of mapping one object to another.
+- [AutoMapper](https://automapper.org/): object-object mapper. Takes out all of the fuss of mapping one object to another.
 - [FluentValidation](https://fluentvalidation.net/): .NET library for building strongly-typed validation rules.
 
 ## Architecture and Patterns
