@@ -2,7 +2,8 @@
 {
     public enum MailType
     {
-        Register = 1,
+        Empty,
+        Register ,
         ConfirmConsultant,
         MakeAppointment,
     }

@@ -4,6 +4,7 @@ using Guider.Application.Contracts.Infrastructure;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
 using Guider.Domain.Entities;
+using Guider.Domain.Enums;
 using MediatR;
 
 namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
@@ -16,12 +17,15 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
         private readonly IValidator<ConsultantRegisterCommand> _validator;
         private readonly IMapper _mapper;
         private readonly IImageService _imageService;
+        private readonly IMailFactory _mailFactory;
+        private readonly IMailService _mailService;
 
         public ConsultantRegisterCommandHandler(IConsultantRepository consultantRepository,
                                                 IRegisterUserRepository<Consultant> userRepository,
                                                 IValidator<ConsultantRegisterCommand> validator,
                                                 IMapper mapper, IImageService imageService,
-                                                IAttachmentRepository attachmentRepository)
+                                                IAttachmentRepository attachmentRepository,
+                                                IMailFactory mailFactory, IMailService mailService)
 
         {
             _consultantRepository = consultantRepository;
@@ -30,6 +34,8 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
             _mapper = mapper;
             _imageService = imageService;
             _attachmentRepository = attachmentRepository;
+            _mailFactory = mailFactory;
+            _mailService = mailService;
         }
 
         public async Task<AuthenticationResponse> Handle(ConsultantRegisterCommand request, CancellationToken cancellationToken)
@@ -64,6 +70,10 @@ namespace Guider.Application.UseCases.Users.Command.ConsultantRegister
             var res = await _attachmentRepository.AddAttachmentsAsync(attachments);
             if (!res)
                 throw new Exceptions.BadRequestException("Error in save Attachments to database");
+
+
+            var mes = _mailFactory.GenerateMailMssage(MailType.Register, user);
+            await _mailService.SendMailAsync(mes);
 
             return result;
         }
