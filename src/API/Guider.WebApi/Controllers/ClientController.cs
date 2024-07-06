@@ -5,12 +5,14 @@ using Guider.Application.UseCases.Clients.Command.UpdateImage;
 using Guider.Application.UseCases.Clients.Query.GetAllClients;
 using Guider.Application.UseCases.Clients.Query.GetClientDetails;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -2,12 +2,14 @@
 using Guider.Application.UseCases.Payment.Command.Refund;
 using Guider.Application.UseCases.Payment.Command.UserPayment;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PaymentController : ControllerBase
     {
 

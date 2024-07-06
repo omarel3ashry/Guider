@@ -3,12 +3,14 @@ using Guider.Application.UseCases.Schedules.Command.DeleteSchedule;
 using Guider.Application.UseCases.Schedules.Command.UpdateSchedule;
 using Guider.Application.UseCases.Schedules.Query.GetAllSchdeulesForConsultant;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ScheduleController : ControllerBase
     {
         private readonly IMediator _mediator;

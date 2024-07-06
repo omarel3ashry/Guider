@@ -1,12 +1,14 @@
 ﻿using Guider.Application.UseCases.Transactions.Command.AddTransaction;
 using Guider.Application.UseCases.Transactions.Query.GetTransactionQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransactionController : ControllerBase
     {
         private readonly IMediator _mediator;

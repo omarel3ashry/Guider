@@ -3,12 +3,14 @@ using Guider.Application.UseCases.Admin.Command.VerifyConsultant;
 using Guider.Application.UseCases.Admin.Query.GetUnVerifiedConsultantDetailes;
 using Guider.Application.UseCases.Admin.Query.GetUnVerifiedConsultants;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IMediator _mediator;

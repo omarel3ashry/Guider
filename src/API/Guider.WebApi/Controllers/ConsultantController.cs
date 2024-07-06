@@ -6,12 +6,14 @@ using Guider.Application.UseCases.Consultants.Query.GetDetails;
 using Guider.Application.UseCases.Consultants.Query.GetFiltered;
 using Guider.Application.UseCases.Consultants.Query.GetFilteredByName;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ConsultantController : ControllerBase
     {
         private readonly IMediator _mediator;

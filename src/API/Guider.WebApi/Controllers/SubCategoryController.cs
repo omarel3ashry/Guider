@@ -1,12 +1,14 @@
 ﻿using Guider.Application.UseCases.Categories.Query.GetById;
 using Guider.Application.UseCases.SubCategories.Query.getSubCategoryList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guider.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubCategoryController : ControllerBase
     {
         private readonly IMediator _mediator;
