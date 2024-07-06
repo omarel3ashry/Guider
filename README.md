@@ -36,7 +36,7 @@ Welcome to Guider Backend API repository! This API serves as the backend for the
    
 ## Technologies Used
 
-- [ASP.NET Core Web API](https://learn.microsoft.com/en-us/aspnet/core/web-api): A rich framework for building web apps and APIs using the Model-View-Controller design pattern.
+- [ASP.NET Core Web API](https://learn.microsoft.com/en-us/aspnet/core/web-api): A rich framework for building web apps and APIs using the MVC design pattern.
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/): A proprietary relational database management system developed by Microsoft.
 - [Entity Framework (EF) Core](https://learn.microsoft.com/en-us/ef/core/): An object-relational mapping (ORM) framework developed by Microsoft.
 - [MediatR](https://www.nuget.org/packages/MediatR): Simple, unambitious mediator implementation in .NET
