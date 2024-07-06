@@ -1,10 +1,8 @@
 <div align="center">
   <a href="https://github.com/omarel3ashry/Guider">
-    <img src="assets/GuiderLogo.png" alt="Logo" width="80" height="80">
+    <img src="assets/GuiderLogo.png" alt="Logo" width="100" height="100">
   </a>
-
-  <h3 align="center">Guider</h3>
-
+  <h3 align="center"></h3>
   <p align="center">
     Guiding You Towards Expertise, One Consultation at a Time!
   </p>
