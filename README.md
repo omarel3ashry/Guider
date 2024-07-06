@@ -107,3 +107,6 @@ To run Guider locally, follow these steps:
    dotnet run
    ```
 **Note:** Make sure you have [.NET Core SDK](https://dotnet.microsoft.com/en-us/download) installed on your system.
+
+## License
+This project is licensed under the MIT License. Feel free to modify and distribute the code as long as you include the original license file.
