@@ -28,7 +28,7 @@ namespace Guider.WebApi.Controllers
         {
 
             var query = new getTransactionByUserIdQuery() { UserId = userId };
-            var response= await _mediator.Send(query);
+            var response = await _mediator.Send(query);
             return Ok(response);
 
         }

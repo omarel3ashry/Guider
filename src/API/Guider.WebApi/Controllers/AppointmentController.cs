@@ -30,6 +30,7 @@ namespace Guider.WebApi.Controllers
             var result = await _mediator.Send(GetAppointmentQuery);
             return Ok(result);
         }
+
         [HttpGet("Stats")]
         public async Task<ActionResult<AppointmentDto>> GetAppointmentsStats()
         {
@@ -69,15 +70,10 @@ namespace Guider.WebApi.Controllers
         public async Task<ActionResult<AppointmentDto>> CancelAppointment(CancelAppointmentCommand command)
         {
             command.ClientUserId = int.Parse(User.Claims.FirstOrDefault(e => e.Type == JwtRegisteredClaimNames.Sid)?.Value ?? "0");
-            //var cancelAppointCommand = new CancelAppointmentCommand()
-            //{
-            //    AppointmentId = appointmentId,
-            //    ClientUserId = int.Parse(User.Claims.FirstOrDefault(e => e.Type == JwtRegisteredClaimNames.Sid)?.Value ?? "0")
-            //};
-
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
         [HttpPatch("rate")]
         public async Task<ActionResult<AppointmentDto>> RateAppointment(RateAppointmentCommand command)
         {

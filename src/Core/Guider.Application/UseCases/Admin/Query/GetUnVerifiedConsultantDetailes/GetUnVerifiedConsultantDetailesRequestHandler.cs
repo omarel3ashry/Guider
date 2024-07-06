@@ -2,11 +2,6 @@
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Responses;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Guider.Application.UseCases.Admin.Query.GetUnVerifiedConsultantDetailes
 {
@@ -25,7 +20,7 @@ namespace Guider.Application.UseCases.Admin.Query.GetUnVerifiedConsultantDetaile
         {
             var con = await _consultantRepository.GetConsultantWithsubCategoryUserAndAttachmentsById(request.Id);
             var dto = _mapper.Map<ConsultantDetailsDto>(con);
-            return new BaseResponse<ConsultantDetailsDto> {Success = true, Result = dto };
+            return new BaseResponse<ConsultantDetailsDto> { Success = true, Result = dto };
         }
     }
 }

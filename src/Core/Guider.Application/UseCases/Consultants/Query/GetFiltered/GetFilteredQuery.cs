@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Guider.Application.UseCases.Consultants.Query.GetFiltered
 {
-    public class GetFilteredQuery : IRequest<BaseResponse<PaginatedList<FilteredConsultantDto,Consultant>>>
+    public class GetFilteredQuery : IRequest<BaseResponse<PaginatedList<FilteredConsultantDto, Consultant>>>
     {
         public int Page { get; set; }
         public int PageSize { get; set; }

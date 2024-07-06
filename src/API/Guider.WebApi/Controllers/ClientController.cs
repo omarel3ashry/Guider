@@ -80,31 +80,12 @@ namespace Guider.WebApi.Controllers
             return BadRequest(result);
         }
 
-
-
         [HttpPut("UploadProfileImage")]
         public async Task<IActionResult> UploadProfileImage(int Id, IFormFile formFile)
         {
-            UpdateClientImageCommand command = new UpdateClientImageCommand() { Id = Id };
-            string fileExe = formFile.FileName.Split('.').Last();
-            string imagePath = $"client\\{command.Id}_img.{fileExe}";
-            string fullPath = _path + imagePath;
-
-            if (System.IO.File.Exists(imagePath))
-            {
-                System.IO.File.Delete(imagePath);
-            }
-
-            using (FileStream stream = System.IO.File.Create(fullPath))
-            {
-                await formFile.CopyToAsync(stream);
-            }
-
-            Console.WriteLine("successful upload ! " + imagePath);
-            command.Image = imagePath;
+            UpdateClientImageCommand command = new UpdateClientImageCommand() { Id = Id, Image = formFile };
             var response = await _mediator.Send(command);
-
-            return Ok(new { imagePath = imagePath });
+            return Ok(response);
         }
     }
 }

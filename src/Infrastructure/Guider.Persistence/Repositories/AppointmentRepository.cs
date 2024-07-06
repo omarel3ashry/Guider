@@ -95,13 +95,13 @@ namespace Guider.Persistence.Repositories
 
         public async Task UpdateAppointmentRateAsync(int appointmentId, int rate)
         {
-            var appointment = await _context.Appointment.Include(e=>e.Consultant)
-                .ThenInclude(e=>e.Appointments)
-                .FirstOrDefaultAsync(e=>e.Id==appointmentId);
+            var appointment = await _context.Appointment.Include(e => e.Consultant)
+                .ThenInclude(e => e.Appointments)
+                .FirstOrDefaultAsync(e => e.Id == appointmentId);
             if (appointment != null)
             {
                 appointment.Rate = rate;
-                appointment.Consultant.AverageRate = appointment.Consultant.Appointments.Where(e=>e.State==AppointmentState.Completed&&e.Rate!=0).Average(e => e.Rate);
+                appointment.Consultant.AverageRate = appointment.Consultant.Appointments.Where(e => e.State == AppointmentState.Completed && e.Rate != 0).Average(e => e.Rate);
                 await _context.SaveChangesAsync();
             }
         }

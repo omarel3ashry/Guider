@@ -1,23 +1,26 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
+using Guider.Application.Responses;
 using Guider.Domain.Entities;
 using MediatR;
 
 namespace Guider.Application.UseCases.Schedules.Command.CreateSchedule
 {
-    public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleCommand, bool>
+    public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleCommand, BaseResponse>
     {
 
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IConsultantRepository _consultantRepository;
 
-        public CreateScheduleCommandHandler(IScheduleRepository scheduleRepository, IConsultantRepository consultantRepository, IMapper mapper)
+        public CreateScheduleCommandHandler(IScheduleRepository scheduleRepository,
+                                            IConsultantRepository consultantRepository,
+                                            IMapper mapper)
         {
             _scheduleRepository = scheduleRepository;
             _consultantRepository = consultantRepository;
         }
 
-        public async Task<bool> Handle(CreateScheduleCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(CreateScheduleCommand request, CancellationToken cancellationToken)
         {
             var consultant = await _consultantRepository.GetByIdAsync(request.ConsultantId);
 
@@ -35,7 +38,9 @@ namespace Guider.Application.UseCases.Schedules.Command.CreateSchedule
                 }
             }
 
-            return await _scheduleRepository.AddSchedulesAsync(schedules);
+            var added = await _scheduleRepository.AddSchedulesAsync(schedules);
+
+            return new BaseResponse() { Success = added, Message = added ? "Added successfully." : "Failed to add the schedule!" };
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Guider.Application.Exceptions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Text.Json;
 
-namespace Guider.WebApi.MIddlewares
+namespace Guider.Application.Middlewares
 {
     public class ExceptionHandlerMiddleware
     {

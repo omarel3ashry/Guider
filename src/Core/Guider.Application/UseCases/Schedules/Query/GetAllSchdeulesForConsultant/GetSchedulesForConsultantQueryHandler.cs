@@ -5,7 +5,7 @@ using MediatR;
 namespace Guider.Application.UseCases.Schedules.Query.GetAllSchdeulesForConsultant
 {
 
-    public class GetSchedulesForConsultantQueryHandler : IRequestHandler<GetSchedulesForConsultantQuery, List<ScheduleDto>>
+    public class GetSchedulesForConsultantQueryHandler : IRequestHandler<GetSchedulesForConsultantQuery, IReadOnlyCollection<ScheduleDto>>
     {
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace Guider.Application.UseCases.Schedules.Query.GetAllSchdeulesForConsulta
             _mapper = mapper;
         }
 
-        public async Task<List<ScheduleDto>> Handle(GetSchedulesForConsultantQuery request, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<ScheduleDto>> Handle(GetSchedulesForConsultantQuery request, CancellationToken cancellationToken)
         {
             var schedules = await _scheduleRepository.GetSchedulesByConsultantIdAsync(request.ConsultantId);
             return _mapper.Map<List<ScheduleDto>>(schedules);

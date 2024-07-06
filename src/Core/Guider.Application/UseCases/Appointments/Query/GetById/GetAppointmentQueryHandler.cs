@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Guider.Application.Contracts.Persistence;
 using Guider.Application.Exceptions;
-using Guider.Domain.Entities;
 using MediatR;
 
 namespace Guider.Application.UseCases.Appointments.Query.GetById

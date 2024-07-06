@@ -1,7 +1,6 @@
 ﻿using Guider.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System.Runtime.Serialization.Formatters;
 
 
 namespace Guider.Application.UseCases.Users.Command.ConsultantRegister

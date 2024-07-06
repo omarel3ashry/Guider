@@ -1,9 +1,10 @@
 ﻿using Guider.Application.Contracts.Persistence;
+using Guider.Application.Responses;
 using MediatR;
 
 namespace Guider.Application.UseCases.Schedules.Command.DeleteSchedule
 {
-    internal class DeleteScheduleCommandHandler : IRequestHandler<DeleteScheduleCommand, bool>
+    internal class DeleteScheduleCommandHandler : IRequestHandler<DeleteScheduleCommand, BaseResponse>
     {
         private readonly IScheduleRepository _scheduleRepository;
 
@@ -12,15 +13,15 @@ namespace Guider.Application.UseCases.Schedules.Command.DeleteSchedule
             _scheduleRepository = scheduleRepository;
         }
 
-        public async Task<bool> Handle(DeleteScheduleCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(DeleteScheduleCommand request, CancellationToken cancellationToken)
         {
             var existingSchedule = await _scheduleRepository.GetScheduleByConsultantIdAndDateAsync(request.ConsultantId, request.Date);
 
             if (existingSchedule == null)
-                return false; // Schedule not found or already deleted
+                throw new Exceptions.NotFoundException("Schedule not found!");
 
-            await _scheduleRepository.DeleteAsync(existingSchedule);
-            return true;
+            var deleted = await _scheduleRepository.DeleteAsync(existingSchedule);
+            return new BaseResponse() { Success = deleted, Message = deleted ? "Deleted successfully." : "Failed to delete the schedule!" }; ;
         }
     }
 }

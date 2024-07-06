@@ -1,9 +1,10 @@
 ﻿
+using Guider.Application.Responses;
 using MediatR;
 
 namespace Guider.Application.UseCases.Schedules.Command.UpdateSchedule
 {
-    public class UpdateScheduleCommand : IRequest<bool>
+    public class UpdateScheduleCommand : IRequest<BaseResponse>
     {
         public int ConsultantId { get; set; }
         public DateTime Date { get; set; }

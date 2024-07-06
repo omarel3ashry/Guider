@@ -17,7 +17,7 @@ namespace Guider.Infrastructure
                 c.UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage(config.GetConnectionString("HangfireConnection")));
-            services.AddHangfireServer(x=>x.SchedulePollingInterval=TimeSpan.FromSeconds(5));
+            services.AddHangfireServer(x => x.SchedulePollingInterval = TimeSpan.FromSeconds(5));
             services.AddSignalR();
             services.AddScoped<IBackgroundJob, BackgroundJobs>();
             services.AddSingleton<MeetingHub>();
